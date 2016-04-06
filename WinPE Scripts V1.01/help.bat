@@ -1,7 +1,8 @@
 Echo off
 echo help 			Displays this page
 echo formatc		Clean disk 0, quick format, assign letter C
-echo formatfw		Clean disks 1-2, quick format, assign letters E-F
+echo formatfw4		Clean disks 1-2, quick format, assign letters E-F
+echo formatfw5		Clean disks 2-3, quick format, assign letters E-F
 echo cleanc			Romove all partition data from disk 0
 echo mapn			Force attempt to map network drive N:\ for storing log files
 echo bit			Open BurnInTest

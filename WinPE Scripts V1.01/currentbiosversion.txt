@@ -1,2 +1,2 @@
-S1200BTL;S1200BT.86B.02.00.0041.120520121743;"x:\Program Files\Gen4\iflash32\iflash32.exe" /u /ni /nopc R0041.cap;syscfg4.bat
-S1200V3RP;**********************************;"x:\Program Files\Gen5\iflash32\iflash32.exe" /u /ni /nopc R03.02.0003.cap;syscfg5.bat
+S1200BTL;S1200BT.86B.02.00.0041.120520121743;"x:\Program Files\Gen4\iflash32\iflash32.exe" /u R0041.cap;syscfg4.bat
+S1200V3RP;S1200RP.86B.03.02.0003.070120151022;"x:\Program Files\Gen5\iflash32\iflash32.exe" /u R03.02.0003.cap updatebackupbios;syscfg5.bat
