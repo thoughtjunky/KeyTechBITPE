@@ -1,0 +1,1 @@
+"X:\Program Files\BurnInTest\bit.exe"

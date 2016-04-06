@@ -1,0 +1,1 @@
+net use N: \\pxeserver\BITPE_LOGS password /user:admin

@@ -1,0 +1,5 @@
+DISM /image:d:\bitpex64\mount /Add-Package /PackagePath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\winpe-wmi.cab"
+
+DISM /image:d:\bitpex64\mount /Add-Package /PackagePath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\winpe-hta.cab"
+
+DISM /image:d:\bitpex64\mount /Add-Package /PackagePath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\winpe-scripting.cab"

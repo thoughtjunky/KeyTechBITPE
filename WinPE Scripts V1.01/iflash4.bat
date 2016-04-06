@@ -1,0 +1,1 @@
+%ProgramFiles%\Gen4\iflash32\iflash32.exe /u R0041.cap
