@@ -25,7 +25,7 @@ echo WARNING: Motherboard not supported for BIOS update and configuration utilit
 time
 date
 set /p serialnumber=Serial Number:
-:: Secretly allow for manual diagnostics before we start erasing things
+:: Allow for manual diagnostics before we start erasing things
 if "%serialnumber%" == "test" goto cmdline
 goto setup
 
@@ -52,10 +52,11 @@ net use N: \\pxeserver\BITPE_LOGS password /user:admin :: Map the network folder
 ::Flash Drive still here?
 if exist F:\ set flashdrive=present
 :: Is this a Gen V?
-for /f "tokens=* skip=1" %a in ('wmic baseboard get product') do if "%a" == "S1200V3RP" goto GENV
+for /f "tokens=1 skip=1" %a in ('wmic baseboard get product') do if "%a" == "S1200V3RP" goto GENV
 
-:setdisk :: Strip and reassign drive letters
-diskpart /s diskpart.txt
+:setdisk 
+:: Strip and reassign drive letters
+diskpart /s volstrip.txt
 if "%flashdrive%" == "present" (
 diskpart /s diskpartGen4.txt
 ) else (
@@ -63,7 +64,7 @@ diskpart /s diskpartGen4dd.txt
 )
 goto setip
 :GENV
-diskpart /s diskpart.txt
+diskpart /s volstrip.txt
 if exist F:\ (
 diskpart /s diskpartGen4.txt
 ) else (
@@ -90,9 +91,13 @@ goto end
 "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6.bitcfg
 
 :end
-if errorlevel 1 goto cmdline :: If something went wrong, don't shutdown
-diskpart /s diskclean.txt :: Erase all partition data from primary disk
-powershell eject :: Eject the CD
-wpeutil shutdown :: Test completed successfully
+:: If something went wrong, don't shutdown
+if errorlevel 1 goto cmdline
+:: Erase all partition data from primary disk
+diskpart /s diskclean.txt
+:: Eject the CD
+powershell eject
+:: Test completed successfully
+wpeutil shutdown
 
 :cmdline
