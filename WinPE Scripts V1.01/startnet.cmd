@@ -46,8 +46,10 @@ echo BIOS update successful
 for /f "tokens=4 delims=;" %d in ('find "%b" currentbiosversions.txt') do %d
 if errorlevel 1 goto cmdline
 echo successfully set BIOS configuration
-powershell set-executionpolicy unrestricted :: Allow script to run powershell cmdlets (used for ejecting the CD)
-net use N: \\pxeserver\BITPE_LOGS password /user:admin :: Map the network folder for logging BIT results
+:: Allow script to run powershell cmdlets (used for ejecting the CD)
+powershell set-executionpolicy unrestricted
+:: Map the network folder for logging BIT results
+net use N: \\pxeserver\BITPE_LOGS password /user:admin
 
 ::Flash Drive still here?
 if exist F:\ set flashdrive=present
