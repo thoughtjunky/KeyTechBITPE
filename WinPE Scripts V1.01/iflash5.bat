@@ -1,1 +1,1 @@
-%ProgramFiles%\Gen5\iflash32\iflash32 /u /ni R03.03.0003.cap updatebackupbios
+%ProgramFiles%\Gen5\iflash32\iflash32 /u R03.03.0003.cap updatebackupbios

@@ -1,2 +1,2 @@
-syscfg /bldfs ""
-syscfg /bcs "" "Server Management" "Resume on AC Power Loss" 02
+%ProgramFiles%\Gen5\syscfg\install.bat
+%ProgramFiles%\Gen5\syscfg\syscfg.exe /r syscfg.ini /b
