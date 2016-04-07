@@ -7,19 +7,18 @@ echo ensure all ports and drives are ready for testing
 echo 
 
 :: Probe for Motherboard Model
-for /f "tokens=1 skip=1" %a in ('wmic baseboard get product') do ^
-find "%a" currentbiosversions.txt
+for /f "tokens=1 skip=1" %%a in ('wmic baseboard get product') do find "%%a" currentbiosversions.txt
 if errorlevel 1 goto altconfig
 :: Probe for BIOS version
-for /f "tokens=1 skip=1" %b in ('wmic bios get smbiosbiosversion') do ^
-find "%b" currentbiosversions.txt
+for /f "tokens=1 skip=1" %%b in ('wmic bios get smbiosbiosversion') do find "%%b" currentbiosversions.txt
 if errorlevel 1 goto updatebios
 goto setdisk
 
 
 :altconfig
 set motherboard=unsupported
-if "%%a" == "S1200BT" ( echo Motherboard not supported for WinPE BIOS update, EFI must be used instead
+if "%%a" == "S1200BTL" (
+echo Motherboard not supported for WinPE BIOS update, EFI must be used instead
 ) else (
 echo Motherboard not supported for BIOS update and configuration utilities
 )
@@ -44,7 +43,7 @@ if "%serialnumber%" == "test" goto cmdline
 goto setup
 
 :setup
-for /f "tokens=4 delims=;" %d in ('find "%b" currentbiosversions.txt') do %d
+for /f "tokens=4 delims=;" %%d in ('find "%%b" currentbiosversions.txt') do %%d
 if errorlevel 1 goto cmdline
 echo successfully set BIOS configuration
 :: Allow script to run powershell cmdlets (used for ejecting the CD)
@@ -89,8 +88,8 @@ echo Please enter "yes" or "no"
 goto updatebios
 
 :upbios
-if "%motherboard%" == "S1200BT" goto altconfig
-for /f "tokens=3 delims=;" %c in ('find "%a" currentbiosversions.txt') do %%c
+if "%motherboard%" == "S1200BTL" goto altconfig
+for /f "tokens=3 delims=;" %%c in ('find "%%a" currentbiosversions.txt') do %%c
 if errorlevel 1 goto cmdline
 pause BIOS update successful, press any key to reboot.
 wpeutil reboot
