@@ -1,1 +1,0 @@
-diskpart /s diskpartfw.txt
