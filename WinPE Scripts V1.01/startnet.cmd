@@ -40,12 +40,12 @@ date
 set /p serialnumber=Serial Number:
 :: Allow for manual diagnostics before we start erasing things
 if "%serialnumber%" == "test" goto cmdline
-goto setup
-
-:setup
 for /f "tokens=4 delims=;" %%d in ('find "%%b" currentbiosversions.txt') do %%d
-if errorlevel 1 goto cmdline
+if errorlevel 1 (
+echo unable to set BIOS configuration
+) else (
 echo successfully set BIOS configuration
+)
 :: Allow script to run powershell cmdlets (used for ejecting the CD)
 powershell set-executionpolicy unrestricted
 :: Map the network folder for logging BIT results
