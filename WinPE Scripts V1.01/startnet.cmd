@@ -1,10 +1,14 @@
-echo off
-wpeinit
+@echo off
 
+:: If E:\ exists, it must have Firewire
+if exist E:\ set fw=true
 echo Key Technology G6 CPU BurnInTest 1.01
 echo WARNING: THIS TEST WILL ERASE ALL DATA ON PRIMARY DISK
 echo ensure all ports and drives are ready for testing
 echo 
+
+:: the only thing that originally existed in this .cmd
+wpeinit
 
 :: Probe for Motherboard Model
 for /f "tokens=1 skip=1" %%a in ('wmic baseboard get product') do find "%%a" currentbiosversions.txt
@@ -29,7 +33,7 @@ diskpart /s volstrip.txt
 if "%%a" == "S1200RP" (
 diskpart /s diskpartGen5.txt
 ) else (
-if exist E:/ diskpart /s diskpartGen4.txt
+if "%fw%" == "true" diskpart /s diskpartGen4.txt
 ) else (
 diskpart /s diskpartGen4dd.txt
 )
