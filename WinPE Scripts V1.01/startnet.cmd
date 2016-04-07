@@ -6,11 +6,11 @@ echo WARNING: THIS TEST WILL ERASE ALL DATA ON PRIMARY DISK
 echo ensure all ports and drives are ready for testing
 echo 
 
-
+:: Probe for Motherboard Model
 for /f "tokens=1 skip=1" %a in ('wmic baseboard get product') do^
 find "%a" currentbiosversions.txt
 if errorlevel 1 goto altconfig
-
+:: Probe for BIOS version
 for /f "tokens=1 skip=1" %b in ('wmic bios get smbiosbiosversion') do ^
 find "%b" currentbiosversions.txt
 if errorlevel 1 goto updatebios
@@ -76,18 +76,18 @@ netsh int ipv4 set address ethernet static 192.168.0.1 255.255.255.0 127.0.0.1
 netsh int ipv4 set address "ethernet 2" static 192.168.0.2 255.255.255.0 127.0.0.1
 
 if exist F:\ goto FW0
-"x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_SelftestDD.bitcfg
+"x:\Program Files\BurnInTest\bit.exe" â€“h -x -r -c G6_SelftestDD.bitcfg
 goto end
 :FW0
-"x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_Selftest.bitcfg
+"x:\Program Files\BurnInTest\bit.exe" â€“h -x -r -c G6_Selftest.bitcfg
 goto end
 
 :online
 if exist F:\ goto FW1
-"x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_DD.bitcfg
+"x:\Program Files\BurnInTest\bit.exe" â€“h -x -r -c G6_DD.bitcfg
 goto end
 :FW1
-"x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6.bitcfg
+"x:\Program Files\BurnInTest\bit.exe" â€“h -x -r -c G6.bitcfg
 
 :end
 if errorlevel 1 goto cmdline :: If something went wrong, don't shutdown
