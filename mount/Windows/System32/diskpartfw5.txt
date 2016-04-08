@@ -1,15 +1,15 @@
-select disk 2 noerr
-clean noerr
-create partition primary noerr
-select partition 1 noerr
-active noerr
-format quick fs=ntfs noerr
-assign letter=e noerr
+select disk 2
+clean
+create partition primary
+select partition 1
+active
+format quick fs=ntfs
+assign letter=e
 
-select disk 3 noerr
-clean noerr
-create partition primary noerr
-select partition 1 noerr
-active noerr
-format quick fs=ntfs noerr
-assign letter=f noerr
+select disk 3
+clean
+create partition primary
+select partition 1
+active
+format quick fs=ntfs
+assign letter=f

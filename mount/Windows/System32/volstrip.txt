@@ -1,10 +1,10 @@
-select vol 0 noerr
-remove all noerr
-select vol 1 noerr
-remove all noerr
-select vol 2 noerr
-remove all noerr
-select vol 3 noerr
-remove all noerr
-select vol 4 noerr
-remove all noerr
+select vol 0
+remove all
+select vol 1
+remove all
+select vol 2
+remove all
+select vol 3
+remove all
+select vol 4
+remove all

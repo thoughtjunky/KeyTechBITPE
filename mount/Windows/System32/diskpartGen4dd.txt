@@ -1,14 +1,14 @@
-select disk 0 noerr
-clean noerr
-create partition primary noerr
-select partition 1 noerr
-active noerr
-format quick fs=ntfs noerr
-assign letter=c noerr
+select disk 0
+clean
+create partition primary
+select partition 1
+active
+format quick fs=ntfs
+assign letter=c
 
-select vol 0 noerr
-assign letter=d noerr
+select vol 0
+assign letter=d
 
-select disk 1 noerr
-select partition 1 noerr
-assign letter=g noerr
+select disk 1
+select partition 1
+assign letter=g
