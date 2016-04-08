@@ -1,7 +1,7 @@
 @echo off
 
-:: If E:\ exists, it must have Firewire
-if exist E:\ set fw=true
+:: If it's got 3 drives, it must have Firewire
+if exist F:\ set fw=true
 echo Key Technology G6 CPU BurnInTest 1.01
 echo WARNING: THIS TEST WILL ERASE ALL DATA ON PRIMARY DISK
 echo ensure all ports and drives are ready for testing
