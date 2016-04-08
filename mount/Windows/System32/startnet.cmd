@@ -1,4 +1,4 @@
-@echo off
+﻿
 
 :: If it's got 3 drives, it must have Firewire
 if exist F:\ set fw=true
@@ -12,10 +12,10 @@ echo ensure all ports and drives are ready for testing
 wpeinit
 
 :: Probe for Motherboard Model
-for /f "tokens=1 skip=1" %%a in ('wmic baseboard get product') do find "%%a" currentbiosversions.txt
+for /f "tokens=1 skip=1" %%a in ('wmic baseboard get product') do type currentbiosversions.txt | findstr "%%a"
 if errorlevel 1 goto altconfig
 :: Probe for BIOS version
-for /f "tokens=1 skip=1" %%b in ('wmic bios get smbiosbiosversion') do find "%%b" currentbiosversions.txt
+for /f "tokens=1 skip=1" %%b in ('wmic bios get smbiosbiosversion') do type currentbiosversions.txt | findstr "%%b"
 if errorlevel 1 goto updatebios
 goto setdisk
 
