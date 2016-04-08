@@ -1,4 +1,4 @@
-﻿
+﻿SETLOCAL ENABLEDELAYEDEXPANSION
 
 :: If it's got 3 drives, it must have Firewire
 if exist F:\ set fw=true
@@ -12,10 +12,12 @@ echo ensure all ports and drives are ready for testing
 wpeinit
 
 :: Probe for Motherboard Model
-for /f "tokens=1 skip=1" %%a in ('wmic baseboard get product') do type currentbiosversions.txt | findstr "%%a"
+for /f "tokens=1 skip=1" %%a in ('wmic baseboard get product') do set mobo=%%a
+find "%mobo%" currentbiosversions.txt
 if errorlevel 1 goto altconfig
 :: Probe for BIOS version
-for /f "tokens=1 skip=1" %%b in ('wmic bios get smbiosbiosversion') do type currentbiosversions.txt | findstr "%%b"
+for /f "tokens=1 skip=1" %%b in ('wmic bios get smbiosbiosversion') do set bios=%%b
+find "%bios%" currentbiosversions.txt
 if errorlevel 1 goto updatebios
 goto setdisk
 
@@ -27,8 +29,8 @@ if "%biosupdate%" == "no" goto setdisk
 echo Please enter "yes" or "no"
 goto updatebios
 :upbios
-if "%motherboard%" == "S1200BTL" goto altconfig
-for /f "tokens=3 delims=;" %%c in ('find "%%a" currentbiosversions.txt') do %%c
+if "%mobo%" == "S1200BTL" goto altconfig
+for /f "tokens=3 delims=;" %%c in ('find "%mobo%" currentbiosversions.txt') do %%c
 if errorlevel 1 goto cmdline
 pause BIOS update successful, press any key to reboot.
 wpeutil reboot
@@ -36,7 +38,7 @@ wpeutil reboot
 :altconfig
 :: When BIOS can't be set automatically
 set motherboard=unsupported
-if "%%a" == "S1200BTL" (
+if "%mobo%" == "S1200BTL" (
 echo Motherboard not supported for WinPE BIOS update, EFI or Deployment Assistant must be used instead
 ) else (
 echo Motherboard not recognized
@@ -46,12 +48,11 @@ goto setdisk
 :setdisk 
 :: Strip and reassign drive letters depending on configuration
 diskpart /s volstrip.txt
-if "%%a" == "S1200RP" (
+if "%mobo%" == "S1200RP" (
 diskpart /s diskpartGen5.txt
 ) else (
 if "%fw%" == "true" diskpart /s diskpartGen4.txt
-) else (
-diskpart /s diskpartGen4dd.txt
+if not "%fw%" == "true" diskpart /s diskpartGen4dd.txt
 )
 
 :serial
@@ -61,7 +62,7 @@ set /p serialnumber=Serial Number:
 :: Allow for manual diagnostics before we start erasing things
 if "%serialnumber%" == "test" goto cmdline
 :: Set BIOS configuration if it's a Gen 5
-if "%%a" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%%b" currentbiosversions.txt') do %%d
+if "%mobo%" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%bios%" currentbiosversions.txt') do %%d
 :: Allow powershell scripting (used for ejecting the CD)
 powershell set-executionpolicy unrestricted
 :: Map the network folder for logging BIT results
