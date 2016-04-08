@@ -1,0 +1,22 @@
+select disk 0 noerr
+clean noerr
+create partition primary noerr
+select partition 1 noerr
+active noerr
+format quick fs=ntfs noerr
+assign letter=c noerr
+
+select vol 0 noerr
+assign letter=d noerr
+
+select disk 1 noerr
+select partition 1 noerr
+assign letter=e noerr
+
+select disk 2 noerr
+select partition 1 noerr
+assign letter=f noerr
+
+select disk 3 noerr
+select partition 1 noerr
+assign letter=g noerr
