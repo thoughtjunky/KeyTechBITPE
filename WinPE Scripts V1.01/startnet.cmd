@@ -44,12 +44,8 @@ date
 set /p serialnumber=Serial Number:
 :: Allow for manual diagnostics before we start erasing things
 if "%serialnumber%" == "test" goto cmdline
-for /f "tokens=4 delims=;" %%d in ('find "%%b" currentbiosversions.txt') do %%d
-if errorlevel 1 (
-echo unable to set BIOS configuration
-) else (
-echo successfully set BIOS configuration
-)
+:: Set BIOS configuration if it's a Gen 5
+if "%%a" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%%b" currentbiosversions.txt') do %%d
 :: Allow script to run powershell cmdlets (used for ejecting the CD)
 powershell set-executionpolicy unrestricted
 :: Map the network folder for logging BIT results
@@ -60,7 +56,7 @@ if exist N:\ goto online
 netsh int ipv4 set address ethernet static 192.168.0.1 255.255.255.0 127.0.0.1
 netsh int ipv4 set address "ethernet 2" static 192.168.0.2 255.255.255.0 127.0.0.1
 
-if exist F:\ goto FW0
+if "%fw%" == "true" goto FW0
 "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_SelftestDD.bitcfg
 goto end
 :FW0
@@ -68,7 +64,7 @@ goto end
 goto end
 
 :online
-if exist F:\ goto FW1
+if "%fw%" == "true" goto FW1
 "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_DD.bitcfg
 goto end
 :FW1
