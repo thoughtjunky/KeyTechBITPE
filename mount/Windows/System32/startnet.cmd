@@ -1,4 +1,5 @@
-﻿SETLOCAL ENABLEDELAYEDEXPANSION
+﻿
+SETLOCAL ENABLEDELAYEDEXPANSION
 
 :: If it's got 3 drives, it must have Firewire
 if exist F:\ set fw=true
