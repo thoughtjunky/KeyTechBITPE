@@ -1,23 +1,24 @@
+SETLOCAL
+
 :: Usage
 :: bupcfg [desired program] [motherboard generation]
 :: available programs: iflash32, syscfg
 :: motherboard versions: 4, 5
 
-
 goto %1
 
-
 :iflash32
-cd "%ProgramFiles%\Gen%2\iflash32"
-call install.cmd
+call "%ProgramFiles%\Gen%2\iflash32\install.cmd"
+pushd %~dp0
 if "%2" == "4" iflash32.exe" /u R0042.cap
 if "%2" == "5" iflash32.exe /u R03.02.0003.cap updatebackupbios
-cd "%windir%\System32"
+popd
+goto end
 
 
 :syscfg
-cd "%ProgramFiles%\Gen%2\syscfg"
-call install.cmd
+call "%ProgramFiles%\Gen%2\syscfg\install.cmd"
+pushd %~dp0
 syscfg.exe /bldfs ""
 if "%2" == "4" syscfg.exe /bcs "" "Main" "Quiet Boot" 0
 ::Options: 0=Disabled: 1=Enabled
@@ -34,7 +35,10 @@ if "%2" == "4" syscfg.exe "" /bcs "Server Management" "FRB-2 Enable" 0
 syscfg.exe /bcs "" "USB Configuration" "Make USB Devices Non-Bootable" 1
 ::Options: 0=Disabled: 1=Enabled
 syscfg.exe /bbosys
-echo Enter the correct boot order i.e. "2134". If correct press enter.
+echo Type the correct boot sequence i.e. "2134" to change boot order.
 set /p bootorder=Boot Order:
 syscfg.exe /bbosys "" %bootorder%
-cd "%windir%\System32"
+popd
+
+:end
+ENDLOCAL

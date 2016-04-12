@@ -1,5 +1,5 @@
-﻿
-SETLOCAL ENABLEDELAYEDEXPANSION
+﻿@echo off
+
 
 :: If it's got 3 drives, it must have Firewire
 if exist F:\ set fw=true
@@ -11,6 +11,9 @@ echo ensure all ports and drives are ready for testing
 
 :: the only thing that originally existed in this .cmd
 wpeinit
+
+:: Make the variables behave
+SETLOCAL ENABLEDELAYEDEXPANSION
 
 :: Probe for Motherboard Model
 for /f "tokens=1 skip=1" %%a in ('wmic baseboard get product') do set mobo=%%a
@@ -47,6 +50,8 @@ echo Motherboard not recognized
 goto setdisk
 
 :setdisk 
+:: Set BIOS configuration if it's a Gen 5
+if "%mobo%" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%bios%" currentbiosversions.txt') do %%d
 :: Strip and reassign drive letters depending on configuration
 diskpart /s volstrip.txt
 if "%mobo%" == "S1200RP" (
@@ -62,8 +67,6 @@ date
 set /p serialnumber=Serial Number:
 :: Allow for manual diagnostics before we start erasing things
 if "%serialnumber%" == "test" goto cmdline
-:: Set BIOS configuration if it's a Gen 5
-if "%mobo%" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%bios%" currentbiosversions.txt') do %%d
 :: Allow powershell scripting (used for ejecting the CD)
 powershell set-executionpolicy unrestricted
 :: Map the network folder for logging BIT results
