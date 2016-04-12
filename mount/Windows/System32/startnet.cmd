@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 
 
 :: If it's got 3 drives, it must have Firewire
