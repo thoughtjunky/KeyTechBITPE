@@ -1,5 +1,3 @@
-SETLOCAL
-
 :: Usage
 :: bupcfg [desired program] [motherboard generation]
 :: available programs: iflash32, syscfg
@@ -8,8 +6,8 @@ SETLOCAL
 goto %1
 
 :iflash32
-call "%ProgramFiles%\Gen%2\iflash32\install.cmd"
-pushd %~dp0
+pushd "%ProgramFiles%\Gen%2\iflash32"
+call install.cmd"
 if "%2" == "4" iflash32.exe" /u R0042.cap
 if "%2" == "5" iflash32.exe /u R03.02.0003.cap updatebackupbios
 popd
@@ -17,8 +15,8 @@ goto end
 
 
 :syscfg
-call "%ProgramFiles%\Gen%2\syscfg\install.cmd"
-pushd %~dp0
+pushd "%ProgramFiles%\Gen%2\syscfg"
+call install.cmd
 syscfg.exe /bldfs ""
 if "%2" == "4" syscfg.exe /bcs "" "Main" "Quiet Boot" 0
 ::Options: 0=Disabled: 1=Enabled
@@ -41,4 +39,3 @@ syscfg.exe /bbosys "" %bootorder%
 popd
 
 :end
-ENDLOCAL
