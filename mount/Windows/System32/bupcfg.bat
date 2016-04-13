@@ -30,7 +30,7 @@ if "%2" == "5" syscfg.exe "" /bcs "Server Management" "Resume on AC Power Loss" 
 ::Options: 01=Last State: 02=Reset: 00=Stay Off
 if "%2" == "4" syscfg.exe "" /bcs "Server Management" "FRB-2 Enable" 0
 ::Options: 0=Disabled: 1=Enabled
-syscfg.exe /bcs "" "USB Configuration" "Make USB Devices Non-Bootable" 1
+if "%2" == "4" syscfg.exe /bcs "" "USB Configuration" "Make USB Devices Non-Bootable" 1
 ::Options: 0=Disabled: 1=Enabled
 syscfg.exe /bbosys
 echo Type the correct boot sequence i.e. "2134" to change boot order.
