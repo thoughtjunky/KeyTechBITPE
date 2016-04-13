@@ -7,7 +7,7 @@ goto %1
 
 :iflash32
 pushd "%ProgramFiles%\Gen%2\iflash32"
-call install.cmd"
+call install.cmd
 if "%2" == "4" iflash32.exe" /u R0042.cap
 if "%2" == "5" iflash32.exe /u R03.02.0003.cap updatebackupbios
 popd
