@@ -1,20 +1,24 @@
 @echo OFF
-if "%1" == "v" ( 
-echo ON 
-set verbose=true
-)
 
 :: Make the variables behave
 SETLOCAL ENABLEDELAYEDEXPANSION
+
+if "%1" == "v" ( 
+	echo ON 
+	set verbose=true
+)
 
 :: If it's got 3 drives, it must have Firewire
 if exist F:\ set fw=true
 
 :: A nice message to our dear technician
 @echo.
-@echo Key Technology G6 CPU BurnInTest 1.01
-@echo WARNING: THIS TEST WILL ERASE ALL DATA ON PRIMARY DISK
-@echo Ensure all ports and drives are ready for testing
+call colorecho 0b "Key Technology G6 CPU BurnInTest 1.01"
+@echo.
+call colorecho 0b "THIS TEST WILL ERASE ALL PARTITION DATA ON PRIMARY DISK"
+@echo.
+call colorecho 0b "Ensure all ports and drives are ready for testing"
+@echo.
 @echo.
 @echo Please wait...
 @echo.
@@ -47,9 +51,11 @@ goto updatebios
 if "%mobo%" == "S1200BTL" goto altconfig
 for /f "tokens=3 delims=;" %%c in ('find "%mobo%" currentbiosversions.txt') do %%c
 if errorlevel 1 (
-@echo Something went wrong updating BIOS
-@echo Try again, or update manually.
-goto cmdline
+	call colorecho 0c "Something went wrong updating BIOS"
+	@echo.
+	call colorecho 0c "Try again, or update manually."
+	@echo.
+	goto cmdline
 )
 pause BIOS update successful, press any key to reboot.
 wpeutil reboot
@@ -58,9 +64,11 @@ wpeutil reboot
 :: When BIOS can't be set automatically
 set motherboard=unsupported
 if "%mobo%" == "S1200BTL" (
-@echo Motherboard not supported for WinPE BIOS update, EFI or Deployment Assistant must be used instead
+	call colorecho 0c "Motherboard not supported for WinPE BIOS update, EFI or Deployment Assistant must be used instead"
+	@echo.
 ) else (
-@echo Motherboard not recognized
+	call colorecho 0c "Motherboard not recognized"
+	@echo.
 )
 goto setbios
 
@@ -93,10 +101,10 @@ goto setdisk
 @echo Assigning drive letters and formatting Disk 0 ...
 diskpart /s volstrip.txt >nul 2>&1
 if "%mobo%" == "S1200RP" (
-diskpart /s diskpartGen5.txt >nul 2>&1
+		diskpart /s diskpartGen5.txt >nul 2>&1
 ) else (
-if "%fw%" == "true" diskpart /s diskpartGen4.txt >nul 2>&1
-if not "%fw%" == "true" diskpart /s diskpartGen4dd.txt >nul 2>&1
+	if "%fw%" == "true" diskpart /s diskpartGen4.txt >nul 2>&1
+	if not "%fw%" == "true" diskpart /s diskpartGen4dd.txt >nul 2>&1
 )
 goto setip
 
@@ -108,34 +116,40 @@ goto burnintest
 
 :burnintest
 if "%fw%" == "true" goto FW0
-@echo Launching BurnInTest G6_SelftestDD script...
+	call colorecho 0a "Launching BurnInTest G6_SelftestDD script..."
+	@echo.
 "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_SelftestDD.bitcfg
 goto end
 
 :FW0
-@echo Launching BurnInTest G6_Selftest script...
+	call colorecho 0a "Launching BurnInTest G6_Selftest script..."
+	@echo.
 "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_Selftest.bitcfg
 goto end
 
 :online
 if "%fw%" == "true" goto FW1
-@echo Launching BurnInTest G6_DD script...
+	call colorecho 0a "Launching BurnInTest G6_DD script..."
+	@echo.
 "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_DD.bitcfg
 goto end
 
 :FW1
-@echo Launching BurnInTest G6 script...
+	call colorecho 0a "Launching BurnInTest G6 script..."
+	@echo.
 "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6.bitcfg
 goto end
 
 :end
 :: If something went wrong, don't shutdown
 if errorlevel 1 (
-@echo.
-@echo Looks like BurnInTest crashed
-@echo Try again.
-@echo.
-goto cmdline
+	@echo.
+	call colorecho 0c "Looks like BurnInTest crashed"
+	@echo.
+	call colorecho 0c "Try again."
+	@echo.
+	@echo.	
+	goto cmdline
 )
 
 :: Erase all partition data from primary disk
@@ -144,15 +158,18 @@ diskpart /s diskclean.txt
 :: Eject the CD
 powershell eject
 if errorlevel 1 (
-@echo.
-@echo Unable to eject CD
-@echo Try again.
-@echo.
-goto cmdline
+	@echo.
+	call colorecho 0c "Unable to eject CD"
+	@echo.
+	call colorecho 0c "Try again."
+	@echo.
+	@echo.
+	goto cmdline
 )
 
 :: Test completed successfully
-@echo Testing complete, shutting down...
+	call colorecho 0a "Testing complete, shutting down..."
+	@echo.
 wpeutil shutdown
 
 

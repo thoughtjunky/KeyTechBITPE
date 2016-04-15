@@ -14,6 +14,11 @@ call install.cmd nul nul >nul 2>&1
 )
 if "%2" == "4" iflash32.exe" /u R0042.cap
 if "%2" == "5" iflash32.exe /u R03.02.0003.cap updatebackupbios
+if errorlevel 1 (
+	call colorecho 0c "Something went wrong flashing BIOS"
+	@echo.
+	exit /b 1
+)
 popd
 goto end
 
@@ -28,11 +33,13 @@ call install.cmd
 call install.cmd nul nul >nul 2>&1
 )
 
-syscfg /bldfs ""
-
-if errorlevel 1 goto end
-
-@echo Loaded Defaults
+syscfg /bldfs "" >nul 2>&1
+if errorlevel 1 (
+	call colorecho 0c "unable to load system defaults"
+	@echo.
+	exit /b 1
+)
+call colorecho 0a "Loaded Defaults"
 
 if "%2" == "4" (
 syscfg.exe /bcs "" "Main" "Quiet Boot" 0
@@ -43,8 +50,11 @@ syscfg.exe /bcs "" "USB Configuration" "Make USB Devices Non-Bootable" 1
 )
 
 if "%2" == "5" syscfg /prp ON
-
-if errorlevel 1 goto end
+if errorlevel 1 (
+	call colorecho 0c "Failed to set Power Restore Policy"
+	@echo.
+	exit /b 1
+)
 
 syscfg /bbosys
 
@@ -55,16 +65,24 @@ set bootorder=blank
 set /p bootorder=Boot Order:
 set ERRORLEVEL=0
 
-if not "%bootorder%" == "blank" syscfg /bbosys "" %bootorder% /q >nul 2>&1
-@echo.
+if not "%bootorder%" == "blank" (
+	syscfg /bbosys "" %bootorder% /q >nul 2>&1
+	@echo.
+)
 
 if errorlevel 1 (
-@echo Something went wrong setting the boot order
-@echo did you put spaces between your numbers?
-popd
-exit /b 1
-) 
-if not "%bootorder%" == "blank" @echo Boot order set successfully
+	call colorecho 0c "Something went wrong setting the boot order"
+	@echo.
+	call colorecho 0c "did you put spaces between your numbers?"
+	@echo.
+	popd
+	exit /b 1
+)
+
+if not "%bootorder%" == "blank" (
+	call colorecho 0a "Boot order set successfully"
+)
 
 :end
 popd
+exit /b
