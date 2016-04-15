@@ -1,3 +1,4 @@
+
 @echo OFF
 
 :: Make the variables behave
@@ -24,7 +25,7 @@ call colorecho 0b "Ensure all ports and drives are ready for testing"
 @echo.
 
 :: the only thing that originally existed in this .cmd
-@echo Initializing services...
+@echo Initializing Windows PE Services...
 wpeinit
 @echo.
 
@@ -92,16 +93,26 @@ if "%serialnumber%" == "test" goto cmdline
 powershell set-executionpolicy unrestricted
 
 :: Map the network folder for logging BIT results
-@echo Attempting to map network drive...
-net use N: \\pxeserver\BITPE_LOGS password /user:admin
+	@echo Attempting to map network drive...
+net use N: \\pxeserver\BITPE_LOGS password /user:admin >nul 2>&1
+	@echo.
+	@echo.
+	
 goto setdisk
 
 :setdisk 
 :: Strip and reassign drive letters depending on configuration
-@echo Assigning drive letters and formatting Disk 0 ...
+	@echo Assigning drive letters and formatting Disk 0 ...
+	@echo.
+if errorlevel 1 (
+	call colorecho 06 "Network Share not found"
+) else (
+	call colorecho 0a "Network Share Mapped"
+)
+	@echo.
 diskpart /s volstrip.txt >nul 2>&1
 if "%mobo%" == "S1200RP" (
-		diskpart /s diskpartGen5.txt >nul 2>&1
+	diskpart /s diskpartGen5.txt >nul 2>&1
 ) else (
 	if "%fw%" == "true" diskpart /s diskpartGen4.txt >nul 2>&1
 	if not "%fw%" == "true" diskpart /s diskpartGen4dd.txt >nul 2>&1
@@ -112,60 +123,73 @@ goto setip
 if exist N:\ goto online
 netsh int ipv4 set address ethernet static 192.168.0.1 255.255.255.0 127.0.0.1
 netsh int ipv4 set address "ethernet 2" static 192.168.0.2 255.255.255.0 127.0.0.1
+if errorlevel 1 (
+	call colorecho 0c "Failed to set Static IP Addresses"
+) else (
+	call colorecho 0a "Static IP Addresses Set"
+	goto cmdline
+)
+	@echo.
 goto burnintest
 
 :burnintest
 if "%fw%" == "true" goto FW0
 	call colorecho 0a "Launching BurnInTest G6_SelftestDD script..."
 	@echo.
-"x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_SelftestDD.bitcfg
+call "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_SelftestDD.bitcfg"
 goto end
 
 :FW0
 	call colorecho 0a "Launching BurnInTest G6_Selftest script..."
 	@echo.
-"x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_Selftest.bitcfg
+call "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_Selftest.bitcfg"
 goto end
 
 :online
 if "%fw%" == "true" goto FW1
 	call colorecho 0a "Launching BurnInTest G6_DD script..."
 	@echo.
-"x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_DD.bitcfg
+call "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_DD.bitcfg"
 goto end
 
 :FW1
 	call colorecho 0a "Launching BurnInTest G6 script..."
 	@echo.
-"x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6.bitcfg
+call "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6.bitcfg"
 goto end
 
 :end
 :: If something went wrong, don't shutdown
 if errorlevel 1 (
-	@echo.
-	call colorecho 0c "Looks like BurnInTest crashed"
-	@echo.
-	call colorecho 0c "Try again."
-	@echo.
-	@echo.	
+	call colorecho 0c "Something went wrong"
+) else (
+	call colorecho 0a "BurnInTest Complete"
 	goto cmdline
 )
+	@echo.
+	@echo.
 
 :: Erase all partition data from primary disk
-diskpart /s diskclean.txt
+diskpart /s diskclean.txt >nul 2>&1
+if errorlevel 1 (
+	call colorecho 0c "Failed to Clean Disk 0"
+) else (
+	call colorecho 0a "Disk 0 Cleaned"
+	goto cmdline
+)
+	@echo.
+	@echo.
 
 :: Eject the CD
 powershell eject
 if errorlevel 1 (
-	@echo.
 	call colorecho 0c "Unable to eject CD"
-	@echo.
-	call colorecho 0c "Try again."
-	@echo.
-	@echo.
+) else (
+	call colorecho 0a "CD Ejected"
 	goto cmdline
 )
+	@echo.
+	@echo.
 
 :: Test completed successfully
 	call colorecho 0a "Testing complete, shutting down..."
