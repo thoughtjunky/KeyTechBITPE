@@ -7,27 +7,36 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 if "%1" == "v" ( 
 	echo ON 
 	set verbose=true
-)
+	)
 
 :: If it's got 3 drives, it must have Firewire
 if exist F:\ set fw=true
 
 :: A nice message to our dear technician
-@echo.
+	@echo.
 call colorecho 0b "Key Technology G6 CPU BurnInTest 1.01"
-@echo.
+	@echo.
 call colorecho 0b "THIS TEST WILL ERASE ALL PARTITION DATA ON PRIMARY DISK"
-@echo.
+	@echo.
 call colorecho 0b "Ensure all ports and drives are ready for testing"
-@echo.
-@echo.
-@echo Please wait...
-@echo.
+	@echo.
+	@echo.
+	@echo Initializing Windows PE Services
+	@echo Please wait...
+	@echo.
 
 :: the only thing that originally existed in this .cmd
-@echo Initializing Windows PE Services...
-wpeinit
-@echo.
+call wpeinit
+
+:: Allow powershell scripting (used for ejecting the CD)
+powershell set-executionpolicy unrestricted
+if errorlevel 1 (
+	call colorecho 0c "Failed to set Powershell Execution Policy"
+	@echo.
+	call colorecho 0c "this is required for automatic ejection of the CD upon test completion"
+	@echo.
+	)
+	@echo.
 
 :: Probe for Motherboard Model
 for /f "tokens=1 skip=1" %%a in ('wmic baseboard get product') do set mobo=%%a
@@ -45,7 +54,7 @@ goto setbios
 set /p biosupdate=BIOS version %bios% is not current, update BIOS?:
 if "%biosupdate%" == "yes" goto upbios
 if "%biosupdate%" == "no" goto setbios
-@echo Please enter "yes" or "no"
+	@echo Please enter "yes" or "no"
 goto updatebios
 
 :upbios
@@ -57,7 +66,7 @@ if errorlevel 1 (
 	call colorecho 0c "Try again, or update manually."
 	@echo.
 	goto cmdline
-)
+	)
 pause BIOS update successful, press any key to reboot.
 wpeutil reboot
 
@@ -67,30 +76,28 @@ set motherboard=unsupported
 if "%mobo%" == "S1200BTL" (
 	call colorecho 0c "Motherboard not supported for WinPE BIOS update, EFI or Deployment Assistant must be used instead"
 	@echo.
-) else (
+	) else (
 	call colorecho 0c "Motherboard not recognized"
 	@echo.
-)
+	)
 goto setbios
 
 :setbios
 :: Set BIOS configuration if it's a Gen 5
-@echo.
+	@echo.
 if "%mobo%" == "S1200RP" echo Setting BIOS...
 if "%mobo%" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%bios%" currentbiosversions.txt') do %%d
 if errorlevel 1 goto cmdline
-@echo.
+	@echo.
 
 :serial
 time
 date
 set /p serialnumber=Serial Number:
-
 :: Allow for manual diagnostics before we start erasing things
 if "%serialnumber%" == "test" goto cmdline
-
-:: Allow powershell scripting (used for ejecting the CD)
-powershell set-executionpolicy unrestricted
+	
+:setdisk 
 
 :: Map the network folder for logging BIT results
 	@echo Attempting to map network drive...
@@ -98,25 +105,22 @@ net use N: \\pxeserver\BITPE_LOGS password /user:admin >nul 2>&1
 	@echo.
 	@echo.
 	
-goto setdisk
-
-:setdisk 
 :: Strip and reassign drive letters depending on configuration
 	@echo Assigning drive letters and formatting Disk 0 ...
 	@echo.
 if errorlevel 1 (
 	call colorecho 06 "Network Share not found"
-) else (
+	) else (
 	call colorecho 0a "Network Share Mapped"
-)
+	)
 	@echo.
 diskpart /s volstrip.txt >nul 2>&1
 if "%mobo%" == "S1200RP" (
 	diskpart /s diskpartGen5.txt >nul 2>&1
-) else (
+	) else (
 	if "%fw%" == "true" diskpart /s diskpartGen4.txt >nul 2>&1
 	if not "%fw%" == "true" diskpart /s diskpartGen4dd.txt >nul 2>&1
-)
+	)
 goto setip
 
 :setip
@@ -125,10 +129,10 @@ netsh int ipv4 set address ethernet static 192.168.0.1 255.255.255.0 127.0.0.1
 netsh int ipv4 set address "ethernet 2" static 192.168.0.2 255.255.255.0 127.0.0.1
 if errorlevel 1 (
 	call colorecho 0c "Failed to set Static IP Addresses"
-) else (
+	) else (
 	call colorecho 0a "Static IP Addresses Set"
 	goto cmdline
-)
+	)
 	@echo.
 goto burnintest
 
@@ -162,10 +166,10 @@ goto end
 :: If something went wrong, don't shutdown
 if errorlevel 1 (
 	call colorecho 0c "Something went wrong"
-) else (
+	) else (
 	call colorecho 0a "BurnInTest Complete"
 	goto cmdline
-)
+	)
 	@echo.
 	@echo.
 
@@ -173,10 +177,10 @@ if errorlevel 1 (
 diskpart /s diskclean.txt >nul 2>&1
 if errorlevel 1 (
 	call colorecho 0c "Failed to Clean Disk 0"
-) else (
+	) else (
 	call colorecho 0a "Disk 0 Cleaned"
 	goto cmdline
-)
+	)
 	@echo.
 	@echo.
 
@@ -184,10 +188,10 @@ if errorlevel 1 (
 powershell eject
 if errorlevel 1 (
 	call colorecho 0c "Unable to eject CD"
-) else (
+	) else (
 	call colorecho 0a "CD Ejected"
 	goto cmdline
-)
+	)
 	@echo.
 	@echo.
 
