@@ -1,1 +1,1 @@
-"X:\Program Files\Snap-PE\Snap-PE64.exe"
+"X:\Program Files\Snap-PE\Snap-PE64.exe" %1

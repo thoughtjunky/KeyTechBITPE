@@ -10,14 +10,15 @@ goto %1
 
 pushd "%ProgramFiles%\Gen%2\iflash32"
 if "%verbose%" == "true" (
-call install.cmd
-) else (
-call install.cmd nul nul >nul 2>&1
-)
+	call install.cmd
+	) else (
+	call install.cmd nul nul >nul 2>&1
+	)
 if "%2" == "4" iflash32.exe" /u R0042.cap
-if "%2" == "5" iflash32.exe /u R03.02.0003.cap updatebackupbios
+if "%2" == "5" iflash32.exe /u R03.02.0003.cap UpdateBackupBios
 if errorlevel 1 (
 	call colorecho 0c "Something went wrong flashing BIOS"
+	@echo.
 	@echo.
 	exit /b 1
 )
