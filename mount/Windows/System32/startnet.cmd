@@ -9,8 +9,11 @@ if "%1" == "v" (
 	set verbose=true
 	)
 
-:: If it's got 3 drives, it must have Firewire
-if exist F:\ set fw=true
+:: If it's got more than one hard disk, it must have Firewire. CD apparently doesn't count 0_o
+if exist E:\ (
+	set fw=true
+	) else (
+	set fw=false)
 
 :: A nice message to our dear technician
 	@echo.
