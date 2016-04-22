@@ -9,12 +9,6 @@ if "%1" == "v" (
 	set verbose=true
 	)
 
-:: If it's got more than one hard disk, it must have Firewire. CD apparently doesn't count 0_o
-if exist E:\ (
-	set fw=true
-	) else (
-	set fw=false)
-
 :: A nice message to our dear technician
 	@echo.
 call colorecho 0b "Key Technology G6 CPU BurnInTest 1.01"
@@ -29,6 +23,12 @@ call colorecho 0b "Ensure all ports and drives are ready for testing"
 
 :: the only thing that originally existed in this .cmd
 call wpeinit
+
+:: If it's got more than one hard disk, it must have Firewire. CD apparently doesn't count 0_o
+if exist E:\ (
+	set fw=true
+	) else (
+	set fw=false)
 
 :: Allow powershell scripting (used for ejecting the CD)
 powershell set-executionpolicy unrestricted
@@ -142,14 +142,14 @@ if "%fw%" == "true" goto FW0
 	call colorecho 0a "Launching BurnInTest G6_SelftestDD script..."
 	@echo.
 	@echo.
-call "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_SelftestDD.bitcfg"
+call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6_SelftestDD.bitcfg /L 512,0,512,768
 goto end
 
 :FW0
 	call colorecho 0a "Launching BurnInTest G6_Selftest script..."
 	@echo.
 	@echo.
-call "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_Selftest.bitcfg"
+call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6_Selftest.bitcfg /L 512,0,512,768
 goto end
 
 :online
@@ -157,20 +157,20 @@ if "%fw%" == "true" goto FW1
 	call colorecho 0a "Launching BurnInTest G6_DD script..."
 	@echo.
 	@echo.
-call "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6_DD.bitcfg"
+call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6_DD.bitcfg /L 512,0,512,768
 goto end
 
 :FW1
 	call colorecho 0a "Launching BurnInTest G6 script..."
 	@echo.
 	@echo.
-call "x:\Program Files\BurnInTest\bit.exe" –h -x -r -c G6.bitcfg"
+call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6.bitcfg /L 512,0,512,768
 goto end
 
 :end
 :: If something went wrong, don't shutdown
 if errorlevel 1 (
-	call colorecho 0c "Something went wrong"
+	call colorecho 0c "Something went wrong with BurnInTest"
 	goto cmdline
 	) else (
 	call colorecho 0a "BurnInTest Complete"
@@ -190,7 +190,7 @@ if errorlevel 1 (
 	@echo.
 
 :: Eject the CD
-powershell eject
+powershell Set-CDDriveState -eject
 if errorlevel 1 (
 	call colorecho 0c "Unable to eject CD"
 	goto cmdline
