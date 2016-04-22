@@ -18,8 +18,6 @@ if "%2" == "4" iflash32.exe" /u R0042.cap
 if "%2" == "5" iflash32.exe /u R03.02.0003.cap UpdateBackupBios
 if errorlevel 1 (
 	call colorecho 0c "Something went wrong flashing BIOS"
-	@echo.
-	@echo.
 	exit /b 1
 )
 goto end
@@ -39,10 +37,10 @@ call install.cmd nul nul >nul 2>&1
 syscfg /bldfs "" >nul 2>&1
 if errorlevel 1 (
 	call colorecho 0c "Unable to load System Defaults"
-	@echo.
 	exit /b 1
-)
+	) else (
 	call colorecho 0a "System Defaults Loaded"
+	)
 	@echo.
 	@echo.
 
@@ -57,11 +55,10 @@ syscfg.exe /bcs "" "USB Configuration" "Make USB Devices Non-Bootable" 1
 if "%2" == "5" syscfg /prp ON >nul 2>&1
 if errorlevel 1 (
 	call colorecho 0c "Failed to set Power Restore Policy"
-	@echo.
 	exit /b 1
-)
-call colorecho 0a "Power Restore Policy set ON"
-	@echo.
+	) else (
+	call colorecho 0a "Power Restore Policy set ON"
+	)
 	@echo.
 
 syscfg /bbosys
@@ -69,14 +66,13 @@ syscfg /bbosys
 	@echo Type the correct sequence i.e. 2 1 3 4 to change boot order.
 
 set bootorder=blank
-
 set /p bootorder=Boot Order:
 set ERRORLEVEL=0
 
 if not "%bootorder%" == "blank" (
 	syscfg /bbosys "" %bootorder% /q >nul 2>&1
 	@echo.
-)
+	)
 
 if errorlevel 1 (
 	call colorecho 0c "Something went wrong setting Boot Order"
@@ -85,12 +81,12 @@ if errorlevel 1 (
 	@echo ?
 	popd
 	exit /b 1
-)
+	)
 
 if not "%bootorder%" == "blank" (
 	call colorecho 0a "Boot Order set"
 	@echo.
-)
+	)
 
 :end
 popd
