@@ -85,7 +85,7 @@ goto setbios
 :: Set BIOS configuration if it's a Gen 5
 	@echo.
 if "%mobo%" == "S1200RP" echo Setting BIOS...
-if "%mobo%" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%bios%" currentbiosversions.txt') do %%d
+if "%mobo%" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%mobo%" currentbiosversions.txt') do %%d
 if errorlevel 1 goto cmdline
 	@echo.
 
