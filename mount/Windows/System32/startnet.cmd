@@ -1,5 +1,6 @@
 
 @echo OFF
+cls
 
 :: Make the variables behave
 SETLOCAL ENABLEDELAYEDEXPANSION
@@ -84,7 +85,7 @@ goto setbios
 :: Set BIOS configuration if it's a Gen 5
 	@echo.
 if "%mobo%" == "S1200RP" echo Setting BIOS...
-if "%mobo%" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%bios%" currentbiosversions.txt') do %%d
+if "%mobo%" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%mobo%" currentbiosversions.txt') do %%d
 if errorlevel 1 goto cmdline
 	@echo.
 
@@ -99,20 +100,22 @@ if "%computername%" == "test" goto cmdline
 :setdisk 
 :: Map the network folder for logging BIT results
 	@echo Attempting to map network drive...
-net use N: \\pxeserver\BITPE_LOGS password /user:admin >nul 2>&1
 	@echo.
-	@echo.
-if errorlevel 1 (
-	call colorecho 06 "Network Share not found"
-	) else (
+if exist N: (
 	call colorecho 0a "Network Share Mapped"
+	) else (
+	net use N: \\pxeserver\BITPE_LOGS password /user:admin >nul 2>&1
+	if errorlevel 1 (
+		call colorecho 06 "Network Share not found"
+		) else (
+		call colorecho 0a "Network Share Mapped"
+		)
 	)
 	@echo.
 	@echo.
 	
 :: Strip and reassign drive letters depending on configuration
 	@echo Assigning drive letters and formatting Disk 0 ...
-	@echo.
 	@echo.
 diskpart /s volstrip.txt >nul 2>&1
 if "%mobo%" == "S1200RP" (
@@ -190,7 +193,7 @@ if errorlevel 1 (
 	@echo.
 
 :: Eject the CD
-powershell Set-CDDriveState -eject
+powershell Set-CDDriveState -eject >nul 2>&1
 if errorlevel 1 (
 	call colorecho 0c "Unable to eject CD"
 	goto cmdline
@@ -208,3 +211,5 @@ wpeutil shutdown
 
 
 :cmdline
+@echo.
+@echo.
