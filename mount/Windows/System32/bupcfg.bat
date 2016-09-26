@@ -14,8 +14,9 @@ if "%verbose%" == "true" (
 	) else (
 	call install.cmd nul nul >nul 2>&1
 	)
+:: Gen 4 is broken
 if "%2" == "4" iflash32.exe" /u R0042.cap
-if "%2" == "5" iflash32.exe /u R03.02.0003.cap UpdateBackupBios
+if "%2" == "5" iflash32.exe /u R03.03.0003.cap UpdateBackupBios
 if errorlevel 1 (
 	call colorecho 0c "Something went wrong flashing BIOS"
 	exit /b 1

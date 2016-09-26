@@ -1,7 +1,7 @@
 Release Notes for System BIOS and ME Update Utility(iFlash32)
-Version 13.1 Build 6
+Version 13.1 Build 7
 
-May 07, 2015
+Aug 19, 2015
 Copyright (c) 2015 Intel Corporation
 ============================================
 
@@ -9,7 +9,7 @@ Contents
 --------
 
 1. Introduction.
-2. Supported Intel(R) Server Boards.
+2. Supported Platforms.
 3. Supported Operating Systems.
 4. Pre-requisites.
 5. Installation and Un-installation.
@@ -23,28 +23,28 @@ Contents
 1. Introduction
 ---------------
 
- The Iflash32 Utility is an application program used for updating system BIOS and ME.
+ The iFlash32 Utility is an application program used for updating system BIOS and ME.
 
 
-2. Supported Intel(R) Server Boards
+2. Supported Platforms
 ----------------------
    
-   Intel(R) Server Board S2600 series (Intel(R) Xeon(R) processor E5-2600 v3 product family)
-   Intel(R) Server Board S1200RP series
-   Intel(R) Server Board S1200, S1400, S1600, S2400, S2600, S4600 series
-
+   Intel® Server Board based on Intel® Xeon® processor E5-1600/2600/4600 v2 product family
+   Intel® Server Board based on Intel® Xeon® processor E5-2400 v2 product family
+   Intel® Server Board based on Intel® Xeon® processor E5-2600 v3/v4 product family
+   Intel® Server Board based on Intel® Xeon® processor E3-1200 v2/v3/v4 product family
 
 3. Supported Operating Systems
 ------------------------------
 
-    UEFI 2.3.1
+    EFI Shell
     WinPE* 3.x/4.x (32 bit & EM64T)
 
 
 4. Pre-requisites
 -----------------
 
-   1. None.
+   1.Boot to the appropriate WinPE Environment OR EFI shell.
 
 
 5. Installation and Un-installation
@@ -57,12 +57,12 @@ UEFI:
    2. Connect the external media to Intel(R) Server.
    3. Go to the directory where Iflash32.efi is present in the external media
    4. Now you can run command with options (example: "iflash32.efi -u -ni x032.cap")
-   5. Run Iflash32.efi -h for usage.
+   5. Run iflash32.efi -h for usage.
 
    Uninstallation:
    ---------------
 
-   1. To uninstall Iflash32 utility, manually delete the contents of the directory where the utility is present.
+   1. To uninstall iFlash32 utility, manually delete the contents of the directory where the utility is present.
 
 WinPE:
 
@@ -75,7 +75,7 @@ WinPE:
 
    Uninstallation:
    ---------------
-     1. To uninstall Iflash32 utility, manually delete the contents of the directory where the utility is present.
+     1. To uninstall iFlash32 utility, manually delete the contents of the directory where the utility is present.
      2. To uninstall the drivers, please follow this path : drivers->win and choose the x86 or x64 depends on the Operating system
         and run the uninstall.cmd.
 
@@ -85,81 +85,80 @@ WinPE:
 
    1. Command line Interface
 
-             IFlash32 [Options] [File Name]
+             iflash32 [Options] [File Name]
 
 
       a. To view the command-line help page:
 
-             IFlash32 -h
+             iflash32 -h
 
 
       b. To update the system BIOS:
 
-             IFlash32 -u [File Name]
+             iflash32 -u [File Name]
 
       c. To display file information:
 
-             IFlash32 -i [File Name]
+             iflash32 -i [File Name]
 
       d. To display the system BIOS Version:
 
-             IFlash32 -i
+             iflash32 -i
 
       e. To update the system BIOS in non-interactive mode:
 
-             IFlash32 -u [FileName] -ni
+             iflash32 -u [FileName] -ni
 
 
       f. To Restore Default BIOS Settings
 
-	     IFlash32 -rd [biosadminpassword]
+	         iflash32 -rd [biosadminpassword]
 
-             if no BIOS Admin password is set then use
+           if no BIOS Admin password is set then use
 
-             IFlash32 -rd ""
+             iflash32 -rd ""
 
 
             Note:  Only on EFI, if no BIOS Admin password is set
 
                    Then the user can give
 
-	           IFlash32 -rd ""
+	           iflash32 -rd ""
 
                    Or
 
-                   IFlash32 -rd
+                   iflash32 -rd
 
 
       g. To update the system BIOS and by-pass platform check
 
-             IFlash32 -u [File Name] -nopc
+             iflash32 -u [File Name] -nopc
 
              Note : Usage of this switch with a capsule file not intended for the system can corrupt the BIOS.
 
       h. To preserve OEM data
 
-             IFlash32 -u [FileName] -saveoemdata
+             iflash32 -u [FileName] -saveoemdata
 
       i. To Restore ME default configuration.
 
-             IFlash32 -rmec
+             iflash32 -rmec
              or
-             IFlash32 -rmeconfig
+             iflash32 -rmeconfig
       
 	  For "Intel(R) Server Board S2600 series (E5-2600 v3 product family)" and "Intel(R) Server Board S1200RP series"
       j. To update the System Primary and Backup BIOS:
 
-             IFlash32 -u [File Name] UpdateBackupBios -ni
+             iflash32 -u [File Name] UpdateBackupBios -ni
 
       For "Intel(R) Server Board S2600 series (E5-2600 v3 product family)"		
-      k. To force update Nvram region:
+      k. Use the following command syntax when admin password is set in BIOS setup
 
-             IFlash32 -u [File Name] UpdateNvram -ni
-
+             iflash32 -u [File Name] Password=admin_password -ni
 
       l. To set a customer ID for mono ME or FD capsule:
 
-             IFlash32 -u [File Name] CustomerID=[ID] -ni
+             iflash32 -u [File Name] CustomerID=[ID] -ni
 
 
          Note:  When using -u to update BIOS, multiple BIOS strings can be
@@ -179,7 +178,7 @@ WinPE:
 8. New/Unsupported Features & Changes
 ------------------------
    New Features
-   None.
+   Enable UEFI utility signing for UEFI secure boot.
    
    Unsupported Features
    None.

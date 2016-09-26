@@ -5,14 +5,24 @@ cls
 :: Make the variables behave
 SETLOCAL ENABLEDELAYEDEXPANSION
 
+::manually running "startnet v" allows for debugging
 if "%1" == "v" ( 
 	echo ON 
 	set verbose=true
 	)
 
+:: used for error reporting
+set bitcrash=false
+
+:: If it's got more than one hard disk, it must have Firewire. CD apparently doesn't count 0_o
+if exist E:\ (
+	set fw=true
+	) else (
+	set fw=false)
+
 :: A nice message to our dear technician
 	@echo.
-call colorecho 0b "Key Technology G6 CPU BurnInTest 1.01"
+call colorecho 0b "Key Technology G6 CPU BurnInTest 1.02"
 	@echo.
 call colorecho 0b "THIS TEST WILL ERASE ALL PARTITION DATA ON PRIMARY DISK"
 	@echo.
@@ -24,12 +34,6 @@ call colorecho 0b "Ensure all ports and drives are ready for testing"
 
 :: the only thing that originally existed in this .cmd
 call wpeinit
-
-:: If it's got more than one hard disk, it must have Firewire. CD apparently doesn't count 0_o
-if exist E:\ (
-	set fw=true
-	) else (
-	set fw=false)
 
 :: Allow powershell scripting (used for ejecting the CD)
 powershell set-executionpolicy unrestricted
@@ -54,11 +58,16 @@ goto setbios
 
 :updatebios
 :: Currently only functions for Gen5
-set /p biosupdate=BIOS version %bios% is not current, update BIOS?:
-if "%biosupdate%" == "yes" goto upbios
-if "%biosupdate%" == "no" goto setbios
-	@echo Please enter "yes" or "no"
-goto updatebios
+@echo BIOS %bios% is not current
+@echo Update? [Y/N]
+set /p biosupdate=
+	@echo.
+	if "%biosupdate%" == "y" goto upbios
+	if "%biosupdate%" == "yes" goto upbios
+	if "%biosupdate%" == "n" goto setbios
+	if "%biosupdate%" == "no" goto setbios
+	@echo Please enter Yes or No
+	goto updatebios
 
 :upbios
 if "%mobo%" == "S1200BTL" goto altconfig
@@ -83,11 +92,12 @@ goto setbios
 
 :setbios
 :: Set BIOS configuration if it's a Gen 5
-	@echo.
-if "%mobo%" == "S1200RP" echo Setting BIOS...
-if "%mobo%" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%mobo%" currentbiosversions.txt') do %%d
-if errorlevel 1 goto cmdline
-	@echo.
+:: THIS IS BROKEN
+::	@echo.
+:: if "%mobo%" == "S1200RP" echo Setting BIOS...
+:: if "%mobo%" == "S1200RP" for /f "tokens=4 delims=;" %%d in ('find "%mobo%" currentbiosversions.txt') do %%d
+:: if errorlevel 1 goto cmdline
+::	@echo.
 
 :serial
 time
@@ -119,7 +129,8 @@ if exist N: (
 	@echo.
 diskpart /s volstrip.txt >nul 2>&1
 if "%mobo%" == "S1200RP" (
-	diskpart /s diskpartGen5.txt >nul 2>&1
+	if "%fw%" == "true" diskpart /s diskpartGen5.txt >nul 2>&1
+	if not "%fw%" == "true" diskpart /s diskpartGen5dd.txt >nul 2>&1
 	) else (
 	if "%fw%" == "true" diskpart /s diskpartGen4.txt >nul 2>&1
 	if not "%fw%" == "true" diskpart /s diskpartGen4dd.txt >nul 2>&1
@@ -146,6 +157,7 @@ if "%fw%" == "true" goto FW0
 	@echo.
 	@echo.
 call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6_SelftestDD.bitcfg /L 512,0,512,768
+if errorlevel 1 set bitcrash=true
 goto end
 
 :FW0
@@ -153,6 +165,7 @@ goto end
 	@echo.
 	@echo.
 call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6_Selftest.bitcfg /L 512,0,512,768
+if errorlevel 1 set bitcrash=true
 goto end
 
 :online
@@ -161,6 +174,7 @@ if "%fw%" == "true" goto FW1
 	@echo.
 	@echo.
 call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6_DD.bitcfg /L 512,0,512,768
+if errorlevel 1 set bitcrash=true
 goto end
 
 :FW1
@@ -168,11 +182,12 @@ goto end
 	@echo.
 	@echo.
 call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6.bitcfg /L 512,0,512,768
+if errorlevel 1 set bitcrash=true
 goto end
 
 :end
 :: If something went wrong, don't shutdown
-if errorlevel 1 (
+if %bitcrash% == "true" (
 	call colorecho 0c "Something went wrong with BurnInTest"
 	goto cmdline
 	) else (
