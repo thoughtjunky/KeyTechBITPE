@@ -9,10 +9,6 @@ assign letter=c
 select vol 0
 assign letter=d
 
-select disk 1
-select partition 1
-assign letter=g
-
 select disk 2
 select partition 1
 assign letter=e
@@ -20,3 +16,7 @@ assign letter=e
 select disk 3
 select partition 1
 assign letter=f
+
+select disk 1
+select partition 1
+assign letter=g
