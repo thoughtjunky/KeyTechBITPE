@@ -58,6 +58,9 @@ goto setbios
 
 :updatebios
 :: Currently only functions for Gen5
+:: Disabled for Vendor environment
+goto setbios
+
 @echo BIOS %bios% is not current
 @echo Update? [Y/N]
 set /p biosupdate=
