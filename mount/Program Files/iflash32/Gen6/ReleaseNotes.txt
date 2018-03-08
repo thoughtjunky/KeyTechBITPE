@@ -1,0 +1,269 @@
+Release Notes for System BIOS and ME Update Utility(iFlash32)
+Version 14.0 Build 12
+
+Jun 06, 2017
+Copyright (c) 2017 Intel Corporation
+============================================
+
+Contents
+--------
+1. Introduction
+2. Supported Platforms
+3. Supported Operating Systems
+4. Pre-requisites
+5. Installation and Un-installation
+6. Usage
+7. Known Issues
+8. Unsupported Features
+9. Change List
+10. Instructions for end-user
+11. Legal Information
+
+
+1. Introduction
+---------------
+ The iFlash32 Utility is an application program used for updating system BIOS and ME.
+
+
+2. Supported Platforms
+----------------------
+   Intel(R) Server Board based on Intel(R) Xeon(R) processor E5-1600/2600/4600 v2 product family
+   Intel(R) Server Board based on Intel(R) Xeon(R) processor E5-2400 v2 product family
+   Intel(R) Server Board based on Intel(R) Xeon(R) processor E5-2600 v3/v4 product family
+   Intel(R) Server Board based on Intel(R) Xeon(R) processor E3-1200 v2/v3/v4/v5 product family
+   Intel(R) Server Board based on Intel(R) Xeon(R) phi(TM) product family
+
+3. Supported Operating Systems
+------------------------------
+      EFI Shell
+      Windows* PE 4.x EM64T
+
+   The below OSes are not supported after Build 8:
+      Windows* PE 3.x (32bit & EM64T)
+
+4. Pre-requisites
+-----------------
+   1. Boot to the appropriate WinPE Environment OR EFI shell.
+
+
+5. Installation and Un-installation
+-----------------------------------
+UEFI:
+   Installation:
+   -------------
+   1. Unzip the compressed zip file on any windows machine and copy the folder to any external media.
+   2. Connect the external media to Intel(R) Server.
+   3. Go to the directory where iflash32.efi is present in the external media
+   4. Now you can run command with options (example: "iflash32.efi -u -ni x032.cap")
+   5. Run iflash32.efi -h for usage.
+
+   Uninstallation:
+   ---------------
+
+   1. To uninstall iFlash32 utility, manually delete the contents of the directory where the utility is present.
+
+WinPE:
+
+   Installation:
+   ------------
+
+     1. Unzip and copy the file into your local directory (e.g. C:\IFlash32).
+     2. Go to "Drivers" folder and Choose appropriate folder depending on the operating System and run "install.cmd" as administrator to install drivers.
+     3. Go to "Win_x86" or "Win_x64" folder based on the operating system and you can run iflash32.exe -h for help.
+
+   Uninstallation:
+   ---------------
+     1. To uninstall iFlash32 utility, manually delete the contents of the directory where the utility is present.
+     2. To uninstall the drivers, please follow this path : "Drivers" -> "win" -> "x86" or "x64" (depending on the Operating system)
+        and run the uninstall.cmd.
+
+
+6. Usage
+--------
+
+   1. Command line Interface
+
+             iflash32 [Options] [File Name]
+
+
+      a. To view the command-line help page:
+
+             iflash32 -h
+
+
+      b. To update the system BIOS:
+
+             iflash32 -u [File Name]
+
+      c. To display file information:
+
+             iflash32 -i [File Name]
+
+      d. To display the system BIOS Version:
+
+             iflash32 -i
+
+      e. To update the system BIOS in non-interactive mode:
+
+             iflash32 -u [FileName] -ni
+
+
+      f. To Restore Default BIOS Settings
+
+	     iflash32 -rd [biosadminpassword]
+
+             if no BIOS Admin password is set then use
+
+             iflash32 -rd ""
+
+
+            Note:  Only on EFI, if no BIOS Admin password is set
+
+                   Then the user can give
+
+	                 iflash32 -rd ""
+
+                   Or
+
+                     iflash32 -rd
+
+
+      g. To update the system BIOS and by-pass platform check
+
+             iflash32 -u [File Name] -nopc
+
+             Note : Usage of this switch with a capsule file not intended for the system can corrupt the BIOS.
+
+      h. To preserve OEM data
+
+             iflash32 -u [FileName] -saveoemdata
+
+      i. To Restore ME default configuration.
+
+             iflash32 -rmec
+             or
+             iflash32 -rmeconfig
+      
+      j. To update the System Primary and Backup BIOS:
+
+             iflash32 -u [File Name] UpdateBackupBios -ni
+	
+      k. To force update Nvram region:
+
+             iflash32 -u [File Name] UpdateNvram -ni
+
+      For "Intel(R) Server Board S2600 series (E5-2600 v3 product family)"
+      l. Use the following command syntax when admin password is set in BIOS setup
+
+             iflash32 -u [File Name] Password=admin_password -ni
+
+
+      m. To set a customer ID for mono ME or FD capsule:
+
+             iflash32 -u [File Name] CustomerID=[ID] -ni
+
+
+         Note:  When using -u to update BIOS, multiple BIOS strings can be
+
+                concatenated with + character.
+
+      n. To clear ITK customized settings:
+
+             iflash32 -ccs
+
+    2. Reboot system after the update/Restore Default BIOS Settings operation is completed.
+
+
+7. Known Issues
+---------------
+
+    1. ME update does not work as BIOS does not support ME update currently which will be fixed shortly.
+
+
+8. Unsupported Features
+------------------------
+
+   None.
+
+
+9. Change List
+------------------------
+
+   Build 12
+   Support one new platform.
+
+   Build 11
+   Fix a defect of segment failure with 32-bit binary.
+
+   Build 10
+   Support BIOS security fix.
+   Update supported platform.
+
+   Build 9
+   ReleaseNotes OS list update.
+
+
+10. Instructions for end-user
+---------------------------
+
+   a. None.
+
+
+11. Legal Information
+--------------------
+
+========================================================
+
+                               LEGAL INFORMATION
+
+========================================================
+
+Information in this document is provided in connection with Intel Products
+
+and for the purpose of supporting Intel developed server boards and systems.
+
+No license, express or implied, by estoppel or otherwise, to any intellectual
+
+property rights is granted by this document. Except as provided in Intel's
+
+Terms and Conditions of Sale for such products, Intel assumes no liability
+
+whatsoever, and Intel disclaims any express or implied warranty, relating to
+
+sale and/or use of Intel products including liability or warranties relating
+
+to fitness for a particular purpose, merchantability, or infringement of any
+
+patent, copyright or other intellectual property right. Intel Corporation may
+
+have patents or pending patent applications, trademarks, copyrights, or other
+
+intellectual property rights that relate to the presented subject matter.
+
+The furnishing of documents and other materials and information does not
+
+provide any license, express or implied, by estoppel or otherwise, to any
+
+such patents, trademarks, copyrights, or other intellectual property rights.
+
+Intel products are not intended for use in medical, life saving, or life
+
+sustaining applications. Intel may make changes to specifications and product
+
+descriptions at any time, without notice.
+
+
+
+Intel is a registered trademark of Intel Corporation.
+
+
+
+*Other names and brands are the property of their respective owners.
+
+
+
+Copyright (c) 2017 Intel Corporation.
+
+
+
+(end)

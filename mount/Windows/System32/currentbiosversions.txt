@@ -1,2 +1,0 @@
-S1200BTL;S1200BT.86B.02.00.0041.120520121743;call bupcfg.bat iflash32 4;call bupcfg.bat syscfg 4;
-S1200RP;S1200RP.86B.03.03.0003.121820151104;call bupcfg.bat iflash32 5;call bupcfg.bat syscfg 5;

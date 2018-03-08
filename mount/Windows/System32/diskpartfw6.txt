@@ -1,0 +1,15 @@
+select disk 2
+clean
+create partition primary
+select partition 1
+active
+format quick fs=ntfs
+assign letter=e
+
+select disk 3
+clean
+create partition primary
+select partition 1
+active
+format quick fs=ntfs
+assign letter=f

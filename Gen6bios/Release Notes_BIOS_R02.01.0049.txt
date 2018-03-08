@@ -1,0 +1,1277 @@
+﻿================================================================================
+Intel(R) Server Platform BIOS Release Notes
+================================================================================
+
+INTEL(R) Server Boards and Systems
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+
+
+================================================================================
+
+DATE    : Jan 04, 2017
+TO      : Multi-Core Intel(R) Xeon(R) Processor-Based Server Platform customers
+SUBJECT : BIOS Release notes for version 02.01.0049
+
+================================================================================
+                           LEGAL INFORMATION
+================================================================================
+
+INFORMATION IN THIS DOCUMENT IS PROVIDED IN CONNECTION WITH INTEL PRODUCTS. NO 
+LICENSE, EXPRESS OR IMPLIED, BY ESTOPPEL OR OTHERWISE, TO ANY INTELLECTUAL 
+PROPERTY RIGHTS IS GRANTED BY THIS DOCUMENT. EXCEPT AS PROVIDED IN INTEL'S TERMS 
+AND CONDITIONS OF SALE FOR SUCH PRODUCTS, INTEL ASSUMES NO LIABILITY WHATSOEVER 
+AND INTEL DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY, RELATING TO SALE AND/OR USE 
+OF INTEL PRODUCTS INCLUDING LIABILITY OR WARRANTIES RELATING TO FITNESS FOR A 
+PARTICULAR PURPOSE, MERCHANTABILITY, OR INFRINGEMENT OF ANY PATENT, COPYRIGHT OR 
+OTHER INTELLECTUAL PROPERTY RIGHT. 
+
+A "Mission Critical Application" is any application in which failure of the Intel 
+Product could result, directly or indirectly, in personal injury or death. SHOULD 
+YOU PURCHASE OR USE INTEL'S PRODUCTS FOR ANY SUCH MISSION CRITICAL APPLICATION, 
+YOU SHALL INDEMNIFY AND HOLD INTEL AND ITS SUBSIDIARIES, SUBCONTRACTORS AND 
+AFFILIATES, AND THE DIRECTORS, OFFICERS, AND EMPLOYEES OF EACH, HARMLESS AGAINST 
+ALL CLAIMS COSTS, DAMAGES, AND EXPENSES AND REASONABLE ATTORNEYS' FEES ARISING OUT 
+OF, DIRECTLY OR INDIRECTLY, ANY CLAIM OF PRODUCT LIABILITY, PERSONAL INJURY, OR 
+DEATH ARISING IN ANY WAY OUT OF SUCH MISSION CRITICAL APPLICATION, WHETHER OR NOT 
+INTEL OR ITS SUBCONTRACTOR WAS NEGLIGENT IN THE DESIGN, MANUFACTURE, OR WARNING OF 
+THE INTEL PRODUCT OR ANY OF ITS PARTS. 
+
+Intel may make changes to specifications and product descriptions at any time, 
+without notice. Designers must not rely on the absence or characteristics of any 
+features or instructions marked "reserved" or "undefined". Intel reserves these for 
+future definition and shall have no responsibility whatsoever for conflicts or 
+incompatibilities arising from future changes to them. The information here is 
+subject to change without notice. Do not finalize a design with this information. 
+
+The products described in this document may contain design defects or errors known 
+as errata which may cause the product to deviate from published specifications. 
+Current characterized errata are available on request. 
+
+Contact your local Intel sales office or your distributor to obtain the latest 
+specifications and before placing your product order. 
+
+Copies of documents which have an order number and are referenced in this document, 
+or other Intel literature, may be obtained by calling 1-800-548-4725, 
+or go to: http://www.intel.com/design/literature.htm
+
+Intel is a registered trademark of Intel Corporation. 
+
+*Other names and brands are the property of their respective owners.
+
+Copyright (C) 2016 Intel Corporation.
+
+================================================================================
+                              ABOUT THIS RELEASE
+================================================================================
+Build Stamp : S1200SP.86B.02.01.0049
+Build Date  : Jan 02, 2017
+
+================================================================================
+                           KNOWN ISSUE
+================================================================================
+
+
+================================================================================
+                           CRC32 VALUE
+================================================================================
+R02.01.0049_SilverPassLC.bin CRC32: 0x4cbce3aa
+R02.01.0049_SilverPassRO.bin CRC32: 0x69426860
+R02.01.0049_SilverPassSE.bin CRC32: 0x8acb1aca
+        
+================================================================================
+                           BIOS COMPONENTS/CONTENTS
+================================================================================
+Processors supported: 
+    Intel(R) Xeon(R) processor E3-1200 v5/v6 series
+
+Microcode update versions
+CPUID     Version      Status
+0x506E3   0000009E     Debug(E3-1200 v5 UP R0/S0)
+0x906E9   00000042     Debug(E3-1200 v6 B0)
+
+
+On-Board Component Option ROM Versions:
+all_gigabit_pxe_vxx.LOM   - 1G PXE OpROM v1.5.53 (for all EPSD gigabit controllers, including LOMs and I/O modules)
+all_iscsi_vxx.LOM         - iSCSI Boot OpROM v3.0.34(for all EPSD gigabit and 10G EPSD controllers, including LOMs and I/O modules)
+AHCIOR.BIN                - sata AHCI Oprom
+Vbt.bin                   - iGFX graphic UEFI driver VBT file, VBT version 193
+MATROXVIDEOOPROM.BIN      - Onbaord VGA legacy Oprom v3.8SQ
+
+ACM            : V0.8
+RSTe SATA Legacy OPROM              : V4.3.0.1018   
+RSTe SATA EFI OPROM                 : V4.3.0.1018 
+ESRTII Legacy OPROM                 : A.15.08211538I   
+ESRTII EFI OPROM                    : 04050000   
+1G NIC Legacy PXE OPROM             : V1.5.53.1    
+1G NIC EFI PXE OPROM                : V5.4.19  
+iSCSI OPROM                         : V3.0.34  
+iBMC Matrox G200 VGA                : V3.8SQ
+iGFX Legacy                         : 9.0.1027
+iGFX UEFI Driver                    : 9.0.1033  
+RC Version                          : V3.9.0.5
+Security Revision                   : 01.01
+Management Engine Firmware Version  : v04.01.03.019
+
+================================================================================
+                       SYSTEM FIRMWARE REQUIREMENTS
+================================================================================
+BIOS Update Utility: 
+  UEFI iFlash32 V14.0 build10
+  
+Beta/Silver/Gold boards:
+  Product   Fab Version   BMC      FRUSDR    EEPROM     HSC 
+
+
+IMPORTANT NOTICE:
+
+================================================================================
+              INTRODUCTION
+================================================================================ 
+
+================================================================================
+             INSTALLATION NOTES
+================================================================================
+================================================================================
+                           INSTALLATION NOTES
+================================================================================
+
+WARNING:  It is very important to follow these instructions as they are written.
+Failure to update using the proper procedure may cause damage to your system.
+
+User can update BIOS flash image via either of the follow methods...
+A. UEFI iFlash32 
+   1.  Boot the system to EFI Shell
+   2.  Copy IFlash32.efi and BIOS .CAP file to a HD or USB Flash Drive
+       ( Do not use the *Rec.CAP file as it will clear NVRAM and should
+         only be used for Recovery - See Recovery Instructions below )
+   3.  Map the respective storage device in system with the command
+       Shell> map -r
+   4.  Change the Shell to mapped device file system
+       Example: Shell> fs0: (or fs1:)
+   5.  Run the IFlash32 utility on the prompt
+       fs0:\> IFlash32 [File Name] /u /ni
+   6.  Reboot system after the update is completed.
+
+B. Use flash programmer to burn the new BIOS ROM image (16MB) into the flash chip.
+
+c. Backup BIOS update instructions
+   1.  Boot the system to EFI Shell
+   2.  Copy IFlash32.efi and BIOS .CAP file to a HD or USB Flash Drive
+       ( Do not use the *Rec.CAP file as it will clear NVRAM and should
+         only be used for Recovery - See Recovery Instructions below )
+   3.  Map the respective storage device in system with the command
+       Shell> map -r
+   4.  Change the Shell to mapped device file system
+       Example: Shell> fs0: (or fs1:)
+   5.  Run the IFlash32 utility on the prompt
+       fs0:\> IFlash32 [File Name] /u /ni UpdateBackupBios
+   6.  It will update primary BIOS with processed capsule and the backup BIOS update will be completed in next normal boot.
+   7.  Restart unit, Backup flash update done.
+
+
+================================================================================
+                        BIOS RECOVERY INSTRUCTIONS
+================================================================================
+The Recovery process can be initiated by setting the recovery jumper (called BIOS Recovery Boot Jumper)
+ 
+A BIOS recovery can be accomplished from backup BIOS region. 
+ 
+The recovery media must contain the following files under the root directory:
+   1.  UEFI iFlash32 (including IFlash32.efi and ipmi.efi )
+   2.  *Rec.CAP
+   3.  Startup.nsh (update accordingly to use proper *Rec.CAP file)
+ 
+BIOS starts the recovery process by first loading and booting to the recovery image from backup BIOS region.
+This process takes place before any video or console is available. Once the system boots 
+to recovery image, it will boot automatically into EFI Shell to 
+invoke the Startup.nsh script and start the flash update application (IFlash32.efi). 
+IFlash32.efi requires the supporting BIOS Capsule image file (*Rec.CAP). 
+After the update is complete, there will be a message displayed stating that the
+"BIOS has been updated successfully" indicating the recovery process is finished.
+The User should then switch the recovery jumper back to normal operation and restart
+the system by performing a power cycle.
+ 
+The following steps demonstrate this recovery process:
+   1.  Power OFF the system.
+   2.  Switch the recovery jumper. Details regarding the jumper ID and location
+       can be obtained from the Board EPS for that Platform.
+   3.  Power ON the system.
+   4.  The BIOS POST screen will appear displaying the progress and system automatically 
+       boots to the EFI SHELL.
+   5.  Startup.nsh file executes, and initiates the flash update (IFlash32.efi)
+       with new capsule file (*Rec.CAP). The regular IFlash message will be displayed at
+       the end of the process, once the flash update succeeds.
+   6.  Power OFF the system, and revert the recovery jumper position to "normal operation".
+   7.  Power ON the system. 
+   8.  Do *NOT* interrupt the BIOS POST during the first boot.
+
+
+================================================================================
+                ME FW Capsule INSTALLATION NOTES
+================================================================================
+A. UEFI iFlash32 
+   1.  Boot the system to EFI Shell
+   2.  Copy IFlash32.efi and ME.CAP and FD.CAP file to a HD or USB Flash Drive
+   3.  Map the respective storage device in system with the command
+       Shell> map -r
+   4.  Change the Shell to mapped device file system
+       Example: Shell> fs0: (or fs1:)
+   5.  Run the IFlash32 utility on the prompt
+           fs0:\> IFlash32 ME.CAP /u /ni 
+           fs0:\> IFlash32 FD.CAP /u /ni 
+   6.  AC cycle the system after the update is completed.
+
+================================================================================
+                IMPORTANT NOTICE
+================================================================================
+D01.03.0008 - This BIOS has included CCB108 implementation(Aperture size), need to press F9 to load default if BIOS is updated via online method.
+D02.01.0036 - This BIOS has Microcode support for E3-1200 v5 CPU/E3-1200 v6 B0 CPU and remove the Microcode for E3-1200 v6 A0 due to the space limitation.
+D02.01.0037 - This BIOS has SMM communication buffer fix with Security Revision updated to 01.01 following SPRD requirement. Two impacts should be noted:
+              >> 1. Security Revision upgrade: causing BIOS can't be downgraded to previous version with Security Revision 01.00 under normal mode. No impact under Recovery Mode. 
+              >> 2. SMM communication buffer fix: causing older version of utilities are not functional, only version equal or newer than below ones can be used together with this new BIOS.
+                        Sysinfo V14.0 Build 18, Selviewer V14.0 Build 17, Syscfg V14.0 Build 15, iFlash32 v14.0 Build10, FWPIAUPD v14.0 Build 8, FRUSDR v14.0 Build 8, OFU v14.0 Build 13 
+            
+================================================================================
+                KNOWN ISSUES/WORKAROUND
+================================================================================
+
+================================================================================
+                FEATURES ADDED/REMOVED
+================================================================================
+               02.01.R0049
+================================================================================
+    1. Re-sign BIOS package with production key.
+================================================================================
+               02.01.D0049
+================================================================================
+1. Add E3-1200 v6 aware msg back.
+================================================================================
+               02.01.D0048
+================================================================================
+1. S1200SP Refresh disable ME PSU PDT
+================================================================================
+               02.01.D0047
+================================================================================
+1. EPSD100256731: The board hangs up during POST when factorys' serial port loopback cable is connected
+================================================================================
+               02.01.D0045
+================================================================================
+1. [EPSD100031108] Get Yellow-Mark devices in Device Manager when installed Windows 10 OS
+2. [EPSD100256270]-[X] Boot menu page does not disappear when boot to IPv4 device.
+3. [EPSD100035644] at Sever Management page, bottom info show on left-top screen when login to BIOS setup as an User privilege
+4. temp remove the E3-1200 v6 aware for PVL test
+================================================================================
+               02.01.D0042
+================================================================================
+1. add secure boot production PK
+================================================================================
+               02.01.D0041
+================================================================================
+1. EPSD100254486:System Auto Rebooted during FSUP Bios 01.03.0010 ME 04.00.03.096 BMC 01.03.9805 frusdr 1.19 update under Linux
+2. EPSD100256264 - [E3-1200 v6]Sysinfo_V14.0.18:BIOS ID shows messy code by reading it with notepad++ or word.
+3. [EPSD100035167] Sometimes, it will record "Fan low critical” event after AC power 
+4. E3-1200 v6 Aware BIOS cut in
+================================================================================
+               02.01.D0040
+================================================================================
+1. Update MRC to version 3.9.0.5
+2. Update ME to version 04.01.03.019
+3. Microcode Update E3-1200 v6 B0 version 42
+================================================================================
+                02.01.D0039
+================================================================================
+1. legacy USB RT security fix
+2. Update MRC to version 3.9.0.4
+3. Update ME to version 04.01.03.017
+================================================================================
+                02.01.D0037
+================================================================================
+
+1. Fix chipsec security Test failed in SMI 0x26, 0x28 and 0xef(BIOS Security enhancement for SMM communication buffer).
+================================================================================
+                02.01.D0036
+================================================================================
+1. S1200SP Refresh MRC update to Beta 3 Version 3.9.0.3
+2. S1200SP refresh cut in E3-1200 v5 + E3-1200 v6 B0 processor
+3. EPSD100035028: ME status will show "Recovery" after online update(D01.03.0023->D02.01.0034) (Disable CUPS in ME configuration file
+===============================================================================
+
+                02.01.D0034
+================================================================================
+1. EPSD100034949: Fix set active processor cores item is invalid with E3-1200 v6 B0 CPU 
+2. S1200SP Refresh microcode remove E3-1200 v6 B0 support, add back E3-1200 v5 support.
+===============================================================================
+
+                02.01.D0032
+================================================================================
+1. EPSD100034795: Fix BMC Firmware Version is incorrect in post screen.
+2. EPSD100034770: Fix the warnning message is not correct when User passwords are setted same as Administrator password
+3. EPSD100034874: Fix user cannot enter correct password at second times when set up with “Caps Lock” key on keyboard under BIOS Setup screen issue.
+================================================================================
+                02.01.D0030
+================================================================================
+1. EPSD100254632 Chipsec UEFI NVRAM variables protect test fialed
+2. Update RC: 3.9.0.1
+3. ME update to 04.01.03.001
+4. Add E3-1200 v6 I3 CPU Graphic support
+5. Microcode Update E3-1200 v6 B0 version 3A
+================================================================================
+                02.01.D0027
+================================================================================
+1. EPSD100034570: Change ME build ID in BIOS post screen to 3 number wide(xx.xx.xx.xxx).
+2. EPSD100034559: SMBIOS type 4 max speed is dynamic changed base on the processor’s max supported speed.
+3. EPSD100254183: System Status LED and the value of ED2 in SEL are incorrect when inject Correctable/Uncorrectable Error.
+4. EPSD100034285: Fix SUT will hang during installing pGFX driver with Addin VGA card  when VGA output from IGD.
+================================================================================
+                02.01.D0024
+================================================================================
+1. EPSD100254192: When disable WHEA Support, inject memory CE/UCE at BIOS/OS no any log appear at SELlog.
+2. Fix some help strings don't match with BIOS setup spec.
+3. disable SDR ME Power State Sensor by BMC's request.
+4. Update BIOS and SINIT ACMs to version 0.8.
+================================================================================
+                02.01.D0020
+================================================================================
+1. EPSD100034001: Fix some Error Message not mach with EPS.
+2. EPSD100034203: ACPI table has extra tables DBGP, BGRT and UEFI, but EPS1.1 defined not support.
+3. EPSD100033983: Change ME build ID in BIOS setup to 3 number wide(xx.xx.xx.xxx).
+4. Add Microcode patch 0x34 for E3-1200 v6 A0/B0, Remove E3-1200 v5 Microcode temporary.
+5. update RC to version 3.8.0.4.
+6. Add E3-1200 v6 CPU Class to fix E3-1200 v6 B0 POST hang issue.
+7. ME update to version 04.01.03.000.
+8. EPSD100254185: Correctable Error Threshold option is no function.
+9. Fix some Error Message don't mach with EPS.
+10. EPSD100254667 Syscfg cannot enable "static boot order". Add a check which only do boot order check when "static boot order" is enabled by F2 setup.
+11. BIOS SPS update for CUPS.
+12. Add back E3-1200 v5 CPU to support: E3-1200 v5, E3-1200 v6 A0.
+13. Update RC code 3.9.0.
+
+================================================================================
+                02.01.D0012
+================================================================================
+1. EPSD100033997 In UEFI mode populated TPM1.2 on SUT cannot turn on bitlocker in Win2012R2.
+2. EPSD100254177 No iSCSI 1GbE/10GbE Option ROM item at RO board.
+3. Bugfix: TPM20 Bitlocker not working on UEFI Win2012 when PCR5 enable
+4. EPSD100033985 Under EFI shell(UEFI mode), static IP can't connect TCP/IP succesfully.
+5. EPSD100033987:Some Help strings don't match with BIOS setup spec v1.3.
+================================================================================
+                02.01.D0009
+================================================================================
+1. EPSD100254186: Use cmdtool to set auto boot to payload/PXE, at the first time reset SUT it can't auto boot to payload/PXE. SUT boot to payload/PXE at the 2nd time reboot.
+2. EPSD100253661 [x]Customer report the DMI type 41 record bug on Silver Pass RO system-part2.
+3. Update E3-1200 v5 Microcode 0x9E.
+4. EPSD100254178:FRB2 still has function when set system boot time >6min or when enable power on password.
+5. EPSD100254319: Clean up Security issue on Greenlow-R by removing all  usages/references to EFI_SMM_RUNTIME_PROTOCOL.
+6. EPSD100034023 The value of PCR1 is not change by using pcrdump64_1.2.1.efi to dump log with different DIMM quantity.
+7. EPSD100033997: In UEFI mode  populated TPM1.2 on SUT cannot turn on bitlocker in Win2012R2.
+================================================================================
+                02.01.D0006
+================================================================================
+1. EPSD100254108: Remove AC during flash BIOS then plug-in AC and power on, SUT not auto boot to Error Manager.
+2. Enable CUPS in ME configuration file.
+3. EPSD100253666: Remove LPIT, WDAT and DBG2 from ACPI table list.
+4. EPSD100033981 Connect TPM2.0,use PCR reading tool to dump PCR0-7 value ,after reboot or shutdown some times, PCR1 value dumped always different.
+5. EPSD100033980 TPM2 table in ACPI information, "Platform class" value is 0, which should be 1(means server).
+================================================================================
+                02.01.D0005
+================================================================================
+1. E3-1200 v6 Add Memory Speed Selection 2400MHz
+2. EPSD100254111: When set PCIe Slot5 OpROM control option to disabled, PCIe card still has OpROM during POST at LC/SE board.
+3. EPSD100254106:When SUT boot to BIOS recovery mode, no "System Firmware Progress sensor 21 reports BIOS recovery start." event log.
+================================================================================
+                02.01.D0001
+================================================================================
+1. Initial BIOS version for S1200SP Refresh with E3-1200 v6 CPU.
+    Keychange: 
+    1.1 Microcode for E3-1200 v6/E3-1200 v5 are updated. 
+    1.2 RC code is synced.
+    1.3 ME is updated.
+    1.4 BP core is updated.
+================================================================================
+                01.03.D0010
+================================================================================
+    1. [EPSD100252071] Set CTV to be 160~170ms as W/A for RMS25JB080, RMS25KB080, RMS25JB040, RMS25KB040.
+    2. [EPSD100032992] Set 'Platform Class' for server platform and keep PCR1 value consistently when configuration is not changed.
+    3. [EPSD100033014] Change 'Remote Management Module' present policy dependency from NIC to RMM.
+    4. [EPSD100032790] Adjust Sever Management page shown when after ITK modified.
+
+================================================================================
+                01.03.D0008
+================================================================================
+    1. [No Sighting] SPS ME FW update to 4.0.3.96.
+    2. [No Sighting] Expose Aperture Size to ITK w/o default value change for CCB108.
+================================================================================
+                01.03.R0006
+================================================================================
+    1. Re-sign BIOS package with production key.
+================================================================================
+                01.03.D0006
+================================================================================
+    1. SPS ME FW update to 4.0.3.94.
+    2. Disable CLK_RUN# logic following HW design for EPSD100031770.
+================================================================================
+                01.03.D0005
+================================================================================
+    1. Update SPS ME to 4.0.3.096.
+================================================================================
+                01.03.D0004
+================================================================================
+    1. Roll back SPS ME to 4.0.3.075.
+
+================================================================================
+                01.03.D0002
+================================================================================
+    1. [EPSD100251676] SE Sku show incorrect SATA information.
+
+================================================================================
+                01.03.D0001
+================================================================================
+    1. Roll back to old ESRTII OPROM due to new one can't support 4K HDD.
+    2. Roll back to remove VS2013 support to adviod side effect that system hang 0x96 with D89 com port connected.
+
+================================================================================
+                01.02.R0021
+================================================================================
+    1. Microcode update to 0074.
+
+================================================================================
+                01.02.R0020
+================================================================================
+    1. [EPSD100251465] UEFI Production ESRTII Driver 04080000 intergate.
+    2. SPS ME FW update to 4.0.3.94.
+    3. WA for system reset will hang at POST code 0x36 due to TCO_STS issue.
+
+================================================================================
+                01.02.R0018
+================================================================================
+    1. Microcode update to 0x6A.
+
+================================================================================
+                01.02.R0017
+================================================================================
+    1. [EPSD100251369] Some errors reported in selftest7_7.0.22.3774.
+    2. [EPSD100031058] During WIN2012R2 Cert with SE SKU and SUT show "USB Exposed Port System Test" test item fail.
+    3. [EPSD100031074] BIOS message display User Name already Exits when type the same user name in User Configuration.
+
+================================================================================
+                01.02.R0015
+================================================================================
+    1. Fixed the issue that the time value in RTC register is not valid when CMOS battery is bad because removed for long time.
+================================================================================
+                01.02.R0014
+================================================================================
+    1. Microcode update to 0x5c.
+    2. SPS FW update to 4.0.3.89.
+================================================================================
+                01.02.R0012
+================================================================================
+    1. Bios update progress will always stay on 0% ,if set recovery jumper and a previous version BIOS has been programmed at first.
+================================================================================
+                01.02.R0011
+================================================================================
+    1. [EPSD100030687] Static Boot Order would not change to Disabled when change boot order via ITK.
+================================================================================
+                01.02.R0010
+================================================================================
+    1. Enable TPM2.0 Support.
+    2. Sync CRB BIOS V104_03, RC version is 1.8.0.1.
+    3. [EPSD100250712] Abnormal SEL of "POST Err Sensor reports Processor 01 disabled" observed after global reset from MFG mode.
+================================================================================
+                01.02.R0008
+================================================================================
+    1. [EPSD100029833] System couldn't install Windows 2008 R2 under UEFI mode.
+================================================================================
+                01.02.R0007
+================================================================================
+    1. [EPSD100029962] In the process of installing win 2008 R2 with RS3WC080, screen will stay at "Starting Windows".
+================================================================================
+                01.02.R0005
+================================================================================
+    1. [EPSD100250675] Auto-Reboot time is too long with TPM module and MFG jumper attached.
+    2. Implement clear screen after PXE oprom and before main screen.
+================================================================================
+                01.02.R0004
+================================================================================
+    1. [EPSD100250586] Abnormal SSB Therm Trip SEL observed on Silver2 build LC boards in EFI shell, MFG mode.
+================================================================================
+                01.02.R0003
+================================================================================
+    1. Microcode update to 0056.
+================================================================================
+                01.02.R0001
+================================================================================
+    1. Update BIOS version to 01.02.0001 for gold build.
+
+================================================================================
+                01.01.D150
+================================================================================
+    1. Sync Iflash32 code with the latest CP code.
+
+================================================================================
+                01.01.D149
+================================================================================
+    1. Update TXT BIOS ACM with version HF 1.3.
+    2. [EPSD100030209] SUT will reboot when press ESC under PMC ASR 71605 UEFI oprom.
+    3. [EPSD100250524] Inappropriate prompt message when only DIMM A1/B1 slot is populated.
+
+================================================================================
+                01.01.D148
+================================================================================
+    1. Microcode update to 0x49_4A.
+    2. ME status report error if some region is corrupted during ME update.
+    3. TXT function implement.
+    4. Fixed RTC debug assert issue.
+    5. [EPSD100030229] System time is abnormal after Linux OS installation completed.
+    6. Fixed recovery hang issue and flash issue.
+
+================================================================================
+                01.01.D146
+================================================================================
+    1. SPS ME FW 4.0.3.75 updated.
+
+================================================================================
+                01.01.D145
+================================================================================
+    1. [EPSD100028819] "Submit fail for form:!." box will pop up after some specific steps with RMS3CC080.
+    2. [EPSD100029971] UUT recorded CATERR in AC/DC/Reset cycling test with varies hang point 0xCC/0xD5/0x55.
+
+================================================================================
+                01.01.D144
+================================================================================
+    1. [EPSD100250133] BIOS Setup Options shows incorrectly with Client S0 CPU.
+    2. [EPSD100030065] System cannot install Legacy W2012R2 OS in RSTe Mode if the RAID volume has included SATA Port 1, Port 6 and Port 7.
+
+================================================================================
+                01.01.D143
+================================================================================
+    1. [EPSD100029901] System stay long time at RMS25PB080 Legacy  UEFI option rom.
+    2. [EPSD100250171] SSB Therm Trip error will be trigger during system warm reset.
+
+================================================================================
+                01.01.D142
+================================================================================
+    1. [EPSD100029430] System show error message "Unknown opcode 0x18 at table offset 0x04B7" when installed SUSE 12 x64.
+
+================================================================================
+                01.01.D141
+================================================================================
+    1. SPS ME FW 4.0.3.68 updated.
+    2. S1200SP Klockwork Issue.
+
+================================================================================
+                01.01.D140
+================================================================================
+    1. [EPSD100029964] NO 8300 and 84F4 error info in error manager.
+    2. [EPSD100250135] There is no screen output when set to DP + Processor graphics with Client CPU QJZW which is 2 + 1 processor.
+
+================================================================================
+                01.01.D138
+================================================================================
+    1. Upgrade ME to be version ME E3_04.00.03.061.0.
+    2. Set PCH Hot Level to be 98 degree C.
+
+================================================================================
+                01.01.D136
+================================================================================
+    1. 450w PSU PMBus hang issue.
+    2. check all USB policy and over current pin align with HW.
+
+================================================================================
+                01.01.D135
+================================================================================
+    1. [EPSD100029793] There are three logs recorded ME version change in SEL after online update ME.
+    2. [EPSD100249379] Chipsec security Test failed.
+    3. [EPSD100247152] Error message didn't display correctly in Error Manager after clear remove CMOS battery or clear CMOS jumper.
+
+================================================================================
+                01.01.D133
+================================================================================
+    1. Upgrade ME to be version ME E3_04.00.03.056.0.
+
+================================================================================
+                01.01.D132
+================================================================================
+    1. Roll back Chipsec lock register.
+    2. Latest VBIOS(9.0.1027) /GOP(9.0.1033) to support S stepping pgfx.
+    3. [EPSD100249773] Update backup BIOS failed with correct command after flash backup BIOS with incorrect command.
+    4. [EPSD100028816] Processor Graphics Driver "15.40.4146.win64" cannot installed completely in W2012R2 OS with VGA Add-on card connected. It would stop at driver installation
+    5. [EPSD100029875] [SE sku] Some removed devices list in SMBIOS Type8.
+    6. update V97_13 PV RC 1.6.0.0 to RC 1.6.0.0.1  
+
+================================================================================
+                01.01.D130
+================================================================================
+    1. Sync CRB bios V97_09 with RC 1.6
+
+================================================================================
+                01.01.D129
+================================================================================
+    1. [EPSD100029869] There are "USB Exposed Port System test" fail items when running Win2012R2 Cert Test
+    2. [EPSD100029657] System stay long time at RMS25CB080 Legacy/UEFI option rom.
+    3. [EPSD100249590] SE board show incorrect PCIe information in BIOS setup.
+    4. [EPSD100249646] CMOS Date/Time still be cleared on first reboot after clear CMOS or remove CMOS battery.
+    6. [EPSD100028474] BIOS can't detect IO module 82599 10G UEFI iSCSI. But onboard ROM UEFI ISCS can detect.
+    7. [EPSD100249731] Production ESRT2 OpROM(A.15.08211538I) and EFI(A.15.08131643I) for inclusion into S1200SP BIOS.
+    8. Microcode update to 0x3A.
+
+================================================================================
+                01.01.D127
+================================================================================
+    1. [EPSD100248742] No DIMM info.
+    2. [EPSD100249280] System will hangs up on 0X0C on next boot when interrupt update BIOS in EFI shell.
+    3. Implement IPMI Command " Set PCIe card presence command".
+    4. [EPSD100249567] System information show incorrect in BIOS setup.
+    5. [EPSD100249547] After F9 load default and Press F10 save,system will pop-up warning message and hangs up on BIOS Setup
+    6. [EPSD100249379] Chipsec security Test failed
+
+================================================================================
+                01.01.D126
+================================================================================
+    1. [EPSD100248742] No DIMM Power info.
+    2. [EPSD100249552] Extra messages display in remote system Hyperterminal when CR is enabled on Legacy mode.
+    3. Fixed BMC user help string error.
+    4. Update ME module to be aligned with FTool_SPS_E3_04.00.03.046.0.
+    5. New AHCI OPROM replace debug verison AHCI oprom.
+
+================================================================================
+                01.01.D124
+================================================================================
+    1. [EPSD100249525] Error information status is gray and error description can't shown in Error manager.
+    2. Re-structure code to align other server platform
+    3. Open one setup item "PciePllSsc" only for ITK tool.
+    4. Integrate ESRT2 latest release OPROM and EFI driver.
+
+================================================================================
+                01.01.D122
+================================================================================
+    1. [EPSD100028351] There is no black space between "number" and "MB" for value of filed "Effective Memory" in BIOS Setup.
+    2. [EPSD100249355] System will display error message "An unknown error occurred while running this application" when execute RSTe Utilitie tool under UEFI Win2012R2.
+    3. [EPSD100249328] Set Admin/User PWD function incorrect and Admin/User PWD status show abnormal at BIOS R021.
+    4. [EPSD100029073] Memory ECC error injection information is incorrect in both SEL Viewer and system log.
+    5. Update XML file for SE SKU settings.
+    6. Update microcode to 0034.
+    7. Change setup help string according new setup spec
+    8. Align setup spec 1.0 new secure boot setup help string.
+    9. Secure Boot Symptoms.    
+
+================================================================================
+                01.01.D120
+================================================================================
+    1. [EPSD100248742]FAIL: There is no DIMM power information.
+    2. Update BIOS flash map.
+
+================================================================================
+                01.01.D119
+================================================================================
+    1. [EPSD100248742] There is no DIMM power information.
+    2. Support MMIO above 4GB when memory size >= 64GB
+
+================================================================================
+                01.01.D118
+================================================================================
+    1. [EPSD100029653] BIOS flash can't run in Quad mode.
+    2. Update ME to be version E3_04.00.03.044.0 with enabled SPI Qual mode.
+    3. [EPSD100247099] There are some errors in SMBIOS log. 
+
+================================================================================
+                01.01.D115
+================================================================================
+    1. [EPSD100029655] One more option "Early System Boot Timeout" lists in Advanced Boot Options page.
+    2. [EPSD100029336] When there is BIOS Recovery log in SEL, it cannot see any log and USB Key will be crashed after executed SELViewer under EFI Shell.
+    3. [EPSD100249269] Update D111_ME.cap will show "Warning: No SMBIOS entry for KCS address - using fixed value of 0xCA2"
+    4. [EPSD100029436] Unable to boot to HDD (with UEFI OS) by LCD.
+    5. [EPSD100242988] Internal:SCT test has below items fail: Runtime Services Test/Console Support Test/Bootable Image Support Test/EFI Byte Code Test/HII Test/ATA Bus Support Test/ISCSI BootTest/SCSI Bus Support Test.
+    6. Enable Secure Boot on SLP.
+    7. flash ME region change request.
+    8. Modify the CommonSetupLib to display total L1 cache size in Setup menu.
+    9. PCH PCIE CTLE setting is missed after PCH RC updating in D108.
+    10.UpdateSmbios function of UBA is not executed.
+
+================================================================================
+                01.01.D113
+================================================================================
+    1. [EPSD100029680] NMI button function does not work.
+    2. [EPSD100029628] Processor information in BIOS Processor Configuration page display "N/A". 
+    3. [EPSD100029293] When install Windows7sp1 will show blue screen.
+    4. [EPSD100029621] Window 2K8 SP2 32/64 can't install and it will show BSOD with legacy mode
+    5. [EPSD100029308] Starting from BIOS 92, HECI error logged in dmesg after SUSE 12 setup in UEFI mode.
+    6. Fixed iBMC vidio can't be disabled.
+    7. Fixed NMI buttom code lost during RC sync.
+    8. Sync ME related ASL code.
+
+================================================================================
+                01.01.D111
+================================================================================
+    1. Fixed Xd feature didn't be enable due to code sync issue.
+    2. Fixed D110 BIOS can't update issue.
+    3. [EPSD100248881] After install drivers,device manage still show yellow mark.
+    4. [EPSD100028791] There are some fail items when running Win2012R2 Cert test.
+
+================================================================================
+                01.01.D110
+================================================================================
+    1. Porting Smbios Type 148 to SLP.
+    2. Fix CpPcPlatPkg Klockwork scan issue.
+    3. [EPSD100248820] System hang up on 0x34 randomly when MFG jumper is connected on RO board.
+
+================================================================================
+                01.01.D109
+================================================================================
+    1. [EPSD100028598] Get Node Manager Power Characterization Range value is 00 via ipmitool NM command
+    2. Change "System Date" help string following product Setup Spec.
+    3. [EPSD100029148] Boot Manager couldn't detect SATA DVDROM under legacy RSTe RAID Mode.
+
+================================================================================
+                01.01.D108
+================================================================================
+    1. [EPSD100028942] System time will become 01/01/2015 after set System Date before year 2015 and then Save & Reset.
+    2. [EPSD100248985] 71605 Raid card OpRom control option cannot be seen under UEFI mode.
+    3. [EPSD100248795] "Load User Default Values" option no function for some BIOS settings.
+    4. Sync CRB BIOS V90_14 RC 1.2
+    5. Microcode upate to 0002E
+
+================================================================================
+                01.01.D106
+================================================================================
+    1. BP/CP core sync to latest common tree.
+    2. Roll back CP sync 4K HDD support code.
+    3. Update ME update code according to the new ME layout.
+    4. [EPSD100029105] New connected Network device will not list in bottom of DBOL.
+
+================================================================================
+                01.01.D105
+================================================================================
+    1. Sync latest CPPC code.
+    2. Update ME FW to PC RC3 4.0.3.36
+
+================================================================================
+                01.01.D104
+================================================================================
+    1. [EPSD100246878] It is ineffective when you press NMI button.
+    2. [EPSD100029092] New connected USB device will not list at buttom of DBOL when USB boot priority is disabled and SBOL snapshot has been taken.
+    3. [EPSD100248942] No error report both in Error manage and SEL viewer when Microcode is updated missing.
+
+================================================================================
+                01.01.D103
+================================================================================
+    1. Update FVLEGACYCSMBIN to CL_255301.
+
+================================================================================
+                01.01.D102
+================================================================================
+    1. [EPSD100029339] Set core number to 1 under "Active Processor Cores" option, save and reboot to OS will occur BSOD:ACPI_BIOS_ERROR.
+    2. [EPSD100029073] Memory ECC error injection information is incorrect in both SEL Viewer and system log.
+    3. [EPSD100249024] ITK support for OA2.x.
+    4. Based on EA team suggestion to set the PCH PCIE Rx CTLE in High Speed I/O (HSIO) Control Register.
+    5. [EPSD100247152] Error message didn't display correctly in Error Manager after clear remove CMOS battery or clear CMOS jumper.
+    6. Update RSTe option ROM and EFI driver to be version 4.3.0.1018.
+
+================================================================================
+                01.01.D101
+================================================================================
+    1. [EPSD100248853] DFT 1914 rule test was failed.
+    2. [EPSD100248881] After install drivers, device manage still yellow mark.
+    3. [EPSD100248945] UEFI RHEL7.0 and UEFI RHEL 7.1 will be hang in black screen with a cursor under UEFI mode.
+    4. [EPSD100248131] Sysinfo_v14.0.4:  incorrect BIOS option was dumped in 'BIOS Settings' part in sysinfo_log.txt.
+    5. [EPSD100248865] SUT can't boot up after 4 hynix 16G DIMMs attached on Beta1 board.
+    6. [EPSD100248472] Total Memory can't indentified on Main and Memory Configuration screen with "hynix 16G" memory.
+
+================================================================================
+                01.01.D099
+================================================================================
+    1. [EPSD100248817] No nvram auto recovery error i BIOS error manage after corrupt whole nvram region.
+    2. 'PCI out of resource error" can't triggered in error manage.
+    3. [EPSD100248449] pci_error_sig_check() has warnings about pcie root port setting.
+
+================================================================================
+                01.01.D098
+================================================================================
+    1. [EPSD100248595] Syscfg_v14.0.6: Run cmd syscfg /bbosys "" 7 6 5 4 3 2 1 change bbo order will be fail.
+    2. [EPSD100248558] 3% of the Beta1 build FAB2 boards can not keep the correct system date and time after reboot/cold boot.
+    3. [EPSD100029353] Temp WA to SUT can't boot up after 4 hynix 4G/8G DIMMs attached on Beta2 board.
+    4. [EPSD100029259] Failed to boot from Legacy PXE for X540-T2 Add-on card. (Error message: PXE-EC8: !PXE structures was not found in UNDI driver code segment.)
+
+================================================================================
+                01.01.D097
+================================================================================
+    1. [EPSD100028746] After disable the "Reset on CATERR" in BIOS,  SUT still reset after CATERR occurred for a while.
+    2. [EPSD100029115] Console Redirection working with previous settings when SOL is Enabled.
+    3. [EPSD100247152] Error message didn't display correctly in Error Manager after clear remove CMOS battery or clear CMOS jumper.
+    4. [EPSD100028126] [2nd sourcen M/B] System stops at 234 loops during DC cycle test.
+    5. Integrate new version option ROM and EFI driver for ESRT2.
+
+================================================================================
+                01.01.D096
+================================================================================
+    1. [EPSD100029073] Memory ECC error injection information is incorrect in both SEL Viewer and system log.
+    2. [EPSD100248814] F10 key behavior is inconsistent after change different BIOS setting.
+
+================================================================================
+                01.01.D095
+================================================================================
+    1. [EPSD100029076] SBO is still enabled when use syscfg utility to change Boot Order.
+    2. [EPSD100247075] Need develop a debug revision of runtime setvariable driver.
+    3. Fixed hynix 4G DIMM can't enter OS issue.
+
+================================================================================
+                01.01.D093
+================================================================================
+    1. [EPSD100029115] Console Redirection working with previous settings when SOL is Enabled.
+    2. [EPSD100028476] BIOS Nic configuration show IO module 82599 as X520.
+
+================================================================================
+                01.01.D092
+================================================================================
+    1. [EPSD100248538] System will pop-up warning message after change some settings via BIOS setup.
+    2. [EPSD100245845] Console Redirection item will show disable and gray out when press F9 to load default BIOS setting.(setup browser issue)
+    3. [EPSD100248007] CP_CR_1258:EPSD100242284: sysinfo V13.10: The value of "Microcode Revision" in sysinfo_log.txt is not consistent with Setup Page value with two CPUs.
+    4. [EPSD100028808] No Payload Boot entry in Boot Manager page after update BIOS with  'Pay Load Boot' enabled.
+    5. [EPSD100029102] "PCI out of resource error" can't triggered in error manage.
+    6. [EPSD100028253] Flash ME fail via OFU tool that will show error message "error while parsing the cfg file
+    7. [EPSD100248478] iFlash32_v14.0.2:ME update fail
+    8. [EPSD100029234] Fail to install legacy Windows2012R2, UUT will BSOD and reset after loading files.
+    9. Update micro code to 001E
+    10.Sync V89_03 RC and ACPI table update.
+
+================================================================================
+                01.01.D089
+================================================================================
+    1. [EPSD100248757] UUID will chang back to primary value after remove MFG jumper.
+    2. [EPSD100028283] The word string "Legacy Network Device Order" would be changed when remove USB key during storage OPROM/Network OPROM.
+    3. [EPSD100248532] Change Execute Disable Bit option then press F10 or select "Save Changes and Exit", SUT not reboot will boot to the first boot device.
+    4. [EPSD100246997] Intergrated IO Configuration /fast boot/OverClocking/SVID/FIVR/Override ICC Spread Spectrum Configuration/  list in BIOS cap file with ITK ,but these option does not display in BIOS Setup.
+    5. [EPSD100028454] SATA SI setting data is different between BIOS RD006 and RD032.
+    6. [EPSD100248758] SUT will hang up on first power after corrupt nvram blocks.
+    7. [EPSD100248791] DP port and VGA Port Output options don't displayed in D087 BIOS.
+
+================================================================================
+                01.01.D087
+================================================================================
+    1. [EPSD100028454] SATA SI setting data is different between BIOS RD006 and RD032.
+    2. [EPSD100028401] A few of symptom about onboard NICs can found within Type 41.
+    3. [EPSD100028542] SUT could not dump the NVRAM area for onbaord NIC by running the dmpstore EFI shell command under MFG mode.
+    4. [EPSD100028616] System cannot occurs memory multi-bit event after switch rework multi-bit memory jumper.
+    5. Sync CRB bios V88_05, RC 1.0 and microcode update.
+
+================================================================================
+                01.01.D085
+================================================================================
+    1. Updated to Legacy ESRTII A.15.06081622I.
+    2. Updated to Legacy/EFI RSTe 4.3.0.1013
+    3. [EPSD100029151] SUT would hang at black screen after boot to SATA DVDROM under Legacy ESRT2 RAID Mode.
+
+================================================================================
+                01.01.D084
+================================================================================
+    01. [EPSD100248005] CP_CR_1277:Fix Klocwork Scan failures.
+    02. [EPSD100028945] There should no "8541 Memory disabled DIMM_A2" error in Error Manager when an DIMM is installed in Slot 1(Black Slot) and no DIMM is installed in Slot 0(Blue Slot).
+    03. [EPSD100248538] System will pop-up warning message after change some settings via BIOS setup.
+    04. [EPSD100027755] "System Boot Timeout" default setting that modified by ITK would be changed after Clear CMOS.
+    05. [EPSD100248673] R1+D0 board will hang up 0x96 during post after VGA Out put set to processor graphics.
+    06. ME FW update to Pre-PC2 4.0.3.15
+
+================================================================================
+                01.01.D081
+================================================================================
+    01. [EPSD100248132] "Enter Password"  is dispatched,even password is not set in BIOS Setup.
+
+================================================================================
+                01.01.D080
+================================================================================
+    01. [EPSD100248372] Get SPS version by spsinfo utility failed.
+    02. [EPSD100248453] System screen will hang up after ESRT2 oprom dispatched.
+    03. [EPSD100028585] Help Text of field "PCIe Link Speed Control" is empty.
+    04. [EPSD100248448] There is no BIOS "platformID" variable available in EFI shell.
+
+================================================================================
+                01.01.D079
+================================================================================
+    01. [EPSD100248154] The new added EFI boot option will be deleted when press F2 directly enter BIOS setup.
+    02. [EPSD100247184] The BIOS admin password could be cleared after BIOS update NVRAM.
+    03. [EPSD100028042] SUT cannot power on successfully when populated Xeon phi 7120 card to SUT.
+    04. [EPSD100028485] Similar uefi network boot device name listed in boot manager page while populated powerville on RO sku.
+    05. [EPSD100027982] The system GUID which retrieved by "Get System GUID" command does not match with the BIOS Setting
+
+================================================================================
+                01.01.D078
+================================================================================
+    01. Fixed ECC error cause smi storm.
+    02. Roll back ME config to fix ME in recovery mode issue.
+
+================================================================================
+                01.01.D077
+================================================================================
+    01. [EPSD100248531] Board ID of IFWI Version is incorrect for S1200SP in both POST and Setup Menu.
+    02. [EPSD100248326] After Press F12 during post,system will boot up from first boot sequence rather than boot from network with UEFI mode.
+    03. [EPSD100028474] BIOS can't detect IO module 82599 10G UEFI iSCSI. But onboard ROM UEFI ISCS can detect.
+
+================================================================================
+                01.01.D076
+================================================================================
+    01. [EPSD100247859] SMBIOS type 38 show 2 times at BIOS R014.
+    02. [EPSD100247244] Unecessary logs for system event appear after DC cycle.
+    03. [EPSD100028746] After disable the "Reset on CATERR" in BIOS,  SUT still reset after CATERR occurred for a while.
+    04. [EPSD100028818] J9K1 RAID key, J9K2 MFC, and J9B2 Chassis INTR are not defined in SMBIOS Type 12.
+    05. [EPSD100027827] it's useless to change some settings under Processor Configuration and CPU P state Control.
+
+================================================================================
+                01.01.D074
+================================================================================
+    01. CSM&USB stack updated.
+
+================================================================================
+                01.01.D073
+================================================================================
+    01. [EPSD100027827] it's useless to change some settings under Processor Configuration and CPU P state Control.
+    02. [EPSD100027619] Only one ME update log in SEL when update D008 ME successfully/
+    03. [EPSD100027561] Failed to update ME with iflash tool. It would show error message.
+    04. [EPSD100247015] There are some failures in SCT2.3.1C test log.
+    05. [EPSD100248483] BIOS option cannot be saved correctly in syscfg.ini.
+
+================================================================================
+                01.01.D071
+================================================================================
+    01. [EPSD100028600] The field of Core Count with Type 4 would be changed when Active Processor Cores changed.
+    02. [EPSD100247019] Some table can not be found when excute Acpitest utility.Table: ERST, BERT, HEST, EINJ, SPCR, WDDT.
+    03. [EPSD100028809] NIC1 will be disabled while [VGA Port Output] = [Processor graphics], [Primary Display] = [Display port].
+    04. [EPSD100247936] Many incorrect BIOS options were dumped in syscfg.ini.
+    05. [EPSD100028674] BMC SOL will not load back to default setting and CR option is grayed out after press F9 to load BIOS default.
+    06. [EPSD100248420] "AHCI Capable Controller" information in POST Diagnostic Screen is incorrect.
+    07. [EPSD100027666] Windows 2012R2 boot fail after installed with HDD:ST6000NM0004.
+    08. [EPSD100028674] BMC SOL will not load back to default setting and CR option is grayed out after press F9 to load BIOS default.
+    09. [EPSD100028673] When BMC SOL is enabled, the Console Redirection related options would not be kept with their before value.
+    10. [EPSD100027631] The prompt time of the OPROM is too short while RSTe RAID had been set.
+    11. [EPSD100028841] SUT would emit 3 beep code and hang at 80port 0xE8 after set "Memory Operating Speed Selection" to 1866MHz.
+
+================================================================================
+                01.01.D069
+================================================================================
+    01. [EPSD100028804] Both of item name and Help Text are incorrect for "Primary Display" in BIOS Setup.
+    02. [EPSD100027755] "Resume on AC Power loss" and "System Boot Timeout" default setting that modified by ITK would be changed after Clear CMOS.
+
+================================================================================
+                01.01.D068
+================================================================================
+    01. [EPSD100027524] No "Invalid DIMM Population" event on POST screen when DIMM populateion invalid.
+    02. [EPSD100028674] BMC SOL will not load back to default setting and CR option is grayed out after press F9 to load BIOS default.
+    03. [EPSD100027570] "Auto Recovery to backup BIOS image" function is not workable, SUT would hang at 80port 0xF2.
+    04. [EPSD100247064] SUT can not boot from backup area after primary BIOS image corruption.
+    05. Update ME module to 4.00.03.08.
+    06. Update ESRT2 EFI driver to A.14.05071212I.
+
+================================================================================
+                01.01.D066
+================================================================================
+    01. [EPSD100027558] System Boot Timeout continued counted even pressing hot key to booting system.
+    02. [EPSD100248299] Change boot order and press F10,system will boot driectly rather than save and reboot.
+    03. [EPSD100027800] Payload boot failed with IPMI command to force payload boot.
+    04. [EPSD100028108] The [Esc] key can't be used in Setup to initiate a "Discard Changes & Exit" action.
+
+================================================================================
+                01.01.D064
+================================================================================
+    01. [EPSD100027682] SUT would hang at 80port 0x96 after set both NIC1 Controller/NIC2 Controller to disabled and then save & reset.
+    02. [EPSD100027800] Payload boot failed with IPMI command to force payload boot.
+    03. [EPSD100247713] Sysinfo_v14.0.3:some value of BIOS option display "Unknow" in sysinfo_log.txt.
+    04. [EPSD100028540] BIOS option PCIe slot5 OpROM control still can found within RO sku even SUT without the PCIe slot.
+    05. [EPSD100247182] C state show incorrectly after disable processor C3/C6 support in BIOS setup menu.
+
+================================================================================
+                01.01.D063
+================================================================================
+    01. [EPSD100247936] many incorrect BIOS options were dumped in syscfg.ini & some BIOS options cannot be dumped in.
+    02. [EPSD100247723] "AHCI Capable Controller" Information in POST Diagnostic Screen is disappeared when disable the AHCI Capable SATA Controller.
+    03. [EPSD100028486] IOM port 1 and 2 PXE for Niantic module are gray out. BIOS setting of "Enable PXE 10GbE Option ROM" changed to Disabled after populated it on RO.
+    04. [EPSD100028005] No 0012/5220 error messages in Error Manager and SEL when remove CMOS battery.
+    05. [EPSD100028654] ESRT2_Silver_Pass: Hotplug is not working in EFI/HII.
+    06. Update RC v83_05 and update microcode, AHCI legacy oprom.
+    07. [EPSD100248090] Some PCH GPIO setting doesn't match requirement.
+    08. [EPSD100028657] DHP failed to reconnect automatically after a critical message.
+
+================================================================================
+                01.01.D061
+================================================================================
+    01. [EPSD100028227] "OEMID" field is not "INTEL" and "OEM Table ID" field is not "S1200SPL" for some ACPI "SSDT" Table.
+    02. [EPSD100247911] CP_CR_1533:CCB261-Enable/Disable MCE SMI by setup option.
+    03. [EPSD100027827] it's useless to change the options Intel(R) Hyper-threading Tech, Active Processor Cores, Execute Disable Bit,
+                            Intel(R) VT for Directed i/o under processor configuration,enhanced intel SpeedStep(R))Tech,Intel(R)Turbo Boost
+                            Tech under CPU P state controle.
+    04. [EPSD100027847] No "Invalid DIMM Population" event and 8501 error message on POST screen when DIMM population invalid.
+
+================================================================================
+                01.01.D059
+================================================================================
+    01. Update label to D059.
+
+================================================================================
+                01.01.D056
+================================================================================
+    01. [EPSD100247951] Wording mistake in  "User Configuration"and Setup Server Information Page.
+    02. [EPSD100027633] ESRT2 OPROM loading time is too long and hotkey "CTRL+E" does not work.
+    03. [EPSD100248178] BIOS update is fail with "iflash32.efi" tool.
+    04. [EPSD100248067] Setup menu for other misc items.
+    05. [EPSD100247863] The help text of "Early System Boot Timeout" show incorrect.
+    06. [EPSD100248196] Update Varstore patch tool to support more variables.
+    07. [EPSD100027630] LightUiApp feature update.
+    08. [EPSD100027682] SUT would hang at 80port 0x96 after set both NIC1 Controller/NIC2 Controller to Disabled and then save & reset.
+    09. ME FW update to 4.0.2.47
+
+================================================================================
+                01.01.D054
+================================================================================
+    01. [EPSD100028584] There is no Legacy FCoE OpROM in POST for IOM X540.
+    02. [EPSD100028541] BIOS option "FCoE 10GbE Option ROM" can found within BIOS setup even no IOM connected to SUT.
+    03. [EPSD100247513] Some ports connector information lost in SMBIOS.
+    04. Update ACM Binary file.
+
+================================================================================
+                01.01.D053
+================================================================================
+    01. [EPSD100027462] The value of memory Device Locator string within SMBIOS not consistent with silkscreen.
+    02. [EPSD100028068] BMC Web display DIMM_A1 and DIMM_B1 info when DIMMs insert slot A2 and B2 in M/B.
+    03. [EPSD100247512] J4K1 jumper information should not exist SMBIOS type 12.
+    04. [EPSD100028262] Memory speed downgrade from 2133MHz to 1867MHz during AC cycle test (7-1,14cycles,10-1,10cycles,25C).
+    05. [EPSD100027533] Boot Manager displayed duplicated UEFI boot device after reboot from UEFI RHEL 7 OS with UEFI W2012R2 OS HDD connected.
+    06. [EPSD100027590] When system into sleep S1 or S3, power LED always is ON under W2012R2 with November update.
+    07. [EPSD100245821] At UEFI RAID ESRT2 mode, "Check All" option no function when config RAID.
+    08. [EPSD100028004] The "Mass Storage Devices" option is hidden when press F9 to load default.
+    09. [EPSD100027855] 4 PCIe slots table within Type 9 wtih BIOS D0017. It's not consistent with HW designed.
+    10. [EPSD100027856] All Slot Type field within Type 9 under BIOS D0017 having similar value.
+    11. [EPSD100027631] The prompt time of the OPROM is too short while RSTe RAID had been set.
+    12. [EPSD100027682] SUT hang at 80port 0x96 after set both NIC1/NIC2 controller to disabled.
+    13. Solve issue that OEM Logo shows at diagnostic even Quiet boot is disabled.
+
+================================================================================
+                01.01.D051
+================================================================================
+    01. ID change based on D050.
+
+================================================================================
+                01.01.D050 (#219679)
+================================================================================
+    01. [EPSD100027442] "BMC DHCP Host Name" is still grayed out and inactive even IP Source is set to "Dynamic".
+    02. [EPSD100028365] Add blank line between each NIC Type in BIOS Setup/NIC Configuration.
+    03. [EPSD100028435] Delete SGX Option in setup.
+    04. [EPSD100247788] Linux(both Redhat7&SUSE12) OS installation failed in both legacy and UEFI mode.
+    05. [EPSD100028420] SUT would not boot into EFI shell automatically in BIOS Recovery mode.
+    06. [EPSD100247939] Backup BIOS cannot be updated successfully by command:iflash32.efi -u D036.cap UpdateBackupBios
+    07. Update ME FW to 4.0.2.44
+
+================================================================================
+                01.01.D048
+================================================================================
+    01. [EPSD100247173] SUT can not use Oa2intel tool to insert OEM data.
+    02. [EPSD100247531] With Grantley code, LegacyRegion->Unlock can not enable memory write under release mode
+    03. [EPSD100028393] Unknown field "DPR Memory Size" appeared after set "Intel(R) TXT" to Enabled in BIOS Setup.
+    04. [EPSD100247664] SUT would auto reboot when boot into RMS25JC080 OPROM about 20 sec.
+    05. [EPSD100027352] Primary BIOS Version showed as "8" in diagnostics screen.
+    06. [EPSD100028402] Incorrect value of Cache Configuration Field for L2 and L3 cache within Type 7.
+    07. [EPSD100247513] Some ports connector information lost in SMBIOS.
+    08. [EPSD100027740] USB device is still functional even when the USB Controller option is disabled.
+    09. [EPSD100247538] syscfg cannot read "Current Memory Speed" under Windows.
+    10. [EPSD100027695] Help Text for item "Correctable Error Threshold" is not correct.
+    11. [EPSD100027847] There is no retries of the boot when change Boot Option Retry to enable.
+    12. [EPSD100027594] The Console Redirection option is gray out and unchangeable after press F9 to load BIOS default values.
+    13. [EPSD100028087] In BMC LAN Configuration/User Configuration, the default privilege of User3 is Administrator, but it should be User.
+    14. [EPSD100247593] Failed to write the GUID to BIOS flash in MFG mode.
+
+================================================================================
+                01.01.D046
+================================================================================
+    01. For AutoBuild debug after code merge.
+
+================================================================================
+                01.01.D044
+================================================================================
+    01. [EPSD100027353] Fix Processor/Memory info not correct in OemPostScreen issue.
+    02. [EPSD100027597] Enable 60/64 emulation for E3-1200 v5 PCH, fix USB keyboard/mouse not work under dos.
+    03. [EPSD100027672] Type 7 Error Correction type is incorrect in SMBIOS log of BIOS D008. 
+    04. [EPSD100027506] DIMM manufacturer field did not be filled with "Empty/NO DIMM" when no DIMM populated on slots. 
+    05. [EPSD100027461] The value of number of memory devices within SMBIOS not consistent HW spec defined. 
+    06. [EPSD100027462] The value of memory Device Locator string within SMBIOS not consistent with silkscreen printed. 
+    07. [EPSD100027460] The value of maximum memory capacity within SMBIOS not consistent HW spec defined.
+    08. [EPSD100027517] When press NMI button in W2K12R2-64_November, system cannot display BSOD.
+    09. [EPSD100028308] Remove boot device will cause SBOchange to disabled.
+    10. [EPSD100027381] There is no Help Text for items "Uncore Power Management", "CPU P State Control" and "CPU C State Control" in BIOS Setup.
+    11. [EPSD100245848] Enable Console Redirection, Remote system show garbage when set Baud Rate to 9.6/19.2/38.4/57.6K.
+    12. [EPSD100028006] POST Code LEDs show 0xFF not 0xE8 when no DIMM installed.
+    13. [EPSD100027336] Few of processor infomration within Processor Configuration page under BIOS display N/A.
+    14. [EPSD100027603] Console Redirection setting is disabled and unchangeable after Enable any of the three BMC LAN SOL.
+    15. [EPSD100247097] The power policy don't support S1, but support S4.
+    16. [EPSD100028089] NIC1 will be disabled while [VGA Port Output] = [Processor graphicd], [Primary Video] = [VGA port].
+    17. [EPSD100027936] "Intel(R) Storage Module" showed as "None" even connected RMS25JB080.
+    18. [EPSD100027573] There is only one log "BIOS Recovery Complete" in SEL indicating recovery boot.
+
+================================================================================
+                01.01.D036
+================================================================================
+    01. [EPSD100247290] SUT can't power on and hang with POST error code 0x96 when no any boot device connect and disable NIC PXE boot at BIOS R011.
+    02. [EPSD100027644] "OEM Table ID" is not correct in ACPI DMAR Table.
+    03. [EPSD100027739] One onboard LAN boot device disappear and "Not enough memory available" event logged in BIOS Error Manager & SEL when populate x540-T2 LAN card in MB.
+    04. [EPSD100027406] No RMM4 Lite port connector information table within SMBIOS.
+    05. [EPSD100027852] Value of Processor Upgrade Field within Type 4 in BIOS D0017 not consistent with HW spec defined.
+    06. [EPSD100247230] DIMM Thrm Mrgn 1 sensor is always in unknown state
+
+================================================================================
+                01.01.D032
+================================================================================
+    01. [EPSD100247059] BIOS need to filter ITK security items.
+    02. [EPSD100027936] "Intel(R) Storage Module" showed as "None" even connected RMS25JB080.
+    03. [EPSD100027775] No OPROM for IOMs during POST and new network boot devices listed in Boot Maintenance Manager page after boot into BIOS Setup.
+    04. [EPSD100027731] Fix POST dignostic screen doesn't display USB keyboard/mouse detected info.
+    05. [EPSD100247241] Boot Order can't be changed when SBO is enabled at BIOS R011.
+    06. Update CPU Microcode to 0000001D revision.
+    07. [EPSD100246833] No beep code during POST.
+    08. [EPSD100246630] No "Early System Boot Timeout" option at Advanced Boot Options, but PCSD BIOS Setup Design Document has.
+    09. [EPSD100027474] It cannot identify which one is NIC1 or NIC2 for Onboard LAN UEFI boot device.
+    10. [EPSD100028038] No COM Port device in device manager in W2k12R2-64.
+    11. [EPSD100247177] Enter BIOS setup through User password then Press F9 to load default, all BIOS settings becomes available and can be modified.
+    12. [EPSD100027342] MSR IA32_MISC_ENABLE bit 34 is not 1 when execute disable bit set to disable.
+    13. [EPSD100027672] Type 7 Error Correction type is incorrect in SMBIOS log of BIOS D008.
+    14. [EPSD100027373] Socket Designation string within type 4 not consistent with requested displayed "CPU x".
+    15. [EPSD100027511] Incorrect value of Device Type field within SMBIOS Type 41 for integrated SATA Controller.
+    16. [EPSD100027503] USB flash drive would not detect as a floppy drive when set the Storage Emulation to "Forced FDD".
+
+================================================================================
+                01.01.D026
+================================================================================
+    01. [EPSD100027505] IPMI Device Information table is Required but was not found by PETS tool.
+    02. [EPSD100247152] The 5220 error message didn't display in Error Manager after clear remove CMOS battery or clear CMOS jumper.
+    03. [EPSD100027596] Information of System Configuration Options within SMBIOS not consistent with HW silkscreen.
+    04. [EPSD100247149] The help text of AHCI Capable SATA Controller displays incorrectly.
+    05. [EPSD100027682] SUT would hang at 80port 0x96 after set both NIC1 Controller/NIC2 Controller to Disabled.
+    06. Sync RC to V78_01 and ME to 4.0.2.12 and microcode to 0019.
+    07. [EPSD100246635] Connect a PCI-E RAID module or SAS RAID module, no RAID info at BIOS setup.
+    08. [EPSD100027517] When press NMI button in W2K12R2-64_November, system cannot display BSOD.
+    09. [EPSD100027362] Serial port not detected message displayed after clean CMOS.
+    10. [EPSD100027377] Storage Infomaion is not correct in post screen.
+    11. [EPSD100246757] Windows2012 R2 OS can not be installed or booted-into with all 4 DIMMs applied.
+    12. [EPSD100247149] The help text of AHCI Capable SATA Controller displays incorrectly.
+    13. [EPSD100027517] When press NMI button in W2K12R2-64_November, system cannot display BSOD.
+    14. [EPSD100027796] Help Text for "Change Boot Order" is not clear enough to let user know how to change Boot Order.
+    15. [EPSD100247165] Yellow mark display in device manager.
+    16. [EPSD100027643] "Preferred_PM_Profile" field is not correct in ACPI FADT Table.
+    17. [EPSD100027943] "Creator ID" is empty in ACPI TCPA Table.
+
+================================================================================
+                01.01.D023
+================================================================================
+    01. EPSD100027326 It display “Press F7 to show boot menu option” during POST, but S1200SP not support this function.
+    02. [EPSD100027343] When system power on without memory, speaker cannot beep. 
+    03. [EPSD100027443]  Speaker does not beep during speaker 1KHz to 10KHz test
+    04. Update ServerAmiRestrictedPkg binary to CP CL203208
+    05. [No slighting]MSR Value is wrong after change CPU Power and Performance setting
+    06. [No slighting] There is no item iSCSI Option ROM in BIOS Setup
+    07. [EPSD100027700]Item name is not correct for "NIC2 Controller" in BIOS Setup.
+    08. NO_SIGHTING: Sync BootOrder code from PCSD_COMMON tree
+    09. [No Slighting]Some RAID mode under UEFI mode issue. 
+    10. [EPSD100247056]Fixed The option of Primary Video and VGA Port Output is not gray out and accessible issue. 
+    11. [EPSD100027637] Fixed No screen output when set "VGA Port Output" to "Processor graphics" issue.
+    12. [EPSD100027741]Sometimes the "Submit fail for form:!." box will pop up when press F10 to save changed BIOS setting
+    13. [No Sighting]Some RAID mode and UEFI issue For RO SKU, SE SKU and EV.
+    14. [EPSD100027341] There is no popup message to notice user to confirm when pressing F10 Hot Key in BIOS Setup. 
+    15. [EPSD100027381]There is no Help Text for items "Uncore Power Management", "CPU P State Control" and "CPU C State Control" in BIOS Setup.
+    16. [EPSD100027409]The Data rows arrangement not align with title under error manager.
+    17. [EPSD100027508]System Date did not roll back to 01/01/2013 after CMOS battery or clean CMOS with jumper
+    18. [EPSD100027409]The Data rows arrangement not align with title under error manage
+    19. [EPSD100244684]Enter 3 times incorrect Admin PWD, no error log at Error manager and SEL log
+    20. [No slighting] Update setup page according 0.9 setup spec
+    21. [EPSD100027511] - Incorrect value of Device Type field within SMBIOS Type 41 for integrated SATA Controller. 
+    22. [EPSD100027515] - All of onboard devices have similar value within SMBIOS for Bus Number, Device Number and Function Number field except Integrated SATA Controller. 
+    23. [EPSD100027514] - Incorrect value of Device Type field within SMBIOS Type 41 for device enabled or not. 
+    24. [EPSD100027507] - Reference Designation String within Type 41 for onbaord network not consistent HW designed. 
+    25. [EPSD100027509] - Onboard IO Module information could found in type 41 even connector removed from current baseboard. 
+    26. [EPSD100027373] Socket Designation string within type 4 not consistent with requested displayed "CPU x". 
+    27. [EPSD100247027] Type 4 Socket Designation string is "U3E1" , not "CPU x" 
+    28. [EPSD10002766]  The HDD's(ST6000NM0004) capacity detects wrong in BIOS 
+    29. [No slighting] Pvmode test error on the Greenlow platform.
+    30. [EPSD100027506] DIMM manufacturer field did not be filled with "Empty/NO DIMM" when no DIMM populated on slots. 
+    31. [EPSD100027462]  The value of memory Device Locator string within SMBIOS not consistent with silkscreen printed. 
+    32. [EPSD100027471] All of DIMMs populated on SUT having similar Asset Tag string within SMBIOS. 
+    33. [EPSD100247155][Platform/Common] [Enable FRB2 and make sure it workable then change FRB2 to disable, at the first time FRB2 still has function.]
+
+================================================================================
+                01.01.D017
+================================================================================
+    01. Memory and PCIe error logging feature add
+       
+================================================================================
+                01.01.D014
+================================================================================
+    01.[EPSD100246882][Password clear jumper function is  ineffective]
+    02.[EPSD100246757]Windows2012 R2 OS can not be installed or booted-into with all 4 DIMMs applied
+    03. VT-D enable function 
+    04.[EPSD100027384]["AHCI Controller Configuration" is still showed as "8 ports of 6Gb/s SATA" even "AHCI Capable SATA Controller" is set to Disabled..]
+    05.[EPSD100247017][No Gigabit NIC driver can be found in EFI shell under UEFI mode.]
+    06.[EPSD100027382][There is a lot of unsupported selection for item "Memory Operating Speed Selection" in BIOS Setup..]
+    07.[EPSD100027387][There is no item "iSCSI Option ROM" in BIOS Setup.]
+    08.[EPSD100246581][MSR value is wrong after change CPU Power and Performance setting]
+    09.[EPSD100027345&EPSD100246426&EPSD100027330][Getting the value "Not Supported" even enabled or disable BIOS option "Direct Cache Access".]
+    10.[EPSD100246961,EPSD100246874] Fixed issue "S1200SP Mezz device lost when slot4/6 has PCIE add-in card installed" and "SUT will hang when install PCIE RAID card in slot 4"
+    11.Add SMBIOS type10 for SE/RO and Type13 issue fix
+    12.[EPSD100246877] System can't shutdown
+
+
+================================================================================
+                01.01.D008
+================================================================================
+    1. Update RC 071_08
+    2. Add iGFX legacy option rom.
+    3. Update CPU microcode.
+    4. Update ME firmware to revision to:4.0.2.5
+    5. Add RSTe Legacy oprom and UEFI driver. add ESRT2 oprom.
+    
+================================================================================
+                01.01.D006
+================================================================================
+    1. Added the UBA Multi Platform support for Greenlow platform.
+    2. Add UBA Oprom control and PCIe Link Speed function
+    3. Add password & NMI button & Frontpanel lock support
+    4. Add PMI acpi table support.
+    5. Add system uuid support
+
+===============================================================================
+                    Issues Fixed
+================================================================================
+================================================================================
+                01.01.D008
+================================================================================
+    1. [EPSD100246852] Fixed Power LED of Front Panel is always off in Chassis issue.
+    2. Fixed SilverPssLC Sku no Pcie Slot6 item in setup
+    3. Fixed BIOS setup can't get ME firmware revision number
+    4. Update GPIO table for PCIe slot5 clock output.
+    5. Fixed SUT can not update FD regions or ME regions with iflash32 utility issue.
+    6. Update SATA Port number string from "0-5" to "0-7".
+    7. SMBIOS type 8/9/10 LC sku porting
+
+
+================================================================================
+                01.01.D006
+================================================================================
+    1. Update SPS ME FW to support C0 PCH and fixed SATA port can't detect HDD issue.
+    2. Fix system will have blue screen when install windows 2008 R2 under legacy mode (Linux legacy install only)
+    3. Temp WA for SMBIOS type 1/2/3, need to be roll back after final solution completed
+    4. Modify TCO base address
+    5. update BP core to 1.2.1.1
+    6. Fixed debug serial port output abnormal issue
+    7. update legacy stack binary, enable usb stack
+    8. Fixed Reovery mode support code and memory info dpx add in RC code
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

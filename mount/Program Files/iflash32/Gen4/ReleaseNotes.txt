@@ -1,0 +1,252 @@
+Release Note for Iflash32 Utility
+Version 10.0 Build 10
+February 24, 2011
+
+Copyright (c) 2010-11 Intel Corporation
+
+============================================
+
+Contents
+--------
+
+1. Introduction
+2. Supported Platforms
+3. Supported Operating Systems
+4. Pre-requisites
+5. Installation and Un-installation (UEFI)
+6. Usage
+7. Known Issues
+8. Unsupported Features
+9. Changes since the previous release
+10. Legal Information
+
+
+1. Introduction
+---------------
+
+ The IFlash32 BIOS Update Utility is an application program used for updating the system BIOS.
+
+
+2. Supported Platforms
+----------------------
+
+    Intel (R) S1200BTL series of platforms.   
+    Intel (R) S1200BTS series of platforms.
+    
+3. Supported Operating Systems
+------------------------------
+
+    UEFI 2.0
+    WinPE 2.0, 3.0 for 32 bit & 64 bit.
+
+
+4. Pre-requisites
+-----------------
+
+   1. UEFI 2.0.
+
+
+5. Installation and Un-installation
+-----------------------------------
+
+UEFI:
+   Installation:
+   -------------
+   1. Unzip the compressed zip file on any windows m/c and take the folder and copy to any external media.
+   2. Connect the external media to SUT
+   3. Go to the directory where Iflash32.efi is present in the external media
+   4. Run Iflash32.efi -h for usage.
+
+   Uninstallation:
+   ---------------
+
+   1. To uninstall Iflash32 utility, manually delete the contents of the directory where the utility is present.
+
+WinPE:
+    
+   Installation:
+   ------------
+   
+     1. Copy the compressed ZIP file into your local directory (e.g. C:\IFlash32).
+     2. Unzip the folder.
+     3. There will be a main folder with ReleaseNotes.txt and folders named drivers, win_x86, win_x64, with following folder structure:
+
+      |----ReleaseNotes.txt
+      |----Drivers
+      |        |---Win
+      |             |---x64
+      |             |    |--DeviceSetup.exe
+      |             |    |--flashud.cat
+      |             |    |--flashud.inf
+      |             |    |--FLASHUD.sys
+      |             |    |--ibsmutil.cat
+      |             |    |--IBSMUtil.sys
+      |             |    |--IBSMUx64.inf
+      |             |    |--imbdrv.cat
+      |             |    |--IMBDrv.inf
+      |             |    |--imbdrv.sys
+      |             |    |--install.cmd
+      |             |    |--uninstall.cmd
+      |             |
+      |             |---x86
+      |                  |--DeviceSetup.exe
+      |                  |--flashud.cat
+      |                  |--flashud.inf
+      |                  |--FLASHUD.sys
+      |                  |--ibsmutil.cat
+      |                  |--IBSMUtil.sys
+      |                  |--IBSMUtil.inf
+      |                  |--imbdrv.cat
+      |                  |--IMBDrv.inf
+      |                  |--imbdrv.sys
+      |                  |--install.cmd
+      |                  |--uninstall.cmd
+      |
+      |----Win_x86
+      |       |---iflash32.exe
+      |       |---imbapi.dll
+      |       |---msipmi.dll
+      |
+      |----Win_x64
+              |---iflash32.exe
+              |---imbapi.dll
+              |---msipmi.dll
+
+     4. Go to 'drivers' folder and Choose appropriate folder depends on the operating System and execute the Install.cmd command.
+     5. Go to win_x86 or win_x64 folder based on the operating system and you can run iflash32.exe -h for help. 
+
+   Uninstallation:
+   ---------------
+     1. To uninstall Iflash32 utility, manually delete the contents of the directory where the utility is present.
+     2. To uninstall the drivers, please follow this path : drivers->win and choose the x86 or x64 depends on the Operating system
+        and run the uninstall.cmd.
+
+
+6. Usage
+--------
+
+   1. Command line Interface
+
+             IFlash32 [Options] [File Name]
+			 			 
+
+      a. To view the command-line help page:
+
+             IFlash32 -h
+			
+
+      b. To update the System BIOS:
+
+             IFlash32 -u [File Name] -nopc
+
+      c. To display file information:
+
+             IFlash32 -i [File Name]
+
+      d. To display the system BIOS Version:
+
+             IFlash32 -i
+
+      e. To update the system BIOS in non-interactive mode:
+             
+             IFlash32 -u [FileName] -ni
+
+
+      f. To Restore Default BIOS Settings
+
+	     IFlash32 -rd
+ 
+      g. To by-pass platform check
+
+	     IFlash32 -nopc
+
+	Note : Usage of this switch with a capsule file not intended
+		for the system can corrupt the BIOS.
+
+      h. To preserve OEM data
+	     IFlash32 -u [FileName] -saveoemdata
+
+      i. Signed way of updating signed BIOS update (added for Romley platforms)
+	     IFlash32 -u [FileName] -signed
+
+
+    2. Reboot system after the update/Restore Default BIOS Settings operation is completed.
+
+
+7. Known Issues
+---------------
+
+    a. ME update on Intel (R) S1200BTS series of platforms works only for BIOS R20 or higher.  ME update works only on EFI.
+    b. Updated ME version may not appear on BIOS Setup screen, in Intel (R) S1200BTS series of platforms. This is a known issue from BIOS
+  
+       
+8. Unsupported Features
+-----------------------
+
+None.
+
+
+9. Changes since the previous release
+--------------------------------------
+
+   Added support for Intel (R) S1200BTS series of platforms..
+
+  
+10. Legal Information
+--------------------
+
+========================================================
+
+                               LEGAL INFORMATION
+
+========================================================
+
+Information in this document is provided in connection with Intel Products
+
+and for the purpose of supporting Intel developed server boards and systems.
+
+No license, express or implied, by estoppel or otherwise, to any intellectual 
+
+property rights is granted by this document. Except as provided in Intel's 
+
+Terms and Conditions of Sale for such products, Intel assumes no liability 
+
+whatsoever, and Intel disclaims any express or implied warranty, relating to 
+
+sale and/or use of Intel products including liability or warranties relating 
+
+to fitness for a particular purpose, merchantability, or infringement of any 
+
+patent, copyright or other intellectual property right. Intel Corporation may 
+
+have patents or pending patent applications, trademarks, copyrights, or other 
+
+intellectual property rights that relate to the presented subject matter.  
+
+The furnishing of documents and other materials and information does not 
+
+provide any license, express or implied, by estoppel or otherwise, to any 
+
+such patents, trademarks, copyrights, or other intellectual property rights.  
+
+Intel products are not intended for use in medical, life saving, or life 
+
+sustaining applications. Intel may make changes to specifications and product 
+
+descriptions at any time, without notice.
+
+ 
+
+Intel is a registered trademark of Intel Corporation. 
+
+ 
+
+*Other names and brands are the property of their respective owners.
+
+ 
+
+Copyright (c) 2011 Intel Corporation.
+
+
+
+(end)

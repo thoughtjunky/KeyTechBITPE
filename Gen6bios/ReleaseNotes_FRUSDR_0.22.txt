@@ -1,0 +1,310 @@
+=============================================================================
+    Intel(R) Server Platform S1200SP FRU/SDR Update Release Notes
+=============================================================================
+
+INTEL Enterprise Platform & Services Marketing
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+
+=============================================================================
+
+DATE:       November 17, 2016
+
+TO:         Intel(R) Server Platform S1200SP customers
+
+SUBJECT:    IBMC(R) FRU/SDR update package S1200SP_FRUSDR_022 release notes
+
+=============================================================================
+                               LEGAL INFORMATION
+=============================================================================
+Information in this document is provided in connection with Intel products. 
+No license, express or implied, by estoppel or otherwise, to any intellectual 
+property rights is granted by this document. Except as provided in Intel's 
+Terms and Conditions of Sale for such products, Intel assumes no liability 
+whatsoever, and Intel disclaims any express or implied warranty, relating to 
+sale and/or use of Intel products including liability or warranties relating 
+to fitness for a particular purpose, merchantability, or infringement of any 
+patent, copyright or other intellectual property right. Intel Corporation may 
+have patents or pending patent applications, trademarks, copyrights, or other 
+intellectual property rights that relate to the presented subject matter.  
+The furnishing of documents and other materials and information does not 
+provide any license, express or implied, by estoppel or otherwise, to any 
+such patents, trademarks, copyrights, or other intellectual property rights.  
+Intel products are not intended for use in medical, life saving, or life 
+sustaining applications. Intel may make changes to specifications and product 
+descriptions at any time, without notice.
+
+Intel is a registered trademark of Intel Corporation. 
+
+*Other names and brands are the property of their respective owners.
+
+Copyright (c) 2015 Intel Corporation.
+
+=============================================================================
+                      ABOUT THIS RELEASE PACKAGE
+=============================================================================
+
+SDR file version:                   0.22
+Baseboard FRU file version:         0.01
+Master configuration file version:  0.16
+FRUSDR loader version:              14.0 Build 8
+FRU/SDR release notes:              0.22
+
+SDR data based on system/thermal team SDR spreadsheet rev 0.94
+
+=============================================================================
+	     SYSTEM HARDWARE & SOFTWARE REQUIREMENTS/REVISIONS
+=============================================================================
+
+- S1200SP baseboard PBA G29130-XXX or higher.
+
+- Skylake S processor A0 stepping or higher.
+
+- BMC FW 00.06 or later
+
+- BIOS R0023 or later
+
+- Front Panel, Hot-swap backplane, and Baseboard FRU data must be available
+  for chassis auto-detection to succeed.
+
+=============================================================================
+                      IMPORTANT INSTALLATION NOTES
+=============================================================================
+
+NOTE: If you updated BIOS and did not clear CMOS Ram, you should do that before
+      installing this package.
+	  
+NOTE: You need to have ME FW 3.05 or later installed for the SSB Temp sensor to work properly.
+
+=============================================================================
+			INSTALLATION PROCEDURE
+=============================================================================
+
+1. Ensure BMC FW release 00.04 or later and BIOS R0001 or later are
+   pre-installed before attempting this FRU/SDR update.
+
+2. Copy all of the files and directories in the S1200SP_FRUSDR_019.zip archive
+   to a USB key, hard disk drive or floppy drive.
+
+3. If the board FRU information has not been previously programmed, then
+   default FRU information must be programmed before the update is started.
+   This is done with the following command:
+   frusdr.efi /fru s1200sp.fru
+   
+4. Execute the following script to bring up the main FRU/SDR load menu:
+
+     updS1200SP.nsh
+
+5. Select Option 1 or 3 to do the SDR update.
+
+6. The package should do an auto-config. If it does not, it will print
+   an error message indicating why auto-detection failed and then present
+   the standard chassis selection menu.
+
+=============================================================================
+                           KNOWN ISSUES/WORKAROUNDS
+=============================================================================
+
+=============================================================================
+                           ISSUES FIXED
+=============================================================================
+S1200SP_022:
+EPSD100255996 SDR update info and product update area info output at the same line when update FRUSDR with nac mode on SilverPass platform.
+EPSD100256122 The SDR version by run command ¡§flashupdt ¡Vi ¡Vu frusdrupdate.cfg¡¨ does not match with the system frusdr 0.21.
+
+S1200SP_021:
+
+S1200SP_020:
+EPSD100034015 When use KBL CPU to Updated FRUSDR 0.19, system detect CPU model as SKL.
+
+S1200SP_019:
+EPSD100030561 1U 450W PSU LED behavior did not meet BKM during different temp threshold.
+
+S1200SP_018:
+
+S1200SP_017:
+EPSD100250253 FRUSDR v0.15 Master.cfg loads chassis intrusion SDR for 1U rack system
+
+S1200SP_016:
+EPSD100029982 In SKU7 (P4000XXSHDR+HSBP SAS (12G*8)), HDD4~7 can be detected by OS, but it doesn't show "Drive Presence" in sensor HDD status.
+
+S1200SP_015:
+EPSD100029996 It shows version 0.14 in the master.cfg file of FruSdr 0.15 package
+ 
+S1200SP_014:
+EPSD100029588 The PS1 Curr Out % status shows "Unknow" in sensor readings of EWS(1U,350W).
+
+S1200SP_013:
+EPSD100029394 After remove/restore system FAN 1/2/3, it cannot occur correct event in BMC.
+
+S1200SP_012:
+EPSD100248819 There's no Exit Air Temp sensor after updated FRUSDR on P2 SUT without HSBP.
+
+S1200SP_011:
+EPSD100248659 The PSU's Fan boost to high speed after update to FRUSDR 0.10.
+
+S1200SP_010:
+EPSD100028987 The "0x20 BB P1 VR Temp" and "0x25 BB Mem VR Temp" sensors show "NA" threshold in BMC WebUI  
+EPSD100247316 There should be no "Exit Air Temp" sensor with Fixed PSU.
+EPSD100248624 No sensors defined for domain 6 in the global Fan Sensor Domain Map record.
+EPSD100248633 When run FSC scripts on SUT P2, always message " FAIL: Main Domain record has no Sub-Records. Skipping this record."
+EPSD100248637 [SVP_FSC]FAIL: Reading Mask & Settable / Readable Threshold field expected to be 0x0000, actual value is 0x1010.
+
+S1200SP_009:
+EPSD100248497 The SDR has no system airflow information for domain 0/2.
+
+S1200SP_008:
+EPSD100028701 After heating up the HSBP temperature sensor over 111 degree, the status of "HSBP Temp" will show "Not available" and it will log "HSBP Health offline" event in SEL.(screenshot)
+
+S1200SP_007:
+EPSD100248275 The Auto Fan Profile record has an illegal value. The Minimum performance profile is out of range.
+EPSD100028700 After cooling down the HSBP temperature sensor below 0 degree, the status of "HSBP Temp" will show "Upper Critical" and reading shows 237 degree.(screenshot)
+EPSD100248301 SDR Record #0xBA has a conflicting Stepwise Sub-Record defining the lower curve record for Domain:6, Profile:0x0~0x7
+
+S1200SP_006:
+
+S1200SP_005:
+EPSD100028286 In FCN chassis, there should be only 1 processor fan and 1 rear system fan, but it detect 1 processor fan and 2 system fans.
+EPSD100027871 In HCN chassis, there should be only 1 processor fan and 1 system fan, but it detect 1 processor fan and 2 system fans.
+EPSD100028426 After disconnect the HSBP I2C, BMC will log Consistency Check/Parity 
+
+S1200SP_004:
+
+S1200SP_003:
+EPSD100247114 Can't show all HDD status in sensor reading page on EWS
+EPSD100247316 There should be no "Exit Air Temp" sensor with Fixed PSU.
+EPSD100027848 The BB P1 VT Temp sensor (actually should be BB P1 VR Temp) threshold value shows "NA"
+EPSD100247238 Rear HDD 0 Stat sensor always in unknown state.
+EPSD100027750 According to BMC SPEC v0.8, the "BB P1 VT Temp" should be "BB P1 VR Temp".
+
+S1200SP_002:
+EPSD100246913 System fan 1 status is incorrect while removed
+EPSD100246912 Processor Fan sensor is mismatched with System Fan 1 in sensor reading page on EWS
+EPSD100246905 there is no sensor for power supply in Sensor reading page on EWS
+EPSD100246895 String "HSBP 0 Health" for HSBP Health sensor is incorrect.
+EPSD100246894 There is no "P1 Thermal margin" sensor in sensor reading page on EWS
+EPSD100246867 MTT cpu2 sensor is not supposed to appear in EWS sensor page.
+EPSD100246858 BB Mem VR temp sensor is always in Critical state.
+EPSD100246857 BB P1 VT Temp sensor is always in Critical state
+EPSD100027560 No beep code 1-5-2-1 and no CPU missing evet assert when power on the SUT without CPU.
+
+S1200SP_001:
+- First release
+
+=============================================================================
+                           FEATURES ADDED
+=============================================================================
+S1200SP_022:
+- Add "DISPLAY ¡§ ¡§" in end of product info update in master.cfg
+
+S1200SP_021:
+- Update FRUSDR utility to v14.0 Build 8. 
+
+S1200SP_020:
+- Remove "SKL-S" string of PROCESSOR message in master.cfg.
+
+S1200SP_019:
+- Follow Silver_FSC_Config_Sheet_Rev0.94
+
+S1200SP_018:
+- Follow Silver_FSC_Config_Sheet_Rev0.93,0.92
+
+S1200SP_017:
+- NO_INTRUSION no need to load sdr record.
+
+S1200SP_016:
+- Follow Silver_FSC_Config_Sheet_Rev0.91
+- HSBP 2 sensor number is : F8h,F9h,FAh,FBh,not F4h,F5h,F6h,F7h.
+- Modify master.cfg for P/N changed of Front Panel board and 4-bay 3.5¡¨ HDD HSBP for 1U rack.
+
+S1200SP_015:
+- Follow Silver_FSC_Config_Sheet_Rev0.85
+
+S1200SP_014:
+- Follow Silver_FSC_Config_Sheet_Rev0.7
+- 350W PSU does NOT support ¡§Current Out¡¨ reading, SDR remove it.
+
+S1200SP_013:
+- Modify fan sensor # not match for 1U rack system.
+- Modify HSBP board 4-bay 3.5¡¨ HDD for 1U rack.It's P/N of FRU data is 'FR1304S3' not 'FR1304S3HSBP'.
+
+S1200SP_012:
+- Follow Silver_FSC_Config_Sheet_Rev0.53
+- Remove sensor# '2Eh' from FSC-P1.
+
+S1200SP_011:
+- Modify Global stepwise header record of PS
+
+S1200SP_010:
+- Follow Silver_FSC_Config_Sheet_Rev0.52
+- Modify 'BB P1 VR Temp' and 'BB Mem VR Temp' two Sensor's UNC (from NA to 5) and UC (from NA to 10).
+- Modify 'System Airflow' sensor# 11h,Reading Mask & Settable / Readable Threshold Masks from 1010 to 0000.
+- Modify FSC-P1 UPS, fan failure sub-record.
+- Modify FSC-P2 UPS, discard all profile, domain 2 SDR record.
+- Modify 'Exit Air Temp' sensor# 2Eh, SDR record not support for FSC-P1 UPS.
+
+S1200SP_009:
+- Modify 'P1 DTS Therm Mgn' Sensor Maximum Reading from 00 to 7F.
+- Modify 'System Airflow' Sensor Normal/Maximum Reading.
+- Modify Global Clamp Header Record ID :0x74 & 0x94, clamp temperature from 0 to -10(F6).
+- Modify System Airflow Formula Domain mask : UPS 2Fan (02 to 03),UPS 3Fan (02 to 07).
+- Modify HDD power weight.
+ 
+S1200SP_008:
+- Follow Silver_FSC_Config_Sheet_Rev0.51
+- Modify HSBP 1/2/3 TEMP SDR,UNC,UC value.
+- Modify system fan 1/2/3/4 and cpu fan SDR of FCT.
+- Modify Global Clamp header Record (80h/25h/22h/5ch/5dh) Clamp Temp.
+- Modify Global Stepwise Curve Record(ID : 45).
+- Add 1U rack SKU support. 
+
+S1200SP_007:
+- Modify HSBP 1/2/3 TEMP SDR,Sensor Units 1,Sensor Maximum/Minimum Reading
+- Modify Autoprofile record,Minimum performance profile value 
+- Modify Global Stepwise Curve ID (18h = 24),Domain max and count from 03 to 83
+
+S1200SP_006:
+- Follow Silver_FSC_Config_Sheet_Rev0.5
+
+S1200SP_005:
+- Modify 'System Fan 1' SDR_TAG from P4000 to P4000_4X_3FAN
+- Modify HSBP 1/2/3 health SDR, Sensor Type,and Event/Reading Type
+
+S1200SP_004:
+- Follow Silver_FSC_Config_Sheet_Rev0.42
+- Modify Global stepwise curve ID 100 Domain Maximun
+- Rename sensor name IERR to CATERR
+
+S1200SP_003:
+- Correct sensor name from "BB P1 VT Temp" to "BB P1 VR Temp"
+- Load Exit Air Temp sensor only with Redundant PSU
+- Rearrange HDD X Status sensors for each HSBP
+- Correct FSC version to 03
+- Correct FSC record type to 02
+- Follow Silver_FSC_Config_Sheet_Rev0.41
+- Modify Domain mask to 01 for fans-off record
+
+S1200SP_002:
+- Remove probe processor 1 and force set the tag in master.cfg
+- Remove clear sticky tag for power supply related in master.cfg
+- Modify readable/settable mast for System Airflow
+- Modify BB P1 VT Temp for threshold and remove as/de event mask
+- Modify BB Mem VR Temp for threshold and remove as/de event mask
+- Modify System Fan 1 sensor number from 0x30 to 0x34
+- Modify Processor 1 Fan sensor number from 0x36 to 0x30
+- Add CPU Missing sensor(0x82) SDR
+- Modify readable/settable mast for Agg Therm Mgn 1/2/3/4/5/6
+- Modify HSBP Health sensor name to 1 based
+- Remove MTT CPU2 SDR
+
+S1200SP_001:
+- First release
+
+=============================================================================
+                             REFERENCE MATERIAL
+=============================================================================
+Common IBMC Firmware EAS
+Common Platform IBMC FW EPS
+Silver_FSC_Config_Sheet_Rev0.42 datasheet
+
+[END OF RELEASE NOTES]
