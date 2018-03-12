@@ -1,0 +1,98 @@
+------------------------------------------------------
+---   Some of these packages may be unnecessary,   --- 
+---   but this is what's in the images I've made   ---
+------------------------------------------------------
+
+Packages listing:
+
+Package Identity : Microsoft-Windows-Common-Foundation-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 7/26/2012 6:14 AM
+
+Package Identity : Microsoft-Windows-WinPE-LanguagePack-Package~31bf3856ad364e35~amd64~en-US~6.2.9200.16384
+State : Install Pending
+Release Type : Language Pack
+Install Time : 7/26/2012 6:18 AM
+
+Package Identity : Microsoft-Windows-WinPE-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Foundation
+Install Time : 7/26/2012 6:14 AM
+
+Package Identity : WinPE-DismCmdlets-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:37 PM
+
+Package Identity : WinPE-Dot3Svc-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:40 PM
+
+Package Identity : WinPE-EnhancedStorage-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:38 PM
+
+Package Identity : WinPE-HTA-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:32 PM
+
+Package Identity : WinPE-MDAC-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:38 PM
+
+Package Identity : WinPE-NetFx4-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:35 PM
+
+Package Identity : WinPE-PowerShell3-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:36 PM
+
+Package Identity : WinPE-PPPoE-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:40 PM
+
+Package Identity : WinPE-Scripting-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:33 PM
+
+Package Identity : WinPE-SecureBootCmdlets-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:39 PM
+
+Package Identity : WinPE-SecureStartup-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:39 PM
+
+Package Identity : WinPE-StorageWMI-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:39 PM
+
+Package Identity : WinPE-WDS-Tools-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:33 PM
+
+Package Identity : WinPE-WinReCfg-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/11/2015 9:37 PM
+
+Package Identity : WinPE-WMI-Package~31bf3856ad364e35~amd64~~6.2.9200.16384
+State : Install Pending
+Release Type : Feature Pack
+Install Time : 8/13/2015 7:42 PM
+
+The operation completed successfully.

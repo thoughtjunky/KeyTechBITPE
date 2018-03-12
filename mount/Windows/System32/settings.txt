@@ -1,3 +1,3 @@
-S1200BTL;S1200BT.86B.02.00.0041.120520121743;call bupcfg.bat iflash32 4 R0041.cap;call bupcfg.bat syscfg 4;
+S1200BTL;S1200BT.86B.02.00.0041.120520121743;goto altconfig                           ;call bupcfg.bat syscfg 4;
 S1200RP;S1200RP.86B.03.01.0002.041520151123;call bupcfg.bat iflash32 5 R03.01.0002.cap;call bupcfg.bat syscfg 5;
 S1200SP;S1200SP.86B.02.01.0049.010220172306;call bupcfg.bat iflash32 6 R02.01.0049.cap;call bupcfg.bat syscfg 6;

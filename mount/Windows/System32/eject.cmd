@@ -1,6 +1,8 @@
 @echo off
 
-:: Allow powershell scripting (used for ejecting the CD)
+REM
+REM Allow powershell scripting (used for ejecting the CD)
+REM
 powershell set-executionpolicy unrestricted
 	if errorlevel 1 (
 		call colorecho 0c "Failed to set Powershell Execution Policy"
@@ -10,7 +12,9 @@ powershell set-executionpolicy unrestricted
 		@echo.
 		)
 
-:: Eject the CD
+REM
+REM Eject the CD
+REM
 powershell Set-CDDriveState -eject >nul 2>&1
 if errorlevel 1 (
 	call colorecho 0c "Unable to eject CD"

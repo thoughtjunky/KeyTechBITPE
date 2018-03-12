@@ -1,110 +1,130 @@
-:: Make the things behave
-SETLOCAL ENABLEDELAYEDEXPANSION
 @echo OFF
+SETLOCAL ENABLEDELAYEDEXPANSION
 cls
 
-::manually running "startnet v" allows for debugging
+REM
+REM V is for verbose 
+REM
 if "%1" == "v" echo ON && set verbose=true
 
-:: used for error reporting
+REM
+REM used for error reporting
+REM
 set bitcrash=false
 
-:: If it's got more than one hard disk, it must have Firewire. CD apparently doesn't count 0_o
+REM
+REM If it's got more than one hard disk, it must have Firewire.
+REM	I should really find a way to use powershell to check specifically for each drive,
+REM	but I'm just not there yet.
+REM
 if exist E:\ (set fw=true) else (set fw=false)
 
-:: A nice message to our dear technician
-@echo.
-call colorecho 0b "Key Technology G6 CPU BurnInTest 1.03"
-@echo.
-call colorecho 0b "THIS TEST WILL ERASE ALL PARTITION DATA ON PRIMARY DISK"
-@echo.
-call colorecho 0b "Ensure all ports and drives are ready for testing"
-@echo.
-@echo.
-@echo Please wait
-@echo Initializing Windows PE Services...
+REM
+REM A nice message to our dear technician
+REM
+echo.
+call colorecho 0b "Key Technology G6 CPU BurnInTest 1.03" && echo.
+call colorecho 0b "THIS TEST WILL ERASE ALL PARTITION DATA ON PRIMARY DISK" && echo.
+call colorecho 0b "Ensure all ports and drives are ready for testing" && echo.
+echo.
+echo Please wait
+echo Initializing Windows PE Services...
+echo.
 
-:: the only thing that originally existed in this .cmd
+REM
+REM the only thing that originally existed in this .cmd
+REM
 call wpeinit
 
-:: Probe for Motherboard Model
+REM
+REM Probe for Motherboard Model
+REM
 for /f "skip=1" %%a in ('wmic baseboard get product') do set mobo=%%a
 	find "%mobo%" settings.txt >nul 2>&1 || goto altconfig
 
-:: Probe for BIOS version
+REM
+REM Probe for BIOS version
+REM
 for /f "skip=1" %%b in ('wmic bios get smbiosbiosversion') do set bios=%%b
 	find "%bios%" settings.txt >nul 2>&1 && goto serial
+	echo.
 
 :updatebios
-:: Currently only functional for Gen5?
-@echo.
-call colorecho 0c "BIOS %bios%"
-@echo. 
-call colorecho 0c "does not match the Specsheet" 
-@echo . Update?
-if "%mobo%" == "S1200BTL" goto altconfig
+REM
+REM Does not work on Gen 4
+REM
+call colorecho 0c "Current BIOS %bios%" && echo. 
+call colorecho 0c "Does not match the Specsheet" && echo . Update?[Y/N]
+
+:updatebios2
 set /p biosupdate=
-	@echo.
 	if "%biosupdate%" == "y" goto upbios
-	if "%biosupdate%" == "yes" goto upbios
 	if "%biosupdate%" == "n" goto serial
-	if "%biosupdate%" == "no" goto serial
-	@echo Please enter Yes or No
-	goto updatebios
+	echo Please enter Y or N
+	goto updatebios2
+echo.
 	
 :upbios
-@echo.
 for /f "tokens=3 delims=;" %%c in ('find "%mobo%" settings.txt') do %%c ^
 	&& pause BIOS update successful, press any key to reboot. ^
 	|| goto cmd
-	wpeutil reboot
+wpeutil reboot
 
 :altconfig
-:: When BIOS can't be set automatically
+REM
+REM When BIOS can't be set automatically
+REM
 set motherboard=unsupported
 if "%mobo%" == "S1200BTL" (
-	call colorecho 0c "Motherboard not supported for WinPE BIOS update. EFI or Deployment Assistant must be used instead"
-	@echo.
-	) else (
-	call colorecho 0c "Motherboard not recognized: cannot verify bios version, drive assignment may not work as expected"
-	@echo.
-	)
+	call colorecho 0c "Motherboard not supported for WinPE BIOS update." && echo.
+	call colorecho 0c "EFI or Deployment Assistant must be used instead." && echo.
+  ) else (
+	call colorecho 0c "Motherboard not recognized: cannot verify bios version." && echo.
+	call colorecho 0c "Drive assignment may not work as expected" && echo.
+  )
 
 :serial
 time
 date
 set /p computername=Serial Number:
-:: Allow for manual diagnostics before we start erasing things
+REM
+REM Backdoor to allow for manual diagnostics before we start erasing things
+REM Technically you could ctrl+C whenever you want, but I prefer this solution.
+REM
 if "%computername%" == "test" goto cmd
-@echo.
+echo.
  
-:: Map the network folder for logging BIT results
-@echo Attempting to map network drive...
-@echo.
+REM
+REM Map the network folder for logging BIT results
+REM
+echo Attempting to map network drive...
+echo.
 if exist N: (
 	call colorecho 0a "Network Share Mapped"
-	) else (
-	net use N: \\pxeserver\BITPE_LOGS password /user:admin >nul 2>&1
+  ) else (
+	net use N: \\pxeserver\BITPE_LOGS password /user:admin 2>nul
 	if errorlevel 1 (
-		call colorecho 06 "Network Share not found"
-		) else (
+		call colorecho 0e "Network Share not found"
+	  ) else (
 		call colorecho 0a "Network Share Mapped"
-		)
-	)
-@echo.
-@echo.
+	  )
+  )
+echo.
+echo.
 	
-:: Strip and reassign drive letters depending on configuration
-@echo Assigning drive letters and formatting Disk 0 ...
-@echo.
+REM
+REM Strip and reassign drive letters depending on configuration
+REM
+echo Assigning drive letters and formatting Disk 0 ...
+echo.
 diskpart /s volstrip.txt >nul 2>&1
 if "%mobo%" == "S1200BT" (
 	if "%fw%" == "true" diskpart /s diskpartGen4.txt >nul 2>&1
 	if "%fw%" == "false" diskpart /s diskpartGen4dd.txt >nul 2>&1
-	) else (
+  ) else (
 	if "%fw%" == "true" diskpart /s diskpartGen5.txt >nul 2>&1
 	if "%fw%" == "false" diskpart /s diskpartGen5dd.txt >nul 2>&1
-	)
+  )
 
 :setip
 if exist N:\ goto onlineDD
@@ -113,25 +133,25 @@ netsh int ipv4 set address "ethernet 2" static 192.168.0.2 255.255.255.0 127.0.0
 if errorlevel 1 (
 	call colorecho 0c "Failed to set Static IP Addresses"
 	goto cmd
-	) else (
+  ) else (
 	call colorecho 0a "Static IP Addresses Set"
-	)
-	@echo.
-	@echo.
+  )
+	echo.
+	echo.
 
 :offlineDD
 if "%fw%" == "true" goto offlineFW
 call colorecho 0a "Launching BurnInTest G6_SelftestDD script..."
-	@echo.
-	@echo.
+	echo.
+	echo.
 	call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6_SelftestDD.bitcfg /L 512,0,512,768
 		if errorlevel 1 set bitcrash=true
 	goto end
 
 :offlineFW
 call colorecho 0a "Launching BurnInTest G6_Selftest script..."
-	@echo.
-	@echo.
+	echo.
+	echo.
 	call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6_Selftest.bitcfg /L 512,0,512,768
 		if errorlevel 1 set bitcrash=true
 	goto end
@@ -139,76 +159,88 @@ call colorecho 0a "Launching BurnInTest G6_Selftest script..."
 :onlineDD
 if "%fw%" == "true" goto onlineFW
 call colorecho 0a "Launching BurnInTest G6_DD script..."
-	@echo.
-	@echo.
+	echo.
+	echo.
 	call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6_DD.bitcfg /L 512,0,512,768
 		if errorlevel 1 set bitcrash=true
 	goto end
 
 :onlineFW
 call colorecho 0a "Launching BurnInTest G6 script..."
-	@echo.
-	@echo.
+	echo.
+	echo.
 	call "x:\Program Files\BurnInTest\bit.exe" /X /R /C G6.bitcfg /L 512,0,512,768
 		if errorlevel 1 set bitcrash=true
 
 :end
-:: If something went wrong, don't shutdown
+REM
+REM If something went wrong, don't shutdown
+REM
 if %bitcrash% == "true" (
 	call colorecho 0c "Something went wrong with BurnInTest"
 	goto cmd
-	) else (
+  ) else (
 	call colorecho 0a "BurnInTest Complete"
-	)
-	@echo.
-	@echo.
+  )
+	echo.
+	echo.
 
-:: Erase all partition data from primary disk
+REM
+REM Erase all partition data from primary disk
+REM
 diskpart /s diskclean.txt >nul 2>&1
 	if errorlevel 1 (
 		call colorecho 0c "Failed to Clean Disk 0"
 		goto cmd
-		) else (
+	  ) else (
 		call colorecho 0a "Disk 0 Cleaned"
-		)
-	@echo.
+	  )
+	echo.
 	
-:: Set BIOS configuration if it's a Gen 5 or 6
-@echo.
+REM
+REM Set BIOS configuration if it's a Gen 5 or 6
+REM
 for /f "tokens=4 delims=;" %%d in ('find "%mobo%" settings.txt') do %%d ^
 	&& call colorecho 0a "BIOS config set" ^
 	|| goto cmd
-@echo.
+echo.
+echo.
 
-:: Allow powershell scripting (used for ejecting the CD)
+REM
+REM Allow powershell scripting (used for ejecting the CD)
+REM
 powershell set-executionpolicy unrestricted
 	if errorlevel 1 (
 		call colorecho 0c "Failed to set Powershell Execution Policy"
-		@echo.
+		echo.
 		call colorecho 0c "this is required for automatic ejection of the CD upon test completion"
-		@echo.
-		@echo.
-		)
+		echo.
+		echo.
+	  )
 
-:: Eject the CD
-powershell Set-CDDriveState -eject >nul 2>&1
+REM
+REM Eject the CD
+REM
+powershell Set-CDDriveState -eject 2>nul
 if errorlevel 1 (
 	call colorecho 0c "Unable to eject CD"
 	goto cmdline
-	) else (
+  ) else (
 	call colorecho 0a "CD Ejected"
-	)
-	@echo.
-	@echo.
+  )
+	echo.
+	echo.
 
-:: Test completed successfully
-	call colorecho 0a "Testing complete, press any key to power off"
-	@echo.
-	@echo.
+REM
+REM Test completed successfully
+REM
+call colorecho 0a "Testing complete, press any key to power off"
+	echo.
+	echo.
 	pause >nul
 wpeutil shutdown
 
 
 :cmd
-@echo.
-@echo.
+echo.
+echo.
