@@ -1,0 +1,16 @@
+********** Logging Start 16-2-2018 10:29:42.601 **********
+.Driver node, "*IPI0001" with hardware ID, is not present.
+Command failed.********** Logging End 16-2-2018 10:29:42.601 **********
+.********** Logging Start 16-2-2018 10:29:42.632 **********
+.SetupDiCreateDeviceInfo failed.
+Command failed.********** Logging End 16-2-2018 10:29:42.648 **********
+.********** Logging Start 16-2-2018 10:29:53.318 **********
+.SetupDiCreateDeviceInfo failed.
+Command failed.********** Logging End 16-2-2018 10:29:53.334 **********
+.********** Logging Start 16-2-2018 10:29:53.850 **********
+.SetupDiCreateDeviceInfo failed.
+Command failed.********** Logging End 16-2-2018 10:29:53.850 **********
+.********** Logging Start 16-2-2018 10:29:53.912 **********
+.SetupDiCreateDeviceInfo failed.
+Command failed.********** Logging End 16-2-2018 10:29:53.912 **********
+.

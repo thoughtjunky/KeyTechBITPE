@@ -1,94 +1,33 @@
 @echo off
-:: Usage
-:: bupcfg [desired program] [motherboard generation]
-:: available programs: iflash32, syscfg
-:: motherboard versions: 4, 5
+goto %1 || exit /b
+REM
+REM Usage
+REM bupcfg [ iflash32 | syscfg ] [ 4 | 5 | 6 ]
+REM Supported motherboards: S1200BT (syscfg only), S1200RP, S1200SP
+REM
 
-goto %1
 
 :iflash32
+pushd "%ProgramFiles%\%1\Gen%2"
+call install nul nul >nul 2>&1
 
-pushd "%ProgramFiles%\Gen%2\iflash32"
-if "%verbose%" == "true" (
-	call install.cmd
-	) else (
-	call install.cmd nul nul >nul 2>&1
-	)
-:: Gen 4 is broken
-if "%2" == "4" iflash32.exe" /u R0042.cap
-if "%2" == "5" iflash32.exe /u R03.03.0003.cap UpdateBackupBios
-if errorlevel 1 (
-	call colorecho 0c "Something went wrong flashing BIOS"
-	exit /b 1
-)
+REM
+REM Gen 4 is broken
+REM
+if "%2" == "4" echo "Gen 4 is broken, how did you even get here?!?" & goto end
+%1 /u %3 UpdateBackupBios ^
+	|| call colorecho 0c "Something went wrong flashing BIOS"
 goto end
 
 
 :syscfg
+pushd "%ProgramFiles%\%1\Gen%2"
+call install nul nul >nul 2>&1
+%1 /bcs "" "USB Configuration" "Make USB Devices Non-Bootable" 1 >nul 2>&1 && %1 /prp on >nul 2>&1 ^
+	|| call colorecho 0c "Something went wrong setting BIOS config"
 
-echo.
-pushd "%ProgramFiles%\Gen%2\syscfg"
-
-if "%verbose%" == "true" (
-call install.cmd
-) else (
-call install.cmd nul nul >nul 2>&1
-)
-
-syscfg /bldfs "" >nul 2>&1
-if errorlevel 1 (
-	call colorecho 0c "Unable to load System Defaults"
-	exit /b 1
-	) else (
-	call colorecho 0a "System Defaults Loaded"
-	)
-	@echo.
-	@echo.
-
-if "%2" == "4" (
-syscfg.exe /bcs "" "Main" "Quiet Boot" 0
-syscfg.exe /bcs "" "Processor Configuration" "Processor C6" 0
-syscfg.exe /bcs "" "PCI Configuration" "Wake on LAN (PME)" 0
-syscfg.exe /bcs "" "Server Management" "FRB-2 Enable" 0
-syscfg.exe /bcs "" "USB Configuration" "Make USB Devices Non-Bootable" 1
-)
-
-if "%2" == "5" syscfg /prp ON >nul 2>&1
-if errorlevel 1 (
-	call colorecho 0c "Failed to set Power Restore Policy"
-	exit /b 1
-	) else (
-	call colorecho 0a "Power Restore Policy set ON"
-	)
-	@echo.
-
-syscfg /bbosys
-
-	@echo Type the correct sequence i.e. 2 1 3 4 to change boot order.
-
-set bootorder=blank
-set /p bootorder=Boot Order:
-set ERRORLEVEL=0
-
-if not "%bootorder%" == "blank" (
-	syscfg /bbosys "" %bootorder% /q >nul 2>&1
-	@echo.
-	)
-
-if errorlevel 1 (
-	call colorecho 0c "Something went wrong setting Boot Order"
-	@echo.
-	call colorecho 0c "did you put spaces between your numbers"
-	@echo ?
-	popd
-	exit /b 1
-	)
-
-if not "%bootorder%" == "blank" (
-	call colorecho 0a "Boot Order set"
-	@echo.
-	)
-
+	
 :end
+echo.
 popd
 exit /b

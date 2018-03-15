@@ -1,0 +1,229 @@
+================================================================================
+Intel(R) Server Platform S1200V3RP System Firmware Update Package for 
+Intel(R) Deployment Assistant, Intel(R) One Boot Flash Update Utility, 
+The embedded EFI Shell, Windows* Preboot Execution Environment
+================================================================================
+Intel Enterprise Platform & Services Division - Marketing
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+================================================================================
+DATE    : May 20, 2015
+TO      : Intel(R) Server Board S1200V3RP
+SUBJECT : Release Notes for System Firmware Update Package 
+================================================================================
+                              ABOUT THIS RELEASE
+================================================================================
+BIOS   : R03.01.0002
+ME     : R03.00.07.018
+BMC    : 1.13.7782
+FRUSDR : 1.08
+================================================================================
+                           Support Platforms and Dependency
+================================================================================
+This update package is for Intel(R) Server Board S1200V3RPO_S1200V3RPL_S1200RPM
+
+Intel(R) Server Platform S1200V3RP family Processors supported: 
+  Intel(R) Xeon(R) Processor E3-1200 V3 series
+  Intel(R) Xeon(R) processor E3-1200 V4 series
+  
+Microcode update versions:
+Intel(R) Xeon processor E3-1200 V3 series A0 version: 0xffff0014 CPUID = 0x306C1
+Intel(R) Xeon processor E3-1200 V3 series B0 version: 0xffff0006 CPUID = 0x306C2
+Intel(R) Xeon processor E3-1200 V3 series C0 version: 0xffff0017 CPUID = 0x306C3
+Intel(R) Xeon processor E3-1200 V3 series C0 version: 0x0000001D CPUID = 0x306C3 
+Intel(R) Xeon processor E3-1200 V4 series G0 version: 0x0000000B CPUID = 0x40671 
+
+On-Board Component Option ROM Versions:
+Integrated Matrox VGA               : VBE BIOS V3.8 SQ
+1G PXE Option ROM                   : Intel(R) Boot Agent XE v1.5.53.1
+10G PXE Option ROM                  : Intel(R) Boot Agent XE v2.3.24.1
+82599 10G PXE Option ROM            : Intel(R) FCoE Boot v1.8.17
+iSCSI Option ROM                    : Intel(R) iSCSI Remote Boot version 3.0.43
+NIC UEFI Driver                     : E6327X3.EFI
+SATA RAID Option ROM - RSTe         : 4.1.0.1026
+UEFI SATA RAID Option ROM - RSTe    : 4.1.0.1026
+ESRT II FOR SATA                    : A.14.02121826
+Legacy Processor Video              : 5.5.1038
+UEFI Processor Video driver         : 5.5.1032 
+
+Reference Code Version              : 2.5.0
+Memory Reference Code Version       : 1.8.0.3
+v4 Memory Reference Code Version    : 2.5.0.8
+Management Engine Firmware Version  : 03.00.07.018
+ACM                                 : BDW v1.2
+
+================================================================================
+                  System Firmware Update Package Usage instructions                   
+================================================================================
+This package can be updated using one of the following methods:
+ - Intel(R) Deployment Assistant
+ - Windows* or Linux* operating system using Intel(R) One-boot Flash Update (OFU)
+   V12.0 Build 4 or later)
+ - Windows* Preboot Execution Environment (WinPE)
+
+To Update from Intel(R) Deployment Assistant (IDA)
+
+The Intel(R) Deployment Assistant software is easy to use and is present on the 
+"Intel(R) Server Deployment & Management" DVD shipped with the system.
+User can download the latest version IDA CD ISO image from http://downloadcenter.intel.com/
+To use the IDA CD to update the system firmware:
+- Boot server with IDA CD
+- Select "Get System Updates" 
+- Choose one of the three options 
+
+  . From http://www.intel.com/support/
+    Automatically downloads the latest Firmware Update Package from Intel 
+    Requires Internet connection
+    Enter your local IP address and proxy configuration
+    Click "Next" to start the download and update process
+
+  . From my network
+    Download the latest Firmware Update Package from http://downloadcenter.intel.com/ and copy 
+    it to a Windows* shared folder
+    Enter your local IP address, the Windows* file server name, and a
+    Windows user name and password
+    Select the firmware package in pop-up window
+    Click "Next" to start the update process
+
+  . From USB flash drive or Hard Disk
+    Download the latest Firmware Update Package from http://downloadcenter.intel.com/ and copy it 
+    to a USB flash drive, then insert the USB flash drive into the server USB port
+    Click "Browse"
+    Select the firmware package in pop-up window
+    Click "Next" to start the update process
+    
+  Note: The Firmware Update Package is in the ZIP file format. Do not unzip 
+        before copying to a Windows* shared folder or USB flash drive.
+
+To update from Windows* and Linux* or operating systems using the Intel(R) One Boot
+Flash Update Utility (OFU)
+
+Intel(R) One boot Flash Update utility can be downloaded from http://downloadcenter.intel.com/
+and it is part of the "BIOS, Firmware Update & Configuration Utilities" for 
+Windows* and Linux*. Please refer to Intel OFU user guide about the details of 
+installation and usage of OFU.
+
+Use OFU to update system firmware by the following steps:
+- Install OFU on Windows* or Linux* system
+- Download the latest firmware update package from http://downloadcenter.intel.com/
+- Unzip package to a folder
+- Run the following command in Windows* command line/Linux* terminal window:
+  <OFU install folder name>:\flashupdt -u  <package folder name>\flashupdt.cfg
+                       
+To update from Windows* Preboot Execution Environment (WinPE)
+
+The System Firmware Update Package can be inserted to Windows* PE customized image 
+for creating a bootable Windows* PE CD. User is able to update system firmware from 
+customized WinPE CD by the following steps:
+- Boot server with customized WinPE CD
+- Run script "WinPE21_x64_Update.bat" or "WinPE20_x86_Update.bat" 
+  (name may be varied depends on your own customization)
+  
+Note:
+1. The Intel(R) OFU utility is case sensitive. Therefore, when you transfer the 
+Firmware Update Package using USB flash drive from a Microsoft Windows* system to a Linux
+environment, you must first extract under the Linux* environment. Otherwise, you 
+will need to mount the USB flash drive manually with 'vfat' option under Linux to avoid 
+conversion from upper case to lower case and vice versa.
+
+2. To make Intel(R) OFU utility run properly under x86 or x64 OS, you have to read
+OFU release notes on known issues for OFU installation.
+
+3. In this SFUP package, Intel only provide batch file "WinPE_x86_Update.bat"
+for WinPE2.0 32 bit solution "WinPE_x64_Update.bat" for WinPE2.1/3.0 64 bit 
+solution as an example. Please refer to white paper "White Paper-Intel Server 
+Utilities Procedure for WinPE.pdf" for details on building your own customized 
+WinPE CD.
+
+4. Windows PE 2.0 - built from Windows Vista SP1 32bit or EM64T
+5. Windows PE 2.1 - built from Windows Vista SP1 or Windows Server 2008, EM64T
+6. Windows PE 3.1 - built from Windows Server 2008R2, EM64T
+7. Microsoft IPMI driver is loaded by default from WinPE CD, if you want to use 
+Intel IPMI driver instead of MS IPMI driver for firmware update, you can un-install
+Microsoft IPMI driver by:
+                Devicesetup.exe ¨Cv remove *IPI0001
+                Note: IPI0001 is the device ID for Microsoft IPMI driver.
+================================================================================
+                      BIOS Changes in release R03.01.0002
+================================================================================
+NOTICE: As security requirement, R03.01.0002 reversion doesn't support capsule downgrade in normal mode. It only supports capsule downgrade in Recovery mode.
+NOTICE:  R03.01.0002 is the first BIOS that adds support for Intel(R) Xeon processor E3-1200 V4 series. If you
+   are upgrading from R02.02.0004 or earlier BIOS versions,  you will need to use  
+   a Intel(R) Xeon processor E3-1200 V3 series processor first to boot to EFI shell and use capsule files to update BIOS to R03.01.0002.
+   After flashing with the Intel(R) Xeon processor E3-1200 V3 series processor, you can install
+   the Intel(R) Xeon processor E3-1200 V4 series processor and boot.
+
+
+ -Added: Microcode update 0x0000001D for CPUID = 0x306C3
+ -Added: Microcode update 0x0000000B for CPUID = 0x40671
+
+ -Fixed: The SUT halt at 0x0D when the backup bios was updated at POST stage
+ -Fixed: The type 4 Processor Upgrade Field vaule is incorrect for LGA1150 
+ -Fixed: Cannot log in to BMC Webconsole after set user and password
+ -Fixed: Sleep S3 wake up failed with BDW CPU. 
+ -Fixed: System hangs at 0x9A with BDW CPU when VT-d is enabled   
+ -Fixed: The value of Creator ID/OEM Revision/Creator Revision in FPDT tabl
+ -Fixed: System will automatic resume from S1/S3/S5 after S3 wake on LAN.
+ -Fixed: The maximum length of password don't match with the length of EPS
+ -Fixed: The value at Bit 3 to Bit 7 of Processor Characteristics field
+ -Fixed: The value of current usage field when it is populated for each in
+ -Fixed: Sometimes the system hang at 0x96 with add-on graphic card.
+ -Fixed: SUT will reboot unexpectedly  when run IWVSS  in Win2012R2.
+ -Fixed: TBoot test failed 
+ -Fixed: There are 16 N/A devices in BIOS USB configuratoin tab after usb controller disable
+================================================================================
+			  ME Changes in Release 03.00.07.018
+================================================================================   
+- Fixed: Wrong value returned from Get Max Allowed CPU P-states/T-states while limiting
+		using Total Power Budget
+===============================================================================
+                            BMC Changes in 01.13.7782
+===============================================================================
+- Fixed:  The board takes 5+ minutes to boot.  Seems
+          to have something to do with initialization of the BMC at startup.
+- Fixed:  The content of "About" button is still in English when using the 
+          Chinese Browser.
+- Fixed:  FWPIAUPD_v13.1.3:Can upgrade BMC to the same version with to down rev?
+          parameter on Denlow
+- Fixed:  RMM4 dedicated NIC on the S2600WP may no responding after disabled 
+          onboard NIC around 2 hours
+- Fixed:  After insert the IHC certificate file,get session id always failed.
+- Fixed:  EWS login failed during run DC cycle with ITAS.
+- Fixed:  The response of "Get DIMM Information" is wrong.
+- Fixed:  "syscfg /cr rank "2 1" " does not take effect on S1200RP.
+- Fixed:  the copyright's timestamp and sign shown in KVM window's help menu is 
+          incorrect.
+- Fixed:  The copyright duration shown in EWS's "About" information is incorrect.
+- Upgrade OpenSSL to 0.9.8zf.
+=============================================================================
+                         FRUSDR Changes in release 1.08
+=============================================================================
+ - Fixed-The sensor reading of P1 MTT is always 0 in EWS(Intel(R) Integrated BMC Web Console)
+=============================================================================
+                            LEGAL INFORMATION
+=============================================================================
+Information in this document is provided in connection with Intel products. 
+No license, express or implied, by estoppel or otherwise, to any intellectual 
+property rights is granted by this document. Except as provided in Intel's 
+Terms and Conditions of Sale for such products, Intel assumes no liability 
+whatsoever, and Intel disclaims any express or implied warranty, relating to 
+sale and/or use of Intel products including liability or warranties relating 
+to fitness for a particular purpose, merchantability, or infringement of any 
+patent, copyright or other intellectual property right. Intel Corporation may 
+have patents or pending patent applications, trademarks, copyrights, or other 
+intellectual property rights that relate to the presented subject matter.  
+The furnishing of documents and other materials and information does not 
+provide any license, express or implied, by estoppel or otherwise, to any 
+such patents, trademarks, copyrights, or other intellectual property rights.  
+Intel products are not intended for use in medical, life saving, or life 
+sustaining applications. Intel may make changes to specifications and product 
+descriptions at any time, without notice.
+
+Intel is a registered trademark of Intel Corporation. 
+*Other names and brands are the property of their respective owners.
+Copyright (c) 2014 Intel Corporation.
+
+A portion of this firmware is open source code, which falls under the
+GPL 2.0 license.  
+
+[END OF RELEASE NOTES]

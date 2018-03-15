@@ -1,0 +1,375 @@
+===============================================================================
+        Intel(R) Server Platform Integrated BMC Firmware Release Notes       
+===============================================================================
+
+
+INTEL Enterprise Platform & Services Marketing
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+
+
+===============================================================================
+DATE:       4th Nov 2016
+
+
+
+TO:         Intel(R) Server Board S1200xx customers
+
+
+SUBJECT:    Integrated BMC(R) firmware 01.04.10248 release notes
+
+
+===============================================================================
+                               LEGAL INFORMATION
+===============================================================================
+Information in this document is provided in connection with Intel products. 
+No license, express or implied, by estoppel or otherwise, to any intellectual 
+property rights is granted by this document. Except as provided in Intel's 
+Terms and Conditions of Sale for such products, Intel assumes no liability 
+whatsoever, and Intel disclaims any express or implied warranty, relating to 
+sale and/or use of Intel products including liability or warranties relating 
+to fitness for a particular purpose, merchantability, or infringement of any 
+patent, copyright or other intellectual property right. Intel Corporation may 
+have patents or pending patent applications, trademarks, copyrights, or other 
+intellectual property rights that relate to the presented subject matter.  
+The furnishing of documents and other materials and information does not 
+provide any license, express or implied, by estoppel or otherwise, to any 
+such patents, trademarks, copyrights, or other intellectual property rights.  
+Intel products are not intended for use in medical, life saving, or life 
+sustaining applications. Intel may make changes to specifications and product 
+descriptions at any time, without notice.
+
+
+Intel is a registered trademark of Intel Corporation. 
+
+
+*Other names and brands are the property of their respective owners.
+
+
+Copyright (c) 2014,2015 Intel Corporation.
+
+
+A portion of this firmware is open source code.
+The OSS source code that the customer is entitled to per OSS license has been
+posted on the Intel support website at the following link:
+
+http://downloadcenter.intel.com/Detail_Desc.aspx?agr=Y&DwnldID=21081
+
+
+This open source code falls under the GPL 2.0 license, please see the license
+at the following link:
+
+http://www.opensource.org/licenses/gpl-2.0.php  
+
+
+===============================================================================
+                            ABOUT THIS RELEASE PACKAGE
+===============================================================================
+Source file: BMC_i_r.bin
+Update script: fwUpdateBMC.nsh
+
+REVISION INFORMATION RETURNED BY GET DEVICE ID COMMAND:
+Operational mode:   01.04.10248
+
+UBoot mode:         01.05
+Device ID:          0x21
+Manufacturer ID:    0x000157
+
+Other version/revision information:
+    PSU Model          H/W revision      FW Version
+    1100ADU00201         S3               1.01.32
+    1100ADU00201         S2               1.01.1E
+    DPS 460KB_A          S3               3.09.31
+    DPS 750XB A          S4               5.**.100 *(See Note 2)
+    DPS 750AB-5A         S0               3.**.21  *(See Note 2)
+    DPS 1200TB A         00               4.39.77 *(See Note 1)
+    DPS 1200TB A         02               6.40.89 *(See Note 1)
+    DPS 1200TB A         S3               3.39.77 *(See Note 1)
+    PSSF172202A          00               0.09.73
+    PSSF162202A          S3               0.09.55 *(See Note 1)
+     
+*NOTE 1: Supported but not POR for Grantley. Will likely be removed in a future release.
+*NOTE 2: The middle version number is attached to a particular batch of power supplies and can be
+         different for the same firmware revision. Therefore, it cannot be predicted ahead of
+		 time what it will be. Validation should ignore this value.
+
+HSBP FW:            01.12 SecurityRev
+Root:               01.17
+WWW:                01.08
+uboot:              01.05
+FWPIAUPD Utility:   V14.0 Build 8
+
+#MD5 checksum of BMC_i_r10248.bin
+7096C844DDAE324F0F152E49CCFDA131
+
+-------------------------------------------------------------------------------
+
+A "Pong" version of the firmware image can be made available on request.
+
+===============================================================================
+                         IMPORTANT INSTALLATION NOTES
+===============================================================================
+The following update process must be followed to ensure a trouble free updating
+of your baseboard.  The order is important to minimize any issues for status
+checking as different components are initialized.
+1.  BMC firmware
+2.  BIOS/Manageability Engine (ME) firmware (as directed in BIOS Release Notes)
+3.  FRU/SDR package specific to the baseboard.
+4.  NIC EEPROM
+
+===============================================================================
+                            INSTALLATION PROCEDURE
+===============================================================================
+- NOTE: None
+  
+1.  Copy the entire contents of the BMC_i_0017r8782.zip archive file to the
+    storage medium of your choice. This can be a hard disk, floppy disk
+    or USB flash drive.
+    All of the files in the zip archive must reside in the same directory.
+
+
+2.  Boot to EFI and then run the fwUpdateBMC.nsh script file to update the
+    Integrated BMC.
+
+    Modification of the update script or using fwpiaupd.efi with your own
+    command line parameters is not supported and doing so is at your own risk!
+
+
+3.  Install latest available FRU/SDR package specific to the platform.
+
+===============================================================================
+                     FIRMWARE RECOVERY PROCEDURE
+===============================================================================
+The Recovery process can be initiated by setting the recovery jumper (called 
+BMC Force Update Jumper) to the recovery position.
+
+The jumper is normally in the normal/de-asserted position. The system must be
+completely powered off (A/C power removed) before the jumper is moved.
+
+After power is re-applied and the firmware update is complete, the system must
+be powered off again and the jumper must be returned to the de-asserted
+position before normal operation can begin.
+
+A BMC recovery can be accomplished from a USB flash drive. 
+1.  Copy the entire contents of the BMC_i_0006r7790.zip archive file to the
+    storage USB flash drive.
+    All of the files in the zip archive must reside in the same directory.
+
+2.  Remove A/C power from the system and wait 30 seconds.
+
+3.  Move the BMC Force Update Jumper to the recovery position. 
+    Details regarding the jumper ID and location can be obtained from the
+    Board EPS for that Platform.
+
+4.  Insert the USB flash drive.
+
+5.  Reapply A/C power to the system and power on the system.
+
+6.  The BIOS POST screen will appear displaying the progress press F6 to
+    select boot options. At the boot option menu select to boot to the
+    EFI SHELL.
+
+7.  Switch to the directory where you stored the update files and then run
+    the fwUpdateBMC.nsh script file to update the Integrated BMC.
+
+    Modification of the update script with your own command line parameters is
+    not supported and doing so is at your own risk!
+
+8.  Remove A/C power from the system and wait 30 seconds.
+
+9.  Move the BMC Force Update Jumper to the normal position.
+
+10. Reapply A/C power to the system and power on the system.
+
+NOTE: Performing this recovery procedure resets all network and user settings to defaults.
+      The FRUSDR will also need to be reloaded after a recovery (SDR update).
+
+===============================================================================
+                     FIRMWARE UPGRADE/DOWNGRADE PROCEDURES
+===============================================================================
+Upgrade of BMC FW from version BMC_i_0004r7652 to later versions will be documented
+in the release notes for those versions.
+
+Reverting to a lower version of firmware may have unexpected side effects,
+including but not limited to user settings reset to defaults, and will always
+result in the loss of functionality which was present in the higher version
+but was not implemented in the lower version.
+We do not guarantee that any downgrade will operate without side-effects.
+
+Always observe caution when downgrading firmware.
+
+===============================================================================
+                        KNOWN ISSUES/WORKAROUNDS/REQUIREMENTS
+===============================================================================
+- This BMC FW update package is to be used only on EPSD server baseboards and
+  does NOT support customer reference boards (CRB) or silicon reference
+  platforms (SRP) such as Rose City.
+  Contact your PDT to determine where to download the BMC FW for these products.
+
+- The BMC FW image file in this package is to be used only with the provided
+  FWPIAUPD update utility.
+  Using the FW image file with a SPI flash device programmer will result in a
+  non-functional system.
+  
+===============================================================================
+                                ISSUES FIXED
+===============================================================================
+01.04.10248
+EPSD100252884:Change FAN to auto-rearm, fan status cannot show correct status on EWS
+EPSD100254591:some incorrect informaion on EWS of S1200SPS
+EPSD100254592:EWS will be hange when move out from Node manager page of S1200SPS
+EPSD100254810:Using IE will not have the lock out message.
+
+
+
+01.03.9805
+EPSD100252457 The DIMM Thrm Margin 1 always show -128c on S1200SPL & S1200SPS EWS
+Merge Privilege Escalation Attack via EWS fix from Granltey
+
+
+01.02.9655
+EPSD100251753:Flash Wear-out Protection Warning' Appears in SEL after 01.03.0001 BIOS update.
+
+
+01.01.9506
+EPSD100030361:UUT recorded PS failure event during AC cycle test.
+
+
+01.00.9441
+Using latest openssl 1.0.2d for SilverPass
+EPSD100030198:It will generate the BMC watchdog error during the BMC
+
+00.20.9366
+Several fixes. 
+
+00.19.9134
+Disable Stunel for IHC
+EPSD100249400 Latest log status of System SOL is abnormal on EWS.
+EPSD100249303 can receive alert mail from all NICs even no cable connected.
+
+00.18.8961
+Several internal fix. 
+
+00.17.8782
+EPSD100240715 System can occur ¡°SSB thermal Lower¡± event after RH7 system stress test.
+EPSD100028980 POST Error "8607 error - Recovery boot has been initiated " displayed as "Unkown Event." in SEL log.
+
+00.16.8723
+EPSD100029217 The Serial Debug Console always shows "IPMIMain: Max no of DIMM Group for this platform: 1#012" when power on the system.
+
+00.15.8664
+EPSD100028545 After pulling out one of the PSU, the relative sensor status still shows "Normal".(screenshot
+EPSD100248497 The SDR has no system airflow information for domain 0/2.
+EPSD100248529 There's no Power Supply Blackbox Data in system debug file
+EPSD100029056 System can occur "Voltage Fault" event during DC cycling test
+EPSD100029062 The Serial Debug Console always shows "IPMIMain: Max no of DIMM Group for this platform: 1#012" when power on the system
+EPSD100029027 The EWS could not show the CPU information in "System Information" ----> "CPU Information" menu.
+
+
+
+00.14.8611
+EPSD100028121 [Hw-v item 341] System is running stress via iwVSS 2.6.2 in Win2012R2 on LC 2nd soruce has fail item and the SEL also has unnormal log
+EPSD100028738 The Serial Debug Console always shows "Can't get CPU's HA number. Use 2HAS for default" when power on the system
+EPSD100028568 P1 DTS Therm Mgn is always in unknown state.
+EPSD100247231 P1 Therm Margin is always in unknown status.
+
+
+00.13.8181
+EPSD100028459 SUT wait about 60 seconds before auto powering up when power restore delay is disabled.
+EPSD100247652 P1 Therm Margin, P1 Therm Ctrl % and P1 DTS Therm Mgn,  is always in unknown state
+EPSD100247231 P1 Therm Margin is always in unknown status.
+EPSD100247234 P1 Therm Ctrl % is always in unknown state.
+EPSD100247235 P1 DTS Therm Mgn is always in unknown state.
+
+00.12.8118
+EPSD100028354  "MTT CPU 1" sensor shows "Normal" and "OK" status in the BMC WebUI.
+EPSD100027967 [[HW-V Item38 and 348] Reset# to CKE timing fail (BMC DDR3 Main source and 2nd source)]
+
+00.11.8090
+EPSD100247824 CHECK ANALOG SENSORS Test fails on Silver Pass Alpha board
+EPSD100028478 The Serial Debug Console always shows "Unused GPIO Pin (command=106)" when power on the system
+
+00.10.8067
+EPSD100027608   SEL could not be saved as an file via web console when SEL is full
+EPSD100028380   The trap information will show "unspecificed & ....." when trigger chassis intrusion detection sensor.
+
+
+00.09.8033
+EPSD100246991	Display screen is abnormal   after offline upgrade bmc and reset into bios setup
+EPSD100028286	In FCN chassis, there should be only 1 processor fan and 1 rear system fan, but it detect 1 processor fan and 2 system fans.
+EPSD100027871	In HCN chassis, there should be only 1 processor fan and 1 system fan, but it detect 1 processor fan and 2 system fans.
+EPSD100028142	[SVL] Login to EMS for a user with User privilege access, press Server Health/Event Log/Save Event Log, no warning dialog box pop-up.
+EPSD100028178	[SLV] ME FW Rev can't be displayed in System Information when login to EMS with User/Operator privilege level.
+
+
+00.08.8005
+EPSD100246991	Display screen is abnormal   after offline upgrade bmc and reset into bios setup
+EPSD100027894	There is an unexpected bit in the response data  of CPU missing event
+EPSD100028318	The BMC WebUI does not show the "ME version" when login by "Operator" and "User" privilege users
+EPSD100027960	The BMC WebUI could not show exact log for CPU thermaltrip and CPU Thermal Margin Sensors
+EPSD100027517	When press NMI button in W2K12R2-64_November, system cannot display BSOD.
+EPSD100028178	[SLV] ME FW Rev can't be displayed in System Information when login to EMS with User/Operator privilege level.
+
+
+00.07.7986
+EPSD100027894 There is an unexpected bit in the response data  of CPU missing event
+EPSD100028178 [SLV] ME FW Rev can't be displayed in System Information when login to EMS with User/Operator privilege level.
+
+00.07.7840
+
+EPSD100247438	No matter which one "Enable" label in Secutity Settings page, all will choose the select box of Force HTTPS.
+EPSD100247495	There is a typo error in EWS system SOL log
+EPSD100027960	The BMC WebUI could not show exact log for CPU thermaltrip and CPU Thermal Margin Sensors
+EPSD100247400	The MAC address of BMC LAN1 in EWS is same as NIC2 Port1 MAC address in BIOS.
+
+
+00.06.7790
+
+EPSD100027960  Invalid Offset for this SensorType - Asserted" for P1 Status Sensor.
+EPSD100027941  There should be "thermal trip assert" event after the PCH thermal trip assert.
+EPSD100027496 The status of "voltage_fault" sensor is always in warning status.
+EPSD100247229 VRHot sensor is always in Critical status.
+EPSD100027599 The buttons on LCP pannel doesn't work.
+EPSD100247098 local hostname for alert email received in inbox doesn't match with the setting on EWS.
+None: Enable NMI GPIO
+
+00.05.7731
+
+-EPSD100246969: Can't connect help page for SOL Log Configuartion.
+-EPSD100027668: [SLV] Help page of "SOL Log Configuration" show "The webpage cannot be found" in EMS.
+-EPSD100246968: Help page for System SOL Log page is abnormal
+-EPSD100027493: The "status led" of virtual front panel in EWS doesn't match the one in front panel.
+-EPSD100246876: copyrigth time is not correct in EWS and KVM legal notices
+-EPSD100246875: Can't get system DIMM information in EWS
+-EPSD100246864: Agg Therm Mgn 1 sensor is always in Unknown state.
+-EPSD100246863: Exit Air Temp sensor is always in Unknown state.
+-EPSD100246853: Status LED of Front Panel is always in Solid Green state in Chassis.
+-none: SSB Temp sensor reading is zero,but BMC web page show it as unknown state
+-none: Change PECI from wire PECI to ME pass through mode on SilverPass according to HW latest rework direction
+-none: BMC did not detected CPU present when it is in socket
+-none: SAS Mod Presence asserted and de-asserted Log appear repeatedly
+-none: Update GPIO for NMI
+
+00.04.7652
+-None
+
+
+
+===============================================================================
+                            FEATURES ADDED
+===============================================================================
+00.06.7790
+-None
+
+00.05.7731
+-None
+
+00.04.7652
+
+First public release supporting Greenlow Platforms with full feature ready
+
+===============================================================================
+                             REFERENCE MATERIAL
+===============================================================================
+Common (integrated) BMC Firmware EAS
+(integrated) BMC Firmware Common Core EPS

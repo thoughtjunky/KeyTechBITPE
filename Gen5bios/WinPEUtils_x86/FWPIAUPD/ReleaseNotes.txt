@@ -1,0 +1,205 @@
+RELEASE NOTES FOR FWPIAUPD UTILITY
+Version 12.0 Build 3
+May 13, 2013
+
+
+Copyright (c) 2013 Intel Corporation.
+===============================
+
+Contents
+-------------
+1. Introduction
+2. Supported Platforms
+3. Supported Operating Systems
+4. Pre-requisites
+5. Installation and Un-installation (WinPE)
+6. Installation and Un-installation (UEFI)
+7. Usage
+8. Known Issues
+9. Unsupported Features
+10. Instructions to end-user
+11. Changes since previous release
+12. Legal Information.
+
+
+1. Introduction
+--------------------
+FWPIAUPD is used for updating the boot block, operational code and PIA for various micro-controllers on a given platform through the use of platform - specific Intel hex programming files or binary image files. The Firmware and PIA Flash Update Utility (FWPIAUPD) updates the boot block, operational code and PIA on the BMC or an IMM module by sending commands through the BMC to update another controller on the IPMB in a firmware transfer mode. After the code is updated, it is compared with the code from the hex/bin file to make sure the write was done correctly.  Finally, the controller is put back into operational mode.
+ 
+2. Supported Platforms
+---------------------------------
+  Intel (R) S1200RP series of platforms.
+  Intel (R) S1200RPL series of platforms.
+  Intel (R) S1200RPS series of platforms.
+  Intel (R) S1200RPO series of platforms.
+  Intel (R) S1200RPM series of platforms.
+
+3. Supported Operating Systems
+-----------------------------------------------
+	WinPE* 3.x/4.x
+	UEFI 2.3.1
+
+4. Pre-requisites
+-----------------
+    1. Boot to WinPE 3.x or WinPE 4.x or UEFI 2.3.1.
+
+
+5. Installation and Un-installation (WinPE)
+-----------------------------------------------
+
+   Installation:
+   ---------------
+     1. Unzip the zip file on any windows machine and take the folder and copy to any external media.
+     2. Connect the external media to the system.	
+     3. There will be ReleaseNotes.txt and folders named “drivers? “win_x86? “win_x64?  Go to “drivers?folder and you can find a “win?folder and inside this, there are two folder called x86 and x64. Choose appropriate folder depending on the Operating System and execute the “install.cmd  .?command.
+    4. Go to win_x86 or win_x64 folder based on the operating system where you can find the fwpiaupd.exe, imbapi.dll, libipmi.dll and msipmi.dll files.
+
+   Uninstallation:
+  --------------------
+     1. To uninstall the FWPIAUPD utility, manually delete the contents of the directory where the         utility is present.
+     2. To uninstall the drivers, please follow this path : drivers->win 
+     3. Choose the x86 or x64 folder depends on the Operating system and run the uninstall.cmd command.
+
+6. Installation and Un-installation (UEFI)
+-----------------------------------
+   Installation:
+   -------------
+   1. Unzip the zip file on any windows machine and take the folder and copy to any external media.
+   2. Connect the external media to system
+   3. Go to the directory where fwpiaupd.efi is present in the external media
+   4. Run Fwpiaupd.efi -h for usage.
+
+   Uninstallation:
+   ---------------
+
+   1. To uninstall FWPIAUPD utility, manually delete the contents of the directory where the utility is present.
+        
+7. Usage
+-------------
+
+   The following is the procedure to execute the FWPIAUPD utility:
+
+      The FWPIAUPD can be run as a command-line application for some of the actions that
+      it performs, including updating the Firmware of BMC,HSC and ME from either binary or hex file.
+
+		fwpiaupd <switch> [File Name] 
+
+      a. To view the command-line help:
+
+                fwpiaupd /h   
+
+      b. Command Line Sysntax:
+	----------------------
+
+	Usage: FWPIAUPD <options> <hexfile|Image file>
+	The character in parenthesis can be substituted for the entire option.
+	-?            Displays the command line help.
+	-(h)elp       Displays the command line help.
+	-ni           Forces the utility into non-interactive mode.  The operation,
+              	      area and primary or secondary controller must be specified.
+	-nodownrev    Prevents loading of an older revision of firmware than what
+                      currently exists in the system.
+	-(u)pload     Uploads the areas specified in the (boot, op, pia, rmm3, efs) arguments.
+	-(v)erify     Verifies the areas specified in the (boot, op, pia, rmm3, efs) arguments.
+	-(i)nventory  Displays an inventory of the input file or a controller. 
+	-(b)oot       Applies the specified operation to the Boot Block.
+	-(o)p         Applies the specified operation to the Op Code.
+	-pia          Applies the specified operation to the PIA.
+	-rmm3         Applies the specified operation to the RMM3 area.
+	-(s)econdary  Selects the secondary controller as the target of the operations.
+	[-address=XX] optionally specified address (default=20).
+	-bin          Specify this option if input file is a firmware image.
+	-setdef       Restores the default non volatile BMC FW settings.
+        -if=kcs	      Uses KCS interface for BMC FW update.
+        -if=usb	      Uses USB interface for BMC FW update.
+
+
+8. Known Issues
+---------------
+1. The BMC FW update using KCS interface takes 
+	12 minutes (UEFI)
+	26 minutes (WinPE MSIPMI driver)
+	12 minutes (WinPE Intel IMB driver)
+
+2. The BMC update with force update jumper set, is not supported on WinPE OS. This feature is applicable only to UEFI currently. On UEFI the time taken for the update is around 22 minutes.
+
+9. Unsupported Features
+-----------------------
+
+None.
+
+10. Instructions to end user
+---------------------------
+
+WinPE:
+------
+a. The "Plug and Play BMC" setting in the BIOS needs to be explicitly enabled, in order to use the MSIPMI driver on WinPE OS. Otherwise, the utility will error out.
+   If the user wants to install the Intel IPMI driver, the following command needs to be explicitly given,  as the install.cmd script currently does not do it.
+   DeviceSetup.exe -v install IMBDrv.inf *IMBDRV. 
+   
+UEFI/WinPE:
+----------
+a. A system event log will be generated when there is a BMC update failure. This will happen only for  inappropriate images of S1600, S1400, S2600, S2400 and S4600 platform series. With any other images, though the utility errors out, an event log will not be generated.
+
+11. Changes since previous release
+----------------------------------
+1. Build 2 Release for S1200R platform series
+
+12. Legal Information
+--------------------
+
+========================================================
+
+                               LEGAL INFORMATION
+
+========================================================
+
+Information in this document is provided in connection with Intel Products
+
+and for the purpose of supporting Intel developed server boards and systems.
+
+No license, express or implied, by estoppel or otherwise, to any intellectual 
+
+property rights is granted by this document. Except as provided in Intel's 
+
+Terms and Conditions of Sale for such products, Intel assumes no liability 
+
+whatsoever, and Intel disclaims any express or implied warranty, relating to 
+
+sale and/or use of Intel products including liability or warranties relating 
+
+to fitness for a particular purpose, merchantability, or infringement of any 
+
+patent, copyright or other intellectual property right. Intel Corporation may 
+
+have patents or pending patent applications, trademarks, copyrights, or other 
+
+intellectual property rights that relate to the presented subject matter.  
+
+The furnishing of documents and other materials and information does not 
+
+provide any license, express or implied, by estoppel or otherwise, to any 
+
+such patents, trademarks, copyrights, or other intellectual property rights.  
+
+Intel products are not intended for use in medical, life saving, or life 
+
+sustaining applications. Intel may make changes to specifications and product 
+
+descriptions at any time, without notice.
+
+ 
+
+Intel is a registered trademark of Intel Corporation. 
+
+ 
+
+*Other names and brands are the property of their respective owners.
+
+ 
+
+Copyright (c) 2012 Intel Corporation.
+
+
+
+(end)

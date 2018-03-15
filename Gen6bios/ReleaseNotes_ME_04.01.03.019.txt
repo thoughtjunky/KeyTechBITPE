@@ -1,0 +1,224 @@
+﻿================================================================================
+       Intel(R) Xeon(R) Processor-Based Server BIOS Development
+================================================================================
+
+ INTEL Product Collaboration and Systems Division
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+
+================================================================================
+
+DATE    : Nov, 2016
+TO      : Intel(R) Xeon(R) Processor-Based Server Platform customers
+SUBJECT : Manageability Engine Release notes for version SPS_E3_4.01.03.019
+
+================================================================================
+                           LEGAL INFORMATION
+================================================================================
+
+Information in this document is provided in connection with Intel Products
+and for the purpose of supporting Intel developed server boards and systems.
+No license, express or implied, by estoppel or otherwise, to any intellectual 
+property rights is granted by this document. Except as provided in Intel's 
+Terms and Conditions of Sale for such products, Intel assumes no liability 
+whatsoever, and Intel disclaims any express or implied warranty, relating to 
+sale and/or use of Intel products including liability or warranties relating 
+to fitness for a particular purpose, merchantability, or infringement of any 
+patent, copyright or other intellectual property right. Intel Corporation 
+may have patents or pending patent applications, trademarks, copyrights, or
+other intellectual property rights that relate to the presented subject matter.
+The furnishing of documents and other materials and information does not 
+provide any license, express or implied, by estoppel or otherwise, to any such
+patents, trademarks, copyrights, or other intellectual property rights.  
+Intel products are not intended for use in medical, life saving, or life 
+sustaining applications. Intel may make changes to specifications and product
+descriptions at any time, without notice.
+
+Intel is a registered trademark of Intel Corporation. 
+
+*Other names and brands are the property of their respective owners.
+
+Copyright (C) 2016 Intel Corporation.
+
+================================================================================
+                              ABOUT THIS RELEASE
+================================================================================
+Build Stamp : ME Firmware             --> 04.01.03.019
+              ME Recovery Boot Loader --> 04.01.03.019
+Build Date  : Oct 2016
+
+================================================================================
+                           Supported Platforms
+================================================================================
+        S1200SP Silver Pass Refresh
+       
+================================================================================
+                        ME RECOVERY INSTRUCTIONS
+================================================================================
+The Recovery process can be initiated by setting the recovery jumper (called ME
+FRC UPDT Jumper)
+
+The following steps demonstrate this recovery process:
+   1.  Power OFF the system.
+   2.  Switch the ME FRC UPDT jumper. Details regarding the jumper ID and
+       location can be obtained from the Board EPS for that Platform.
+   4.  Power ON the system.
+   5.  Enter Setup and verify Error manager displays 83A0 error code
+   6.  Boot to EfiShell and update ME if necessary
+   7.  AC OFF the system, and revert the ME FRC UPDT jumper position to
+       "normal operation".
+   8.  Power ON the system.
+   9.  Enter setup and verify Error Manager does not display 83A0 error code
+
+Note 1 : ME will continuously monitor recovery jumper. Whenever ME FRC UPDT is
+         asserted ME will immediately switch to recovery mode.  AC Power cycle
+         is required after de-asserting ME FRC UPDT jumper for ME to function
+         normally.
+Note 2 : When MC FRC UPDT jumper is asserted with AC OFF, ME will restore to
+         factory default settings.
+
+
+================================================================================
+				ME FW Capsule INSTALLATION NOTES
+================================================================================
+WARNING:  It is very important to follow these instructions as they are written.
+Failure to update using the proper procedure may cause damage to your system.
+
+!!!!! AC failure during update may cause damage to your system and be unrecoverable !!!!!
+
+
+Please follow the below procedure to update ME using UEFI iFlash32 12.0 Build 4
+   1.  Boot the system to EFI Shell
+   2.  Download ME release package
+   3.  Unzip the ME release package to HD or USB Flash Drive
+   3.  Map the respective storage device in system with the command
+           Shell> map -r
+   4.  Change the Shell to mapped device file system
+           Example: Shell> fs0: (or fs1:)
+   5.  Run the IFlash32 utility on the prompt.
+       Use ME_xx_xx_xx_xxx.cap file when ME operational Image update is required.
+       Use MEComplete_xx_xx_xx_xxx.cap file when Only whole ME Image update is required.
+           fs0:\> IFlash32 [File Name] /u /ni
+   6.  Reboot system after the update is completed.
+================================================================================
+      KNOWN ISSUES in 04.01.03.019 release
+================================================================================
+No
+================================================================================
+      Issues fixed in 04.01.03.019 release
+================================================================================
+1. Incorrect event content in ME Power State Change event.
+2. Wrong minimum correction time in NM Capabilities.
+3. Me falls into rcv when coming back from Sx to S0.
+4. Sending diagnostic command 0x41 Reset MCTP statistics response 0x16 instead of 0x85.
+5. smart stops monitoring PSU registers after coming back from Sx.
+6. The SPS FW will crash as set the SMLink0 to 400KHz.
+================================================================================
+      KNOWN ISSUES in 04.01.03.017 release
+================================================================================
+NA
+================================================================================
+      Issues fixed in 04.01.03.017 release
+================================================================================
+1. Cannot set TR Delay to 0 (disabled) in General NM Presets.
+2. (SMART) ME in recovery mode after moving from Sx.
+3. HECI DFU Nonce Retry Port to Greenlow IPG.
+4. HECI DFU Nonce Retry Port to Greenlow.
+5. HECI cmd 0x41 responds with 0x16 instead of with 0x85.
+6. FW goes to recovery after send diagnostic command AggregatedSendRawPeciReq.
+7. (SmaRT) After S0 – S5 – S0 SmaRT no longer polls status registers of PSUs when SMBALERT is asserte.
+8. C232 Setup option Boot Mode Override does not save value changes.
+9. Me not responsive when MFS parameter above defined limit.
+10.Not all of enabled devices are polled when configured on links other than SMLink1.
+11.Incorrect event content in ME Power State Change event.
+12.Wrong min correction time in NM Capabilities after changing scanning period and returning from Sx.
+13.AFS corruption in case of power-loss in middle of write when AFS partition is not full (1st boot typ.
+14. The SPS FW will crash as set the SMLink0 to 400KHz.
+15. Get Me Configuration (59h) rerturns status FAILURE after reading MFS
+================================================================================
+      Issues fixed in 04.01.03.001 release
+================================================================================
+1. Can't set TR Delay to 0(Disabled) in General NM Presets.
+2. The SPS FW will crash as set the SMLink0 to 400KHZ.
+3. Invaild frequency of power reaings.
+4. GNL R: DSKU is not working on ZB whit with KBL B0 plus SPT C236 and BIOS 04-30 with SPS E3 04.01.02.007.0.
+
+================================================================================
+      KNOWN ISSUES in 04.01.01.003 release
+================================================================================
+1.SpecPower score is 11% lower than expected.
+
+================================================================================
+      Issues fixed in 04.01.01.003 release
+================================================================================
+1. Apha Release for Greenlow Refresh platforms (SiEn and Full) introduces new features.
+================================================================================
+
+================================================================================
+      KNOWN ISSUES in 04.00.03.096 release
+================================================================================
+
+1. ME FW is non responsive on SMLink0 in S5 after G3 after SPI image flash followed by
+CMOS clear.
+2. Cannot set TR Delay to 0(disabled) in General NM Presets.
+3. FW does not perform global reset after CPU replacement after S5 exit.
+================================================================================
+      Issues fixed in 04.00.03.096 release
+================================================================================
+1. Sporadical system blackout during warm reset stressed test.
+2. system cannot enter package C3 state(C232).
+
+================================================================================
+      Issues fixed in 04.00.03.094 release
+================================================================================
+No Release Notes for now since still it's a candidate one.
+
+================================================================================
+      KNOWN ISSUES in 04.00.03.089 release
+================================================================================
+
+No Release Notes for now since still it's a candidate one.
+
+================================================================================
+      Issues fixed in 04.00.03.089 release
+================================================================================
+No Release Notes for now since still it's a candidate one.
+
+================================================================================
+      KNOWN ISSUES in 04.00.03.075 release
+================================================================================
+1. AF hang when booting with SKX and LBG - At warm reset.
+2. Please include PMC patch for SMI storm issue.
+3. Online update too slow.
+4. Get NM Statistics command reports Nominal Reading at SDR "Typical Power
+Consumption in Sx" as power consumption in S0 with power readings from PSU.
+5. ME FW keeps sending Alert Immediate commands even though BMC responds with 81h
+completion code.
+6. Platform does not wake up after power button override.
+7. DID is not present first time after image burn. AC cycle needed.
+8. Cannot set TR Delay to 0 (disabled) in General NM Presets.
+9. Enable Command Timed out during ash update.
+10. Cold Reset takes too much time.
+11. ME ColdReset in M3 state causes that FW stops responding.
+12. No Node Manager power limiting during PTU power characterization.
+13. After SMBAlert# line assertion in 8 PSUs conguration ME FW internal exception is
+observed.
+14. After Power Button Override execution system cannot be waken up correctly.
+15. ME Ipmi Cold Reset command doesn’t work correctly in M3 power state.
+16. After multiple quick assertions and de-assertions of SMBAlert, platform stays throttled
+for few seconds.
+17. ME FW stops polling PSUs statuses after S0-Sx-S0 transition with SMBAlert# line
+asserted.
+18. Sizes of the CSE partitions in the flash image are not constant between releases.
+19. FW does not perform global reset after CPU replacement after S5 exit.
+20. Platform may not wake up coorectly out of S4 state.
+
+================================================================================
+      Issues fixed in 04.00.03.075 release
+================================================================================
+1. ME partition corruption results in ME hang.
+2. unexpected SMART-CLST event during DC cycle with PMBus 1.1 PSUs
+3. ME FW is accessing PSUs when autoconguration is switched to BMC
+4. Get NM Statistics command reports 100% for maximum memory throttling.
+5. ME FW is sending NM Health Event - Power Sensor Reading Failure alert for domain 3.
+
