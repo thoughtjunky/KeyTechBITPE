@@ -1,1 +1,1 @@
-diskpart /s diskpartfw%1.txt
+diskpart /s ResetGen%mobo%FW.txt

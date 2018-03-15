@@ -1,8 +1,7 @@
 @echo help		Displays this page
 @echo snap [path]	Take screenshots. Must be full path. i.e. G:\capture.png
 @echo formatc		Clean disk 0, quick format, assign letter C
-@echo formatfw [4]	Clean disks 1-2, quick format, assign letters E-F
-@echo formatfw [5,6]	Clean disks 2-3, quick format, assign letters E-F
+@echo formatfw	Reformat Firewire Drives
 @echo cleanc		Romove all partition data from disk 0
 @echo mapn		Force attempt to map network drive N:\ for storing log files
 @echo update [#]	Manually update Gen[#] Firmware (Gen4 broken)
