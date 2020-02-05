@@ -11,7 +11,7 @@ REM
 if exist E:\ ( 
 	set fw=FW
   ) else ( 
-	set fw=DD 
+	set fw=DD
   )
 
 REM
